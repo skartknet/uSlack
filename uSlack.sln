@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack.Web", "uSlack.Web\uS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack", "uSlack\uSlack.csproj", "{FEEFEB2F-83EF-4561-80E1-D15808CD432A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack.Tests", "uSlack.Tests\uSlack.Tests.csproj", "{76085590-FA77-4BE5-AD75-C669512024D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{FEEFEB2F-83EF-4561-80E1-D15808CD432A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEEFEB2F-83EF-4561-80E1-D15808CD432A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEEFEB2F-83EF-4561-80E1-D15808CD432A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76085590-FA77-4BE5-AD75-C669512024D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76085590-FA77-4BE5-AD75-C669512024D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76085590-FA77-4BE5-AD75-C669512024D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76085590-FA77-4BE5-AD75-C669512024D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

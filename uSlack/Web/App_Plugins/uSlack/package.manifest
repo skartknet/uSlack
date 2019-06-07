@@ -1,0 +1,10 @@
+﻿{
+    "dashboards":  [
+        {
+            "alias": "uSlack",
+            "view":  "/App_Plugins/uSlack/dashboard.html",
+            "sections":  [ "content", "settings" ],
+            "weight": -10
+        }
+    ]
+}
