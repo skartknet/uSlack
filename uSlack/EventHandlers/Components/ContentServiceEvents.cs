@@ -26,17 +26,6 @@ namespace uSlack.EventHandlers.Components
             ContentService.Moved += _handlers.ContentService_Moved;
         }
 
-        
-
-
-
-
-
-
-
-
-
-
         // terminate: runs once when Umbraco stops
         public void Terminate()
         {

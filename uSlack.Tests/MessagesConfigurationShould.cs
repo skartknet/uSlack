@@ -15,7 +15,7 @@ namespace uSlack.Tests
     {
 
         [Test]
-        public void SetMessagesDictionary()
+        public void ReturnsFileContent()
         {
             var sut = new MessagesConfiguration();
 
@@ -23,6 +23,16 @@ namespace uSlack.Tests
 
             var fileContent = sut.GetMessage("filetest");
             Assert.That(fileContent, Is.EqualTo("testcontent"));
+        }
+
+        [Test]
+        public void ReturnsNotFoundExceptionForWrongAlias()
+        {
+            var sut = new MessagesConfiguration();
+
+            sut.Initialize();
+
+            Assert.Throws<FileNotFoundException>(() => sut.GetMessage("wrongAlias"));
         }
     }
 }

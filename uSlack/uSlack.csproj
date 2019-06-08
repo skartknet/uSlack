@@ -176,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\AppConfiguration.cs" />
+    <Compile Include="Configuration\IAppConfiguration.cs" />
     <Compile Include="Configuration\MessagesConfiguration.cs" />
     <Compile Include="TypesRegistration.cs" />
     <Compile Include="EventHandlers\IContentHandlers.cs" />

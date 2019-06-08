@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace uSlack.Configuration
 {
-    public class AppConfiguration
+    public class AppConfiguration : IAppConfiguration
     {
         public MessagesConfiguration Messages { get; }
 
         public string Token => ConfigurationManager.AppSettings["SlackAppToken"];
 
+        public string SlackChannel => ConfigurationManager.AppSettings["SlackAppChannel"];
+
         public AppConfiguration()
         {
             Messages = new MessagesConfiguration();
+            Messages.Initialize();
         }
 
-        
+
     }
 }

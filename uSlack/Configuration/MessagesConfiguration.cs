@@ -14,7 +14,7 @@ namespace uSlack.Configuration
 
         private Dictionary<string, string> _messages = new Dictionary<string, string>();
 
-     
+
         public void Initialize()
         {
             var msgPath = IOHelper.MapPath(_filesLocation);
@@ -25,15 +25,19 @@ namespace uSlack.Configuration
             {
                 if (_messages.ContainsKey(file)) continue;
                 var content = File.ReadAllText(file);
-                _messages.Add(Path.GetFileNameWithoutExtension(file), content);
+                _messages.Add(Path.GetFileNameWithoutExtension(file).ToUpperInvariant(), content);
             }
         }
 
         public string GetMessage(string alias)
         {
-            _messages.TryGetValue(alias, out string message);
+            if (_messages.TryGetValue(alias.ToUpperInvariant(), out string message))
+            {
+                return message;
+            }
 
-            return message;
-        }        
+            throw new FileNotFoundException($"Content for alias {alias} couldn't found");
+
+        }
     }
 }
