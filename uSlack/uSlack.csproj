@@ -175,16 +175,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHandlers\HandlersRegistration.cs" />
+    <Compile Include="Configuration\AppConfiguration.cs" />
+    <Compile Include="Configuration\MessagesConfiguration.cs" />
+    <Compile Include="TypesRegistration.cs" />
     <Compile Include="EventHandlers\IContentHandlers.cs" />
+    <Compile Include="IMessageService.cs" />
     <Compile Include="SlackService.cs" />
     <Compile Include="EventHandlers\ContentHandlers.cs" />
-    <Compile Include="EventHandlers\Components\USlackContentEvents.cs" />
+    <Compile Include="EventHandlers\Components\ContentServiceEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Web\App_Plugins\uSlack\Config\contentService_published.json" />
     <None Include="Web\App_Plugins\uSlack\package.manifest" />
   </ItemGroup>
   <ItemGroup />

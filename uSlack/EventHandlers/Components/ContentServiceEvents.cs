@@ -7,11 +7,11 @@ using Umbraco.Core.Services.Implement;
 
 namespace uSlack.EventHandlers.Components
 {
-    public class USlackContentEvents : IComponent
+    public class ContentServiceEvents : IComponent
     {
         private readonly IContentHandlers _handlers;
 
-        public USlackContentEvents(IContentHandlers handlers)
+        public ContentServiceEvents(IContentHandlers handlers)
         {
             _handlers = handlers;
         }
@@ -19,9 +19,23 @@ namespace uSlack.EventHandlers.Components
         public void Initialize()
         {
             ContentService.Published += _handlers.ContentService_Published;
+            ContentService.Unpublished += _handlers.ContentService_Unpublished;
+            ContentService.Trashed += _handlers.ContentService_Trashed;
+            ContentService.RolledBack += _handlers.ContentService_RolledBack;
+            ContentService.Deleted += _handlers.ContentService_Deleted;
+            ContentService.Moved += _handlers.ContentService_Moved;
         }
 
-       
+        
+
+
+
+
+
+
+
+
+
 
         // terminate: runs once when Umbraco stops
         public void Terminate()
@@ -31,7 +45,7 @@ namespace uSlack.EventHandlers.Components
     }
 
     [RuntimeLevel(MinLevel = RuntimeLevel.Run)]
-    public class USlackContentComposer : ComponentComposer<USlackContentEvents>
+    public class USlackContentComposer : ComponentComposer<ContentServiceEvents>
     {
         // nothing needed to be done here!
     }
