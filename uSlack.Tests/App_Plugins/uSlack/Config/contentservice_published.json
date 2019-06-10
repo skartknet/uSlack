@@ -3,21 +3,8 @@
     "type": "section",
     "text": {
       "type": "mrkdwn",
-      "text": "Great to see you here! App helps you to stay up-to-date with your meetings and events right here within Slack. These are just a few things which you will be able to do:"
+      "text": "Content published with name '@{Name}' and ID: @{Id}"
     }
-  },
-  {
-    "type": "actions",
-    "elements": [
-      {
-        "type": "button",
-        "text": {
-          "type": "plain_text",
-          "text": "Connect account",
-          "emoji": true
-        },
-        "value": "click_me_123"
-      }
-    ]
   }
+
 ]

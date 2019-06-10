@@ -1,27 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using uSlack.Configuration;
 
 namespace uSlack.EventHandlers
 {
-    public class ContentHandlers : IContentHandlers
+    public class ContentHandlers : EventHandlerBase
     {
-        private readonly IMessageService _messageService;
-        private readonly MessagesConfiguration _config;
 
         public ContentHandlers(IMessageService messageService,
-                                MessagesConfiguration config)
-        {
-            _messageService = messageService;
-            _config = config;
-        }
+                              IAppConfiguration config) : base(messageService, config)
+        { }
         public void ContentService_Published(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.ContentPublishedEventArgs e)
         {
-            var json = _config.GetMessage(nameof(this.ContentService_Published));
-            _messageService.SendMessageAsync(json);
+            foreach (var item in e.PublishedEntities)
+            {
+                SendMessageAsync(item, "New item has been published", nameof(this.ContentService_Published));
+            }
         }
 
         public void ContentService_Unpublished(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.PublishEventArgs<Umbraco.Core.Models.IContent> e)

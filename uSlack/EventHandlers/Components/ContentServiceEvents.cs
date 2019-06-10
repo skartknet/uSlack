@@ -9,9 +9,9 @@ namespace uSlack.EventHandlers.Components
 {
     public class ContentServiceEvents : IComponent
     {
-        private readonly IContentHandlers _handlers;
+        private readonly ContentHandlers _handlers;
 
-        public ContentServiceEvents(IContentHandlers handlers)
+        public ContentServiceEvents(ContentHandlers handlers)
         {
             _handlers = handlers;
         }

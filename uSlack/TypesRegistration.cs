@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Umbraco.Core.Composing;
+﻿using Umbraco.Core.Composing;
 using uSlack.Configuration;
 
 namespace uSlack.EventHandlers
@@ -12,9 +7,10 @@ namespace uSlack.EventHandlers
     {
         public void Compose(Composition composition)
         {
-            composition.Register(typeof(IContentHandlers), typeof(ContentHandlers));
+            composition.Register(typeof(ContentHandlers));
+
             composition.Register(typeof(IMessageService), typeof(SlackService));
-            composition.Register(typeof(AppConfiguration), Lifetime.Singleton);
+            composition.Register(typeof(IAppConfiguration), typeof(AppConfiguration), Lifetime.Singleton);
         }
     }
 }

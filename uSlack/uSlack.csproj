@@ -178,8 +178,11 @@
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
     <Compile Include="Configuration\MessagesConfiguration.cs" />
+    <Compile Include="EventHandlers\EventHandlerBase.cs" />
+    <Compile Include="SlackAPIExtensions.cs" />
+    <Compile Include="StringExtensions.cs" />
+    <Compile Include="TypeExtensions.cs" />
     <Compile Include="TypesRegistration.cs" />
-    <Compile Include="EventHandlers\IContentHandlers.cs" />
     <Compile Include="IMessageService.cs" />
     <Compile Include="SlackService.cs" />
     <Compile Include="EventHandlers\ContentHandlers.cs" />

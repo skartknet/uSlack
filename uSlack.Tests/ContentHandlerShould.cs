@@ -48,13 +48,6 @@ namespace uSlack.Tests
             configuration.Setup(config => config.Messages).Returns(messagesConfig);
         }
 
-        [Test]
-        public void SendPublishedMessage()
-        {
-            var sut = new ContentHandlers(messageService.Object, configuration.Object.Messages);
-            sut.ContentService_Published(contentService.Object, evArgs);
-
-            messageService.Verify(srv => srv.SendMessageAsync(Moq.It.IsAny<string>()), Times.Once);
-        }
+      
     }
 }

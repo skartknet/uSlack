@@ -38,7 +38,19 @@ namespace uSlack.Tests
         public void SendMessage()
         {
             var sut = new SlackService(_configuration.Object);
-            Assert.DoesNotThrowAsync(async () => await sut.SendMessageAsync("test message"));
+            var txt = "this is the text";
+            var blocks = @"[
+	                        {
+		                        ""type"": ""section"",
+
+                                ""text"": {
+                                        ""type"": ""mrkdwn"",
+			                        ""text"": ""Hello, Assistant to the Regional Manager Dwight! *Michael Scott* wants to know where you'd like to take the Paper Company investors to dinner tonight.\n\n *Please select a restaurant:*""
+
+                                }
+                            }
+                            ]";
+            Assert.DoesNotThrowAsync(async () => await sut.SendMessageAsync(txt, blocks));
         }
     }
 }

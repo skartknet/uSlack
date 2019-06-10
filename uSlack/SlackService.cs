@@ -1,8 +1,5 @@
 ﻿using SlackAPI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using uSlack.Configuration;
 
@@ -19,27 +16,32 @@ namespace uSlack
             _token = config.Token;
             _channel = config.SlackChannel;
         }
-        public async Task SendMessageAsync(string message)
+        public async Task SendMessageAsync(string txt, string blocks)
         {
-            if (string.IsNullOrEmpty(message))
+            if (string.IsNullOrEmpty(blocks))
             {
-                throw new ArgumentException("Message cannot be empty", nameof(message));
+                throw new ArgumentException("blocks cannot be empty", nameof(blocks));
             }
 
             var client = new SlackTaskClient(_token);
-         
 
-            var response = await client.PostMessageAsync(_channel, message);
+            try
+            {
+                var response = await client.PostMessageOnlyBlocksAsync(_channel, txt, blocks);
 
-            // process response from API call
-            if (response.ok)
-            {
-                Console.WriteLine("Message sent successfully");
+                // process response from API call
+                if (!response.ok)
+                {
+                    //TODO Log error
+                    //Logger.("Message sending failed. error: " + response.error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Message sending failed. error: " + response.error);
+                //TODO Log Error
             }
+
+
         }
     }
 }

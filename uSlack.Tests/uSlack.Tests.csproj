@@ -167,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentHandlerShould.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="MessagesConfigurationShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SlackServiceShould.cs" />
