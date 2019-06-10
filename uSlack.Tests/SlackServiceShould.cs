@@ -51,6 +51,7 @@ namespace uSlack.Tests
                             }
                             ]";
             Assert.DoesNotThrowAsync(async () => await sut.SendMessageAsync(txt, blocks));
+
         }
     }
 }

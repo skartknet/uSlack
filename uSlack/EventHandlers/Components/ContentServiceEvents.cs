@@ -34,7 +34,7 @@ namespace uSlack.EventHandlers.Components
     }
 
     [RuntimeLevel(MinLevel = RuntimeLevel.Run)]
-    public class USlackContentComposer : ComponentComposer<ContentServiceEvents>
+    public class USlackContentServiceComposer : ComponentComposer<ContentServiceEvents>
     {
         // nothing needed to be done here!
     }

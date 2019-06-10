@@ -178,6 +178,12 @@
     <Compile Include="Configuration\AppConfiguration.cs" />
     <Compile Include="Configuration\IAppConfiguration.cs" />
     <Compile Include="Configuration\MessagesConfiguration.cs" />
+    <Compile Include="EventHandlers\Components\MediaServiceEvents.cs" />
+    <Compile Include="EventHandlers\Components\MemberServiceEvents.cs" />
+    <Compile Include="EventHandlers\Components\ContentServiceEvents.cs" />
+    <Compile Include="EventHandlers\MemberHandlers.cs" />
+    <Compile Include="EventHandlers\MediaHandlers.cs" />
+    <Compile Include="EventHandlers\UserHandlers.cs" />
     <Compile Include="EventHandlers\EventHandlerBase.cs" />
     <Compile Include="SlackAPIExtensions.cs" />
     <Compile Include="StringExtensions.cs" />
@@ -186,12 +192,13 @@
     <Compile Include="IMessageService.cs" />
     <Compile Include="SlackService.cs" />
     <Compile Include="EventHandlers\ContentHandlers.cs" />
-    <Compile Include="EventHandlers\Components\ContentServiceEvents.cs" />
+    <Compile Include="EventHandlers\Components\UserServiceEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Web\App_Plugins\uSlack\Config\MediaService_Saved.json" />
     <None Include="Web\App_Plugins\uSlack\Config\contentService_published.json" />
     <None Include="Web\App_Plugins\uSlack\package.manifest" />
   </ItemGroup>

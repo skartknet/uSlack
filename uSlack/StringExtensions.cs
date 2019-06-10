@@ -5,12 +5,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Umbraco.Core.Models;
+using Umbraco.Core.Models.Entities;
 
 namespace uSlack
 {
     public static class StringExtensions
     {
-        public static string ReplacePlaceholders(this string txt, IContent node)
+        public static string ReplacePlaceholders(this string txt, IUmbracoEntity node)
         {
             if (string.IsNullOrWhiteSpace(txt))
             {

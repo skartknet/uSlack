@@ -16,11 +16,11 @@ namespace uSlack.Tests
     [TestFixture]
     public class ContentHandlerShould
     {
-        private Mock<IContentService> contentService;
-        private Mock<IAppConfiguration> configuration;
+        private Mock<IContentService> _contentService;
+        private Mock<IAppConfiguration> _configuration;
 
-        private Mock<IMessageService> messageService;
-        private ContentPublishedEventArgs evArgs;
+        private Mock<IMessageService> _messageService;
+        private ContentPublishedEventArgs _evArgs;
 
 
         [SetUp]
@@ -28,7 +28,7 @@ namespace uSlack.Tests
         {
             SetUpConfigurationMock();
 
-            contentService = new Mock<IContentService>();
+            _contentService = new Mock<IContentService>();
 
             var contentNode = new Mock<IContent>();
             contentNode.Setup(node => node.Name).Returns("nodeName");
@@ -36,18 +36,27 @@ namespace uSlack.Tests
             var evMessages = new EventMessages();
             evMessages.Add(new EventMessage("content", "content saved!"));
 
-            evArgs = new ContentPublishedEventArgs(new IContent[] { contentNode.Object }, false, evMessages);
+            _evArgs = new ContentPublishedEventArgs(new IContent[] { contentNode.Object }, false, evMessages);
         }
 
         private void SetUpConfigurationMock()
         {
-            messageService = new Mock<IMessageService>();
-            configuration = new Mock<IAppConfiguration>();
+            _messageService = new Mock<IMessageService>();
+            _configuration = new Mock<IAppConfiguration>();
             var messagesConfig = new MessagesConfiguration();
             messagesConfig.Initialize();
-            configuration.Setup(config => config.Messages).Returns(messagesConfig);
+            _configuration.Setup(config => config.Messages).Returns(messagesConfig);
         }
 
-      
+        [Test]
+        public void SendIContentMessage()
+        {
+            var contentHandler = new ContentHandlers(_messageService.Object, _configuration.Object);
+
+            Assert.DoesNotThrow(() => contentHandler.ContentService_Published(_contentService.Object, _evArgs));
+
+        }
+
     }
+
 }

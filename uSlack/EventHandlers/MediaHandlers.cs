@@ -1,0 +1,49 @@
+﻿using System;
+using System.Threading.Tasks;
+using Umbraco.Core.Events;
+using Umbraco.Core.Models;
+using uSlack.Configuration;
+
+namespace uSlack.EventHandlers
+{
+    public class MediaHandlers : EventHandlerBase
+    {
+
+        public MediaHandlers(IMessageService messageService,
+                              IAppConfiguration config) : base(messageService, config)
+        { }
+
+
+        public void MediaService_Trashed(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
+        {
+            foreach (MoveEventInfo<IMedia> info in e.MoveInfoCollection)
+            {
+                Task.Run(async () => await SendMessageAsync(info.Entity, "Media item has been trashed", nameof(this.MediaService_Trashed)));
+            }
+        }
+
+        public void MediaService_Saved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMedia> e)
+        {
+            foreach (var item in e.SavedEntities)
+            {
+                Task.Run(async () => await SendMessageAsync(item, "Media item has been saved", nameof(this.MediaService_Saved)));
+            }
+        }
+
+        public void MediaService_Moved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MediaService_EmptiedRecycleBin(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.RecycleBinEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MediaService_Deleted(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMedia> e)
+        {
+            throw new NotImplementedException();
+        }
+
+    }
+}

@@ -21,17 +21,18 @@ namespace uSlack.Tests
         }
 
         [Test]
-        [Ignore("TODO: accept placeholders for custom properties")]
         public void ShouldReplaceTwoPlaceholders()
         {
             var node = new Mock<IContent>();
             node.SetupGet(n => n.Name).Returns("My Content Name");
+            node.SetupGet(n => n.Id).Returns(1234);
 
-            var txt = "some text here @{Name} and more text and @{Name} and other @{}";
+
+            var txt = "some text here @{Name} and more text and @{Name} and other @{Id}";
             var txtReplaced = txt.ReplacePlaceholders(node.Object);
 
 
-            Assert.That(txtReplaced, Is.EqualTo("some text here My Content Name and more text and My Content Name and other Property"));
+            Assert.That(txtReplaced, Is.EqualTo("some text here My Content Name and more text and My Content Name and other 1234"));
         }
     }
 }
