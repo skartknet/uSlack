@@ -32,17 +32,18 @@ namespace uSlack.EventHandlers
 
         public void MediaService_Moved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            throw new NotImplementedException();
-        }
-
-        public void MediaService_EmptiedRecycleBin(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.RecycleBinEventArgs e)
-        {
-            throw new NotImplementedException();
+            foreach (MoveEventInfo<IMedia> info in e.MoveInfoCollection)
+            {
+                Task.Run(async () => await SendMessageAsync(info.Entity, "Media item has been moved", nameof(this.MediaService_Moved)));
+            }
         }
 
         public void MediaService_Deleted(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            throw new NotImplementedException();
+            foreach (var item in e.DeletedEntities)
+            {
+                Task.Run(async () => await SendMessageAsync(item, "Media item has been deleted", nameof(this.MediaService_Deleted)));
+            }
         }
 
     }

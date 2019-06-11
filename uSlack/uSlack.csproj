@@ -198,6 +198,19 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Web\App_Plugins\uSlack\Config\UserService_DeletedUser.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\UserService_DeletedUserGroup.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\UserService_SavedUser.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\MemberService_Deleted.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\MemberService_Saved.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\ContentService_Moved.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\ContentService_Deleted.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\ContentService_RolledBack.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\ContentService_Trashed.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\ContentService_Unpublished.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\MediaService_Deleted.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\MediaService_Moved.json" />
+    <None Include="Web\App_Plugins\uSlack\Config\MediaService_Trashed.json" />
     <None Include="Web\App_Plugins\uSlack\Config\MediaService_Saved.json" />
     <None Include="Web\App_Plugins\uSlack\Config\contentService_published.json" />
     <None Include="Web\App_Plugins\uSlack\package.manifest" />

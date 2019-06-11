@@ -1,0 +1,9 @@
+﻿[
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "The media with name: @{Name} and Id: @{Id} has been deleted."
+    }
+  }
+]

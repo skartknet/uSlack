@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Umbraco.Core.Models;
+using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 
 namespace uSlack.EventHandlers
@@ -16,7 +17,7 @@ namespace uSlack.EventHandlers
             _config = config.Messages;
         }
 
-        public async Task SendMessageAsync(IContent node, string subject, string templateName)
+        public async Task SendMessageAsync(IEntity node, string subject, string templateName)
         {
             var json = _config.GetMessage(templateName);
             var txtReplaced = json.ReplacePlaceholders(node);
@@ -24,12 +25,5 @@ namespace uSlack.EventHandlers
             await _messageService.SendMessageAsync(subject, txtReplaced);
         }
 
-        public async Task SendMessageAsync(IMedia node, string subject, string templateName)
-        {
-            var json = _config.GetMessage(templateName);
-            var txtReplaced = json.ReplacePlaceholders(node);
-
-            await _messageService.SendMessageAsync(subject, txtReplaced);
-        }
     }
 }

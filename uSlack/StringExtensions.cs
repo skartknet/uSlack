@@ -11,7 +11,7 @@ namespace uSlack
 {
     public static class StringExtensions
     {
-        public static string ReplacePlaceholders(this string txt, IUmbracoEntity node)
+        public static string ReplacePlaceholders(this string txt, IEntity node)
         {
             if (string.IsNullOrWhiteSpace(txt))
             {

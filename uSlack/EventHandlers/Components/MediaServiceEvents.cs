@@ -19,7 +19,6 @@ namespace uSlack.EventHandlers.Components
         public void Initialize()
         {
             MediaService.Deleted += _handlers.MediaService_Deleted;
-            MediaService.EmptiedRecycleBin += _handlers.MediaService_EmptiedRecycleBin;
             MediaService.Moved += _handlers.MediaService_Moved;
             MediaService.Saved += _handlers.MediaService_Saved;
             MediaService.Trashed += _handlers.MediaService_Trashed;            

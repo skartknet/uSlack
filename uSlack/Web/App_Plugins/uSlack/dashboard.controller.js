@@ -1,0 +1,1 @@
+﻿angular.module("umbraco").controller("uSlack.dashboard.controller")
