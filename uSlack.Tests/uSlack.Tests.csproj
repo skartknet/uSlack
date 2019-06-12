@@ -166,6 +166,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfigurationShould.cs" />
     <Compile Include="ContentHandlerShould.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="MessagesConfigurationShould.cs" />

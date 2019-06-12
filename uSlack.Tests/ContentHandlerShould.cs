@@ -17,7 +17,7 @@ namespace uSlack.Tests
     public class ContentHandlerShould
     {
         private Mock<IContentService> _contentService;
-        private Mock<IAppConfiguration> _configuration;
+        private Mock<AppConfiguration> _configuration;
 
         private Mock<IMessageService> _messageService;
         private ContentPublishedEventArgs _evArgs;
@@ -42,7 +42,7 @@ namespace uSlack.Tests
         private void SetUpConfigurationMock()
         {
             _messageService = new Mock<IMessageService>();
-            _configuration = new Mock<IAppConfiguration>();
+            _configuration = new Mock<AppConfiguration>();
             var messagesConfig = new MessagesConfiguration();
             messagesConfig.Initialize();
             _configuration.Setup(config => config.Messages).Returns(messagesConfig);
