@@ -3,7 +3,7 @@
     {
       "alias": "uSlack",
       "view": "/App_Plugins/uSlack/dashboard.html",
-      "sections": [ "content", "settings" ],
+      "sections": [ "settings" ],
       "weight": -10
     }
   ],

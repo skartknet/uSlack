@@ -1,80 +1,42 @@
 ﻿<div ng-controller="uslack.dashboard.controller as vm">
-    <label>Token</label>
-    <input type="text" name="token" value="" />
 
-    <label>Channel</label>
-    <input type="text" name="token" value="" />
-
-    <umb-box ng-repeat="section in vm.config.sections">
-        <umb-box-header title="{{section.alias}}_title"></umb-box-header>
+    <umb-box>
+        <umb-box-header title-key="uslack_config"></umb-box-header>
         <umb-box-content>
-            <div ng-repeat="section.parameters" class="sub-view-columns">
-                <div class="sub-view-column-left">
-                    <h5><localize key="uslack_contentService_published_label" /></h5>
-                    <small><localize key="uslack_contentService_published_help" /></small>
-                </div>
-                <div class="sub-view-column-right">
-                    <umb-toggle checked="vm.config.contentService.published"
-                                on-click="vm.config.contentService.published = !vm.config.contentService.published"></umb-toggle>
-                </div>
-            </div>
-
             <div class="sub-view-columns">
                 <div class="sub-view-column-left">
-                    <h5><localize key="uslack_contentService_unpublished_label" /></h5>
-                    <small><localize key="uslack_contentService_unpublished_help" /></small>
+                    <h5><localize key="uslack_token" /></h5>
+                    <small><localize key="uslack_token_help" /></small>
                 </div>
                 <div class="sub-view-column-right">
-                    <umb-toggle checked="vm.config.contentService.unpublished"
-                                on-click="vm.config.contentService.unpublished = !vm.config.contentService.unpublished"></umb-toggle>
+                    <input type="text" placeholder="your app token" ng-model="vm.config.token" />
                 </div>
             </div>
-
             <div class="sub-view-columns">
                 <div class="sub-view-column-left">
-                    <h5><localize key="uslack_contentService_deleted_label" /></h5>
-                    <small><localize key="uslack_contentService_deleted_help" /></small>
-                </div>
-                <div class="sub-view-column-right">
-                    <umb-toggle checked="vm.config.contentService.deleted"
-                                on-click="vm.config.contentService.deleted = !vm.config.contentService.deleted"></umb-toggle>
-                </div>
-            </div>
+                    <h5><localize key="uslack_channel" /></h5>
+                    <small><localize key="uslack_channel_help" /></small>
 
-            <div class="sub-view-columns">
-                <div class="sub-view-column-left">
-                    <h5><localize key="uslack_contentService_moved_label" /></h5>
-                    <small><localize key="uslack_contentService_moved_help" /></small>
                 </div>
                 <div class="sub-view-column-right">
-                    <umb-toggle checked="vm.config.contentService.moved"
-                                on-click="vm.config.contentService.moved = !vm.config.contentService.moved"></umb-toggle>
-                </div>
-            </div>
-
-            <div class="sub-view-columns">
-                <div class="sub-view-column-left">
-                    <h5><localize key="uslack_contentService_rolledBack_label" /></h5>
-                    <small><localize key="uslack_contentService_rolledBack_help" /></small>
-                </div>
-                <div class="sub-view-column-right">
-                    <umb-toggle checked="vm.config.contentService.rolledBack"
-                                on-click="vm.config.contentService.rolledBack = !vm.config.contentService.rolledBack"></umb-toggle>
-                </div>
-            </div>
-
-            <div class="sub-view-columns">
-                <div class="sub-view-column-left">
-                    <h5><localize key="uslack_contentService_trashed_label" /></h5>
-                    <small><localize key="uslack_contentService_trashed_help" /></small>
-                </div>
-                <div class="sub-view-column-right">
-                    <umb-toggle checked="vm.config.contentService.trashed"
-                                on-click="vm.config.contentService.trashed = !vm.config.contentService.trashed"></umb-toggle>
+                    <input type="text" placeholder="your app token" ng-model="vm.config.channel" />
                 </div>
             </div>
         </umb-box-content>
     </umb-box>
 
-
+    <umb-box ng-repeat="section in vm.config.sections">
+        <umb-box-header title-key="uslack_{{section.alias}}_title"></umb-box-header>
+        <umb-box-content>
+            <div ng-repeat="param in section.parameters" class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_{{section.alias}}_{{param.alias}}_label" /></h5>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config[section.alias][param.alias]"
+                                on-click="vm.config[section.alias][param.alias] = !vm.config[section.alias][param.alias]"></umb-toggle>
+                </div>
+            </div>
+        </umb-box-content>
+    </umb-box>
 </div>

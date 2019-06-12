@@ -290,6 +290,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web\App_Plugins\uSlack\lang\en-US.xml" />
+    <Content Include="Gruntfile.js" />
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Web\App_Plugins\uSlack\Config\UserService_DeletedUser.json" />
