@@ -1,1 +1,189 @@
-﻿<div><a href="https://slack.com/oauth/authorize?scope=incoming-webhook&client_id=656657692176.656660358624"><img alt="" Add to Slack"" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a></div>
+﻿<div ng-controller="uslack.dashboard.controller as vm">
+    <label>Token</label>
+    <input type="text" name="token" value="" />
+
+    <label>Channel</label>
+    <input type="text" name="token" value="" />
+
+
+    <umb-box>
+        <umb-box-header title="Content"></umb-box-header>
+        <umb-box-content>
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_contentService_published_label" /></h5>
+                    <small><localize key="uslack_contentService_published_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.contentService.published"
+                                on-click="vm.config.contentService.published = !vm.config.contentService.published"></umb-toggle>
+                </div>
+            </div>
+
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_contentService_unpublished_label" /></h5>
+                    <small><localize key="uslack_contentService_unpublished_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.contentService.unpublished"
+                                on-click="vm.config.contentService.unpublished = !vm.config.contentService.unpublished"></umb-toggle>
+                </div>
+            </div>
+
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_contentService_deleted_label" /></h5>
+                    <small><localize key="uslack_contentService_deleted_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.contentService.deleted"
+                                on-click="vm.config.contentService.deleted = !vm.config.contentService.deleted"></umb-toggle>
+                </div>
+            </div>
+
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_contentService_moved_label" /></h5>
+                    <small><localize key="uslack_contentService_moved_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.contentService.moved"
+                                on-click="vm.config.contentService.moved = !vm.config.contentService.moved"></umb-toggle>
+                </div>
+            </div>
+
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_contentService_rolledBack_label" /></h5>
+                    <small><localize key="uslack_contentService_rolledBack_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.contentService.rolledBack"
+                                on-click="vm.config.contentService.rolledBack = !vm.config.contentService.rolledBack"></umb-toggle>
+                </div>
+            </div>
+
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_contentService_trashed_label" /></h5>
+                    <small><localize key="uslack_contentService_trashed_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.contentService.trashed"
+                                on-click="vm.config.contentService.trashed = !vm.config.contentService.trashed"></umb-toggle>
+                </div>
+            </div>
+        </umb-box-content>
+    </umb-box>
+
+    <umb-box>
+        <umb-box-header title="Media"></umb-box-header>
+        <umb-box-content>
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_mediaService_saved_label" /></h5>
+                    <small><localize key="uslack_mediaService_saved_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.mediaService.saved"
+                                on-click="vm.config.mediaService.saved = !vm.config.mediaService.saved"></umb-toggle>
+                </div>
+            </div>
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_mediaService_deleted_label" /></h5>
+                    <small><localize key="uslack_mediaService_deleted_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.mediaService.deleted"
+                                on-click="vm.config.mediaService.deleted = !vm.config.mediaService.deleted"></umb-toggle>
+                </div>
+            </div>
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_mediaService_trashed_label" /></h5>
+                    <small><localize key="uslack_mediaService_trashed_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.mediaService.trashed"
+                                on-click="vm.config.mediaService.trashed = !vm.config.mediaService.trashed"></umb-toggle>
+                </div>
+            </div>
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_mediaService_moved_label" /></h5>
+                    <small><localize key="uslack_mediaService_moved_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.mediaService.moved"
+                                on-click="vm.config.mediaService.moved = !vm.config.mediaService.moved"></umb-toggle>
+                </div>
+            </div>
+        </umb-box-content>
+    </umb-box>
+
+    <umb-box>
+        <umb-box-header title="Member"></umb-box-header>
+        <umb-box-content>
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_memberService_saved_label" /></h5>
+                    <small><localize key="uslack_memberService_saved_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.contentService.saved"
+                                on-click="vm.config.contentService.saved = !vm.config.contentService.saved"></umb-toggle>
+                </div>
+            </div>
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_memberService_deleted_label" /></h5>
+                    <small><localize key="uslack_memberService_deleted_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.memberService.deleted"
+                                on-click="vm.config.memberService.deleted = !vm.config.memberService.deleted"></umb-toggle>
+                </div>
+            </div>
+        </umb-box-content>
+    </umb-box>
+
+    <umb-box>
+        <umb-box-header title="User"></umb-box-header>
+        <umb-box-content>
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_userService_saved_label" /></h5>
+                    <small><localize key="uslack_userService_saved_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.userService.saved"
+                                on-click="vm.config.userService.saved = !vm.config.userService.saved"></umb-toggle>
+                </div>
+            </div>
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_userService_deleted_label" /></h5>
+                    <small><localize key="uslack_userService_deleted_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.userService.deleted"
+                                on-click="vm.config.userService.deleted = !vm.config.userService.deleted"></umb-toggle>
+                </div>
+            </div>
+            <div class="sub-view-columns">
+                <div class="sub-view-column-left">
+                    <h5><localize key="uslack_userService_userGroupDeleted_label" /></h5>
+                    <small><localize key="uslack_userService_userGroupDeleted_help" /></small>
+                </div>
+                <div class="sub-view-column-right">
+                    <umb-toggle checked="vm.config.userService.userGroupDeleted"
+                                on-click="vm.config.userService.userGroupDeleted = !vm.config.userService.userGroupDeleted"></umb-toggle>
+                </div>
+            </div>
+        </umb-box-content>
+    </umb-box>
+
+
+</div>

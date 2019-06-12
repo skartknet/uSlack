@@ -3,7 +3,7 @@
     "type": "section",
     "text": {
       "type": "mrkdwn",
-      "text": "The page with name: @{Name} and Id: @{Id} has been published."
+      "text": "The user with name: @{Name} and Id: @{Id} has been saved."
     }
   }
 ]
