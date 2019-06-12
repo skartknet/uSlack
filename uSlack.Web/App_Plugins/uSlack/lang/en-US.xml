@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <language alias="en" intName="English" localName="english" lcid="6" culture="en-US">
-  <creator>
-    <name>Mario Lopez</name>
-    <link>http://mydomain.com</link>
-  </creator>
   <area alias="uslack">
+    <key alias="contentService_title">Content Service</key>
     <key alias="contentService_published_label">Content item published</key>
     <key alias="contentService_published_help">Send message when a new content item has been published</key>
     <key alias="contentService_unpublished_label">Content item published</key>
@@ -17,7 +14,8 @@
     <key alias="contentService_rolledBack_help">Send message when a new content item has been published</key>
     <key alias="contentService_trashed_label">Content item published</key>
     <key alias="contentService_trashed_help">Send message when a new content item has been published</key>
-    
+
+    <key alias="mediaService_title">Media Service</key>
     <key alias="mediaService_saved_label">Content item published</key>
     <key alias="mediaService_saved_help">Send message when a new content item has been published</key>
     <key alias="mediaService_deleted_label">Content item published</key>
@@ -25,11 +23,13 @@
     <key alias="mediaService_trashed_label">Content item published</key>
     <key alias="mediaService_trashed_help">Send message when a new content item has been published</key>
 
+    <key alias="memberService_title">Member Service</key>
     <key alias="memberService_deleted_label">Content item published</key>
     <key alias="memberService_deleted_help">Send message when a new content item has been published</key>
     <key alias="memberService_saved_label">Content item published</key>
     <key alias="memberService_saved_help">Send message when a new content item has been published</key>
 
+    <key alias="userService_title">User Service</key>
     <key alias="userService_deleted_label">Content item published</key>
     <key alias="userService_deleted_help">Send message when a new content item has been published</key>
     <key alias="userService_saved_label">Content item published</key>
