@@ -12,11 +12,14 @@ using uSlack.Configuration;
 namespace uSlack.Backoffice
 {
     [PluginController("uslack")]
-    public class ConfigurationApiController: UmbracoAuthorizedJsonController
+    public class ConfigurationApiController : UmbracoAuthorizedJsonController
     {
-        private readonly ConfigurationService _config;
+        private readonly IConfigurationService _config;
 
-        public ConfigurationApiController(ConfigurationService config)
+        public ConfigurationApiController()
+        { }
+
+        public ConfigurationApiController(IConfigurationService config)
         {
             _config = config;
         }
@@ -26,7 +29,7 @@ namespace uSlack.Backoffice
         }
 
         [HttpPut]
-        public IHttpActionResult SaveConfiguration()
+        public IHttpActionResult SaveConfiguration(UslackConfiguration model)
         {
             return Ok();
         }

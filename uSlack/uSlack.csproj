@@ -278,12 +278,12 @@
     <Compile Include="EventHandlers\MediaHandlers.cs" />
     <Compile Include="EventHandlers\UserHandlers.cs" />
     <Compile Include="EventHandlers\EventHandlerBase.cs" />
-    <Compile Include="IMessageService.cs" />
+    <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Extensions\SlackAPIExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="TypesRegistration.cs" />
-    <Compile Include="SlackService.cs" />
+    <Compile Include="Services\SlackService.cs" />
     <Compile Include="EventHandlers\ContentHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

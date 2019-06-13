@@ -1,10 +1,12 @@
 ﻿using SlackAPI;
 using System;
 using System.Threading.Tasks;
+using Umbraco.Core.Composing;
 using uSlack.Configuration;
 using uSlack.Extensions;
+using uSlack.Services;
 
-namespace uSlack
+namespace uSlack.Services
 {
     public class SlackService : IMessageService
     {
@@ -32,16 +34,14 @@ namespace uSlack
 
                 // process response from API call
                 if (!response.ok)
-                {
-                    //TODO Log error
-                    //Logger.("Message sending failed. error: " + response.error);
+                {                    
+                    Current.Logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);
                 }
             }
             catch (Exception ex)
             {
-                //TODO Log Error
+                Current.Logger.Error(typeof(SlackService), ex);
             }
-
 
         }
     }

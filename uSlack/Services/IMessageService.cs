@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace uSlack
+namespace uSlack.Services
 {
     public interface IMessageService
     {

@@ -11,7 +11,7 @@ namespace uSlack.Configuration
     public class MessagesConfiguration
     {
         internal Dictionary<string, string> Messages = new Dictionary<string, string>();
-  
+
         public string GetMessage(string alias)
         {
             if (Messages.TryGetValue(alias.ToUpperInvariant(), out string message))

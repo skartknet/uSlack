@@ -16,6 +16,6 @@ namespace uSlack.Configuration
         public string SlackChannel { get; set; }
 
         [JsonProperty("sections")]
-        public List<ConfigSection> Sections { get; set; }
+        public Dictionary<string, ConfigSection> Sections { get; set; }
     }
 }

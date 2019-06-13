@@ -2,6 +2,7 @@
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 using uSlack.Extensions;
+using uSlack.Services;
 
 namespace uSlack.EventHandlers
 {

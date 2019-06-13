@@ -25,16 +25,16 @@
         </umb-box-content>
     </umb-box>
 
-    <umb-box ng-repeat="section in vm.config.sections">
-        <umb-box-header title-key="uslack_{{section.alias}}_title"></umb-box-header>
+    <umb-box ng-repeat="(section, sectionValue) in vm.config.sections">
+        <umb-box-header title-key="uslack_{{section}}_title"></umb-box-header>
         <umb-box-content>
-            <div ng-repeat="param in section.parameters" class="sub-view-columns">
+            <div ng-repeat="(key, paramValue) in sectionValue.parameters" class="sub-view-columns">
                 <div class="sub-view-column-left">
-                    <h5><localize key="uslack_{{section.alias}}_{{param.alias}}_label" /></h5>
+                    <h5><localize key="uslack_{{section}}_{{key}}_label" /></h5>
                 </div>
                 <div class="sub-view-column-right">
-                    <umb-toggle checked="vm.config[section.alias][param.alias]"
-                                on-click="vm.config[section.alias][param.alias] = !vm.config[section.alias][param.alias]"></umb-toggle>
+                    <umb-toggle checked="vm.config.sections[section].parameters[key]"
+                                on-click="vm.toggleSwitch(section, key)"></umb-toggle>
                 </div>
             </div>
         </umb-box-content>

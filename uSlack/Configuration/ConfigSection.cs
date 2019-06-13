@@ -9,19 +9,8 @@ namespace uSlack.Configuration
 {
     public class ConfigSection
     {
-        [JsonProperty("alias")]
-        public string Alias { get; set; }
-
         [JsonProperty("parameters")]
-        public List<SectionParameter> Parameters { get; set; }
+        public Dictionary<string, object> Parameters { get; set; }
     }
 
-    public class SectionParameter
-    {
-        [JsonProperty("alias")]
-        public string Alias { get; set; }
-
-        [JsonProperty("value")]
-        public string Value { get; set; }
-    }
 }

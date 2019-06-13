@@ -147,11 +147,8 @@ Umbraco.ModelsBuilder.Validation.MediaTypeModelValidator, Umbraco.ModelsBuilder,
 Umbraco.ModelsBuilder.Validation.MemberTypeModelValidator, Umbraco.ModelsBuilder, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.ModelsBuilder.Umbraco.ModelsBuilderComposer, Umbraco.ModelsBuilder, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.ModelsBuilder.Umbraco.ModelsBuilderBackOfficeController, Umbraco.ModelsBuilder, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
+uSlack.InitUSlackComposer, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 uSlack.EventHandlers.TypesRegistration, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-uSlack.EventHandlers.Components.USlackMediaServiceComposer, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-uSlack.EventHandlers.Components.USlackMemberServiceComposer, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-uSlack.EventHandlers.Components.USlackContentServiceComposer, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-uSlack.EventHandlers.Components.USlackUserServiceComposer, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 uSlack.Backoffice.ConfigurationApiController, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 Our.Umbraco.OsmMaps.ValueConverters.OsmMapsValueConverter, Our.Umbraco.OsmMaps, Version=1.2.6992.19752, Culture=neutral, PublicKeyToken=null
 Umbraco.Web.Controllers.UmbProfileController, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -360,11 +357,8 @@ Umbraco.Core.Compose.ManifestWatcherComposer, Umbraco.Core, Version=8.0.0.0, Cul
 Umbraco.Core.Compose.RelateOnCopyComposer, Umbraco.Core, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.Core.Compose.RelateOnTrashComposer, Umbraco.Core, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.ModelsBuilder.Umbraco.ModelsBuilderComposer, Umbraco.ModelsBuilder, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
+uSlack.InitUSlackComposer, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 uSlack.EventHandlers.TypesRegistration, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-uSlack.EventHandlers.Components.USlackMediaServiceComposer, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-uSlack.EventHandlers.Components.USlackMemberServiceComposer, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-uSlack.EventHandlers.Components.USlackContentServiceComposer, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-uSlack.EventHandlers.Components.USlackUserServiceComposer, uSlack, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.Web.SignalR.PreviewHubComposer, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.Web.Search.ExamineComposer, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null
 Umbraco.Web.Scheduling.SchedulerComposer, Umbraco.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null

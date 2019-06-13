@@ -1,5 +1,6 @@
 ﻿using Umbraco.Core.Composing;
 using uSlack.Configuration;
+using uSlack.Services;
 
 namespace uSlack.EventHandlers
 {

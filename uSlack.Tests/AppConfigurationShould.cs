@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Newtonsoft.Json;
+using NUnit.Framework;
 using System.IO;
 using Umbraco.Core.IO;
 using uSlack.Configuration;
-using uSlack.EventHandlers.Components;
 
 namespace uSlack.Tests
 {
@@ -45,6 +45,20 @@ namespace uSlack.Tests
             Assert.That(sut.AppConfiguration.SlackChannel, Is.EqualTo("ulsackchannel"));
 
             Assert.That(sut.AppConfiguration.Sections, Has.Count.EqualTo(2));
+        }
+
+        [Test]
+        public void Deserialize()
+        {
+            var json = @"{
+                      ""token"": ""123"",
+                      ""channel"": ""uslack"",
+                      ""sections"": {
+                                    ""contentService"": ""asd"" 
+                      }
+                    }";
+
+            var config = JsonConvert.DeserializeObject<UslackConfiguration>(json);
         }
     }
 }
