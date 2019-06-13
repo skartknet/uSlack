@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Umbraco.Core.Models;
 using Umbraco.Core.Models.Entities;
 
-namespace uSlack
+namespace uSlack.Extensions
 {
     public static class StringExtensions
     {

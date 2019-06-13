@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using uSlack.Configuration;
+using uSlack.Extensions;
 
 namespace uSlack
 {
@@ -11,10 +12,10 @@ namespace uSlack
         private readonly string _channel;
 
 
-        public SlackService(IAppConfiguration config)
+        public SlackService(IConfigurationService config)
         {
-            _token = config.Token;
-            _channel = config.SlackChannel;
+            _token = config.AppConfiguration.Token;
+            _channel = config.AppConfiguration.SlackChannel;
         }
         public async Task SendMessageAsync(string txt, string blocks)
         {

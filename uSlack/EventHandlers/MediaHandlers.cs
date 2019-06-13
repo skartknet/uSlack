@@ -10,7 +10,7 @@ namespace uSlack.EventHandlers
     {
 
         public MediaHandlers(IMessageService messageService,
-                              IAppConfiguration config) : base(messageService, config)
+                              IConfigurationService config) : base(messageService, config)
         { }
 
 

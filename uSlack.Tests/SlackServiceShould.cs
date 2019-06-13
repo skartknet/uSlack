@@ -13,7 +13,7 @@ namespace uSlack.Tests
     public class SlackServiceShould
     {
         private Mock<IMessageService> _messageService;
-        private Mock<IAppConfiguration> _configuration;
+        private Mock<IConfigurationService> _configuration;
 
         [SetUp]
         public void Init()
@@ -25,12 +25,15 @@ namespace uSlack.Tests
         private void SetUpConfigurationMock()
         {
             _messageService = new Mock<IMessageService>();
-            _configuration = new Mock<IAppConfiguration>();
+            _configuration = new Mock<IConfigurationService>();
             var messagesConfig = new MessagesConfiguration();
-            messagesConfig.Initialize();
-            _configuration.Setup(config => config.Messages).Returns(messagesConfig);
-            _configuration.Setup(config => config.Token).Returns("xoxp-656657692176-645232876739-658179266944-834090019227aa80b4a9f33d43f615ab");
-            _configuration.Setup(config => config.SlackChannel).Returns("uslack");
+            var appConfig = new UslackConfiguration();
+            
+            _configuration.Setup(config => config.MessagesConfiguration).Returns(messagesConfig);
+            _configuration.Setup(config => config.AppConfiguration).Returns(appConfig);
+
+            _configuration.Setup(config => config.AppConfiguration.Token).Returns("xoxp-656657692176-645232876739-658179266944-834090019227aa80b4a9f33d43f615ab");
+            _configuration.Setup(config => config.AppConfiguration.SlackChannel).Returns("uslack");
 
         }
 

@@ -267,25 +267,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backoffice\ConfigurationApiController.cs" />
-    <Compile Include="Configuration\AppConfiguration.cs" />
+    <Compile Include="Backoffice\Models\Configuration.cs" />
+    <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\ConfigSection.cs" />
-    <Compile Include="Configuration\IAppConfiguration.cs" />
+    <Compile Include="Configuration\IConfigurationService.cs" />
     <Compile Include="Configuration\MessagesConfiguration.cs" />
-    <Compile Include="EventHandlers\Components\MediaServiceEvents.cs" />
-    <Compile Include="EventHandlers\Components\MemberServiceEvents.cs" />
-    <Compile Include="EventHandlers\Components\ContentServiceEvents.cs" />
+    <Compile Include="Configuration\UslackConfiguration.cs" />
+    <Compile Include="InitUSlack.cs" />
     <Compile Include="EventHandlers\MemberHandlers.cs" />
     <Compile Include="EventHandlers\MediaHandlers.cs" />
     <Compile Include="EventHandlers\UserHandlers.cs" />
     <Compile Include="EventHandlers\EventHandlerBase.cs" />
-    <Compile Include="SlackAPIExtensions.cs" />
-    <Compile Include="StringExtensions.cs" />
-    <Compile Include="TypeExtensions.cs" />
-    <Compile Include="TypesRegistration.cs" />
     <Compile Include="IMessageService.cs" />
+    <Compile Include="Extensions\SlackAPIExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="TypesRegistration.cs" />
     <Compile Include="SlackService.cs" />
     <Compile Include="EventHandlers\ContentHandlers.cs" />
-    <Compile Include="EventHandlers\Components\UserServiceEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -312,9 +311,7 @@
     <None Include="Web\App_Plugins\uSlack\Config\uslack.config" />
     <None Include="Web\App_Plugins\uSlack\package.manifest" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Web\App_Plugins\uSlack\backoffice\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Web\App_Plugins\uSlack\dashboard.html" />
   </ItemGroup>

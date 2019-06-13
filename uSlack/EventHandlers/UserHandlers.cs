@@ -9,7 +9,7 @@ namespace uSlack.EventHandlers
     {
 
         public UserHandlers(IMessageService messageService,
-                              IAppConfiguration config) : base(messageService, config)
+                              IConfigurationService config) : base(messageService, config)
         { }
 
         public void UserService_DeletedUser(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUser> e)

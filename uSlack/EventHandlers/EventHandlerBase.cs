@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Umbraco.Core.Models;
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
+using uSlack.Extensions;
 
 namespace uSlack.EventHandlers
 {
@@ -11,10 +11,10 @@ namespace uSlack.EventHandlers
         private readonly MessagesConfiguration _config;
 
         public EventHandlerBase(IMessageService messageService,
-                                IAppConfiguration config)
+                                IConfigurationService config)
         {
             _messageService = messageService;
-            _config = config.Messages;
+            _config = config.MessagesConfiguration;
         }
 
         public async Task SendMessageAsync(IEntity node, string subject, string templateName)

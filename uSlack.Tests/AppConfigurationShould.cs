@@ -38,12 +38,13 @@ namespace uSlack.Tests
         [Test]
         public void PopulatePropertiesFromFile()
         {
-            var sut = new AppConfiguration();
+            var sut = new ConfigurationService();
+            sut.Initialize();
 
-            Assert.That(sut.Token, Is.EqualTo("12345"));
-            Assert.That(sut.SlackChannel, Is.EqualTo("ulsackchannel"));
+            Assert.That(sut.AppConfiguration.Token, Is.EqualTo("12345"));
+            Assert.That(sut.AppConfiguration.SlackChannel, Is.EqualTo("ulsackchannel"));
 
-            Assert.That(sut.Sections, Has.Count.EqualTo(2));
+            Assert.That(sut.AppConfiguration.Sections, Has.Count.EqualTo(2));
         }
     }
 }

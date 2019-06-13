@@ -17,22 +17,20 @@ namespace uSlack.Tests
         [Test]
         public void ReturnsFileContent()
         {
-            var sut = new MessagesConfiguration();
-
+            var sut = new ConfigurationService();
             sut.Initialize();
 
-            var fileContent = sut.GetMessage("filetest");
+            var fileContent = sut.MessagesConfiguration.GetMessage("filetest");
             Assert.That(fileContent, Is.EqualTo("testcontent"));
         }
 
         [Test]
         public void ReturnsNotFoundExceptionForWrongAlias()
         {
-            var sut = new MessagesConfiguration();
-
+            var sut = new ConfigurationService();
             sut.Initialize();
 
-            Assert.Throws<FileNotFoundException>(() => sut.GetMessage("wrongAlias"));
+            Assert.Throws<FileNotFoundException>(() => sut.MessagesConfiguration.GetMessage("wrongAlias"));
         }
     }
 }
