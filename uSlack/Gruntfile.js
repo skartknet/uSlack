@@ -1,4 +1,9 @@
-﻿/*
+﻿// <copyright file="Gruntfile.js" company="Mario Lopez">
+// Copyright (c) 2019 Mario Lopez.
+// Licensed under the Apache License, Version 2.0.
+// </copyright>
+
+/*
 This file in the main entry point for defining grunt tasks and using grunt plugins.
 Click here to learn more. https://go.microsoft.com/fwlink/?LinkID=513275&clcid=0x409
 */

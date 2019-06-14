@@ -1,4 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿// <copyright file="EventHandlerBase.cs" company="Mario Lopez">
+// Copyright (c) 2019 Mario Lopez.
+// Licensed under the Apache License, Version 2.0.
+// </copyright>
+
+using System.Threading.Tasks;
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 using uSlack.Extensions;
@@ -8,17 +13,17 @@ namespace uSlack.EventHandlers
 {
     public abstract class EventHandlerBase
     {
-        private readonly IMessageService _messageService;
-        private readonly MessagesConfiguration _config;
+        protected readonly IMessageService _messageService;
+        protected readonly IConfigurationService _config;
 
-        public EventHandlerBase(IMessageService messageService,
+        protected EventHandlerBase(IMessageService messageService,
                                 IConfigurationService config)
         {
             _messageService = messageService;
-            _config = config.MessagesConfiguration;
+            _config = config;
         }
 
-        public async Task SendMessageAsync(IEntity node, string subject, string templateName)
+        protected async Task SendMessageAsync(IEntity node, string subject, string templateName)
         {
             var json = _config.GetMessage(templateName);
             var txtReplaced = json.ReplacePlaceholders(node);

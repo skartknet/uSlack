@@ -1,4 +1,9 @@
-﻿using System;
+﻿// <copyright file="ContentHandlers.cs" company="Mario Lopez">
+// Copyright (c) 2019 Mario Lopez.
+// Licensed under the Apache License, Version 2.0.
+// </copyright>
+
+using System;
 using System.Threading.Tasks;
 using Umbraco.Core.Events;
 using Umbraco.Core.Models;
@@ -15,6 +20,8 @@ namespace uSlack.EventHandlers
         { }
         public void ContentService_Published(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.ContentPublishedEventArgs e)
         {
+            if (_config.GetParameter<bool>("published", "contentService") == false) return;
+
             foreach (var item in e.PublishedEntities)
             {
                 Task.Run(async () => await SendMessageAsync(item, "Content item has been published", nameof(this.ContentService_Published)));

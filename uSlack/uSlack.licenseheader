@@ -1,0 +1,8 @@
+﻿extensions: designer.cs generated.cs
+extensions: .cs .js
+// <copyright file="%FileName%" company="Mario Lopez">
+// Copyright (c) %CurrentYear% Mario Lopez.
+// Licensed under the Apache License, Version 2.0.
+// </copyright>
+
+extensions: .css
