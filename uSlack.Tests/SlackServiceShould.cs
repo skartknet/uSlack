@@ -39,7 +39,7 @@ namespace uSlack.Tests
         [Test]
         public void SendMessage()
         {
-            var sut = new SlackService(_configuration.Object);
+            var sut = new SlackService();
             var txt = "this is the text";
             var blocks = @"[
 	                        {
@@ -61,7 +61,7 @@ namespace uSlack.Tests
         [Test]
         public async Task GetChannels()
         {
-            var sut = new SlackService(_configuration.Object);
+            var sut = new SlackService();
             await sut.GetConversationsAsync();
         }
     }

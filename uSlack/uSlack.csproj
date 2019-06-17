@@ -309,6 +309,7 @@
     <None Include="Web\App_Plugins\uSlack\Config\MediaService_Saved.json" />
     <None Include="Web\App_Plugins\uSlack\Config\contentService_published.json" />
     <Content Include="Web\App_Plugins\uSlack\dashboard.controller.js" />
+    <None Include="Web\App_Plugins\uSlack\Config\uslack - Copy.config" />
     <None Include="Web\App_Plugins\uSlack\Config\uslack.config" />
     <None Include="Web\App_Plugins\uSlack\package.manifest" />
   </ItemGroup>
