@@ -19,6 +19,8 @@ namespace uSlack.EventHandlers
 
         public void UserService_DeletedUser(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUser> e)
         {
+            if (_config.GetParameter<bool>("deletedUser", "userService") == false) return;
+
             foreach (var item in e.DeletedEntities)
             {
                 Task.Run(async () => await SendMessageAsync(item, "User has been deleted", nameof(this.UserService_DeletedUser)));
@@ -27,6 +29,8 @@ namespace uSlack.EventHandlers
 
         public void UserService_DeletedUserGroup(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUserGroup> e)
         {
+            if (_config.GetParameter<bool>("deletedUserGroup", "userService") == false) return;
+
             foreach (IUserGroup item in e.DeletedEntities)
             {
                 Task.Run(async () => await SendMessageAsync(item, "User group has been deleted", nameof(this.UserService_DeletedUserGroup)));

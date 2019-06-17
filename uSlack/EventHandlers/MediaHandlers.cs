@@ -21,6 +21,8 @@ namespace uSlack.EventHandlers
 
         public void MediaService_Trashed(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
+            if (_config.GetParameter<bool>("deleted", "mediaService") == false) return;
+
             foreach (MoveEventInfo<IMedia> info in e.MoveInfoCollection)
             {
                 Task.Run(async () => await SendMessageAsync(info.Entity, "Media item has been trashed", nameof(this.MediaService_Trashed)));
@@ -29,6 +31,8 @@ namespace uSlack.EventHandlers
 
         public void MediaService_Saved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
+            if (_config.GetParameter<bool>("saved", "mediaService") == false) return;
+
             foreach (var item in e.SavedEntities)
             {
                 Task.Run(async () => await SendMessageAsync(item, "Media item has been saved", nameof(this.MediaService_Saved)));
@@ -37,6 +41,8 @@ namespace uSlack.EventHandlers
 
         public void MediaService_Moved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
+            if (_config.GetParameter<bool>("moved", "mediaService") == false) return;
+
             foreach (MoveEventInfo<IMedia> info in e.MoveInfoCollection)
             {
                 Task.Run(async () => await SendMessageAsync(info.Entity, "Media item has been moved", nameof(this.MediaService_Moved)));
@@ -45,6 +51,8 @@ namespace uSlack.EventHandlers
 
         public void MediaService_Deleted(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMedia> e)
         {
+            if (_config.GetParameter<bool>("deleted", "mediaService") == false) return;
+
             foreach (var item in e.DeletedEntities)
             {
                 Task.Run(async () => await SendMessageAsync(item, "Media item has been deleted", nameof(this.MediaService_Deleted)));
