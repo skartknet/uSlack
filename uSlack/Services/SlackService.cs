@@ -15,15 +15,12 @@ namespace uSlack.Services
 {
     public class SlackService : IMessageService
     {
-        private readonly string _token;
-        private readonly string _channel;
-        private readonly SlackTaskClient _slackClient;
+
+        private readonly IConfigurationService _config;
 
         public SlackService(IConfigurationService config)
         {
-            _token = config.AppConfiguration.Token;
-            _channel = config.AppConfiguration.SlackChannel;
-            _slackClient = new SlackTaskClient(_token);
+            _config = config ?? throw new ArgumentNullException(nameof(config));
         }
         public async Task SendMessageAsync(string txt, string blocks)
         {
@@ -34,7 +31,8 @@ namespace uSlack.Services
 
             try
             {
-                var response = await _slackClient.PostMessageOnlyBlocksAsync(_channel, txt, blocks);
+                var client = new SlackTaskClient(_config.AppConfiguration.Token);
+                var response = await client.PostMessageOnlyBlocksAsync(_config.AppConfiguration.SlackChannel, txt, blocks);
                 
                 if (!response.ok)
                 {                    
@@ -43,7 +41,7 @@ namespace uSlack.Services
             }
             catch (Exception ex)
             {
-                Current.Logger.Error(typeof(SlackService), ex);
+                Current.Logger.Warn(typeof(SlackService), ex, "Error sending uSlack message");
             }
 
         }
@@ -52,7 +50,9 @@ namespace uSlack.Services
         {
             try
             {
-                var response = await _slackClient.GetChannelListAsync();
+                var client = new SlackTaskClient(_config.AppConfiguration.Token);
+
+                var response = await client.GetChannelListAsync();
                 
                 if (!response.ok)
                 {

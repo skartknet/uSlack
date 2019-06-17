@@ -14,8 +14,7 @@ namespace uSlack.EventHandlers
     public class UserHandlers : EventHandlerBase
     {
 
-        public UserHandlers(IMessageService messageService,
-                              IConfigurationService config) : base(messageService, config)
+        public UserHandlers(IConfigurationService config) : base(config)
         { }
 
         public void UserService_DeletedUser(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUser> e)
@@ -34,13 +33,6 @@ namespace uSlack.EventHandlers
             }
         }
 
-        public void UserService_SavedUser(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.Membership.IUser> e)
-        {
-            foreach (var item in e.SavedEntities)
-            {
-                Task.Run(async () => await SendMessageAsync(item, "User has been saved", nameof(this.UserService_SavedUser)));
-            }
-        }
 
     }
 }

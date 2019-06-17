@@ -37,32 +37,51 @@ namespace uSlack
         // initialize: runs once when Umbraco starts
         public void Initialize()
         {
-            _config.Initialize();
+            _config.EnsureIsInitialized();
 
-            ContentService.Published += _contentHandlers.ContentService_Published;
-            ContentService.Unpublished += _contentHandlers.ContentService_Unpublished;
-            ContentService.Trashed += _contentHandlers.ContentService_Trashed;
-            ContentService.RolledBack += _contentHandlers.ContentService_RolledBack;
-            ContentService.Deleted += _contentHandlers.ContentService_Deleted;
-            ContentService.Moved += _contentHandlers.ContentService_Moved;
+            try
+            {
+                ContentService.Published += _contentHandlers.ContentService_Published;
+                ContentService.Unpublished += _contentHandlers.ContentService_Unpublished;
+                ContentService.Trashed += _contentHandlers.ContentService_Trashed;
+                ContentService.RolledBack += _contentHandlers.ContentService_RolledBack;
+                ContentService.Deleted += _contentHandlers.ContentService_Deleted;
+                ContentService.Moved += _contentHandlers.ContentService_Moved;
 
-            MediaService.Deleted += _mediaHandlers.MediaService_Deleted;
-            MediaService.Moved += _mediaHandlers.MediaService_Moved;
-            MediaService.Saved += _mediaHandlers.MediaService_Saved;
-            MediaService.Trashed += _mediaHandlers.MediaService_Trashed;
+                MediaService.Deleted += _mediaHandlers.MediaService_Deleted;
+                MediaService.Moved += _mediaHandlers.MediaService_Moved;
+                MediaService.Saved += _mediaHandlers.MediaService_Saved;
+                MediaService.Trashed += _mediaHandlers.MediaService_Trashed;
 
-            MemberService.Saved += _memberHandlers.MemberService_Saved;
-            MemberService.Deleted += _memberHandlers.MemberService_Deleted;
+                MemberService.Saved += _memberHandlers.MemberService_Saved;
+                MemberService.Deleted += _memberHandlers.MemberService_Deleted;
 
-            UserService.SavedUser += _userHandlers.UserService_SavedUser;
-            UserService.DeletedUserGroup += _userHandlers.UserService_DeletedUserGroup;
-            UserService.DeletedUser += _userHandlers.UserService_DeletedUser;
+                UserService.DeletedUserGroup += _userHandlers.UserService_DeletedUserGroup;
+                UserService.DeletedUser += _userHandlers.UserService_DeletedUser;
+            }
+            catch { }
         }
 
         // terminate: runs once when Umbraco stops
         public void Terminate()
         {
-            // do something when Umbraco terminates
+            ContentService.Published -= _contentHandlers.ContentService_Published;
+            ContentService.Unpublished -= _contentHandlers.ContentService_Unpublished;
+            ContentService.Trashed -= _contentHandlers.ContentService_Trashed;
+            ContentService.RolledBack -= _contentHandlers.ContentService_RolledBack;
+            ContentService.Deleted -= _contentHandlers.ContentService_Deleted;
+            ContentService.Moved -= _contentHandlers.ContentService_Moved;
+
+            MediaService.Deleted -= _mediaHandlers.MediaService_Deleted;
+            MediaService.Moved -= _mediaHandlers.MediaService_Moved;
+            MediaService.Saved -= _mediaHandlers.MediaService_Saved;
+            MediaService.Trashed -= _mediaHandlers.MediaService_Trashed;
+
+            MemberService.Saved -= _memberHandlers.MemberService_Saved;
+            MemberService.Deleted -= _memberHandlers.MemberService_Deleted;
+
+            UserService.DeletedUserGroup -= _userHandlers.UserService_DeletedUserGroup;
+            UserService.DeletedUser -= _userHandlers.UserService_DeletedUser;
         }
     }
 

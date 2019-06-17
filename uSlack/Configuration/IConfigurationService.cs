@@ -12,13 +12,15 @@ namespace uSlack.Configuration
         Dictionary<string, string> Messages { get; }
         UslackConfiguration AppConfiguration { get; }
 
-        ConfigurationService Initialize();
+        bool IsInitialized { get; }
+
+        void EnsureIsInitialized();
 
         /// <summary>
         /// Saves the configuration
         /// </summary>
         /// <param name="model"></param>
-        void SaveAppConfiguration(UslackConfiguration model);    
+        void SaveAppConfiguration(UslackConfiguration model);
 
         /// <summary>
         /// Gets a parameter from the App configuration

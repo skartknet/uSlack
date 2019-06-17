@@ -22,6 +22,14 @@
                     <input type="text" placeholder="your app token" ng-model="vm.config.channel" />
                 </div>
             </div>
+            <umb-button action="vm.save()"
+                        type="button"
+                        button-style="action"
+                        state="vm.buttonState"
+                        shortcut="ctrl+c"
+                        label-key="buttons_save"
+                        disabled="vm.buttonState === 'busy'">
+            </umb-button>
         </umb-box-content>
     </umb-box>
 

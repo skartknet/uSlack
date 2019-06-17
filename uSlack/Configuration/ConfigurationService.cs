@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Umbraco.Core.IO;
+using Umbraco.Web.Composing;
 
 namespace uSlack.Configuration
 {
@@ -17,14 +18,33 @@ namespace uSlack.Configuration
 
         public Dictionary<string, string> Messages { get; } = new Dictionary<string, string>();
 
-        public UslackConfiguration AppConfiguration { get; } = new UslackConfiguration();
+        public bool IsInitialized { get; private set; }
 
-        public ConfigurationService Initialize()
+        private UslackConfiguration _appConfiguration = new UslackConfiguration();
+        public UslackConfiguration AppConfiguration
         {
-            InitializeConfiguration();
-            InitializeMessages();
+            get { return _appConfiguration; }
+            private set
+            {
+                _appConfiguration = value;
+            }
+        }
 
-            return this;
+        public void EnsureIsInitialized()
+        {
+            if (IsInitialized) return;
+            try
+            {
+                InitializeConfiguration();
+                InitializeMessages();
+
+                IsInitialized = true;
+            }
+            catch (Exception ex)
+            {
+                Current.Logger.Error(typeof(ConfigurationService), ex, "Error initializing uSlack configuration.");
+            }
+
         }
 
         private void InitializeConfiguration()
@@ -61,6 +81,10 @@ namespace uSlack.Configuration
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
 
+            //update config in memory
+            AppConfiguration = model;
+
+            //update config in file
             var msgPath = IOHelper.MapPath(_filesLocation + "uslack.config");
             var json = JsonConvert.SerializeObject(model);
 

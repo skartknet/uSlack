@@ -31,6 +31,6 @@
     <key alias="userService_title">User Service</key>
     <key alias="userService_saved_label">User saved</key>
     <key alias="userService_deleted_label">User deleted</key>
-    <key alias="userService_userGroupDeleted_label">User group deleted</key>
+    <key alias="userService_deletedUserGroup_label">User group deleted</key>
   </area>
 </language>

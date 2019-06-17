@@ -42,11 +42,12 @@ namespace uSlack.Backoffice
             }
             catch (Exception ex)
             {
+
                 Logger.Error(typeof(ConfigurationApiController), ex, "Error saving configuration.");
                 return InternalServerError(new Exception("There was an error saving the configuration."));
             }
 
-            return Ok();
+            return Ok(model);
         }
     }
 }

@@ -16,11 +16,12 @@ namespace uSlack.EventHandlers
         protected readonly IMessageService _messageService;
         protected readonly IConfigurationService _config;
 
-        protected EventHandlerBase(IMessageService messageService,
-                                IConfigurationService config)
+        protected EventHandlerBase(IConfigurationService config)
         {
-            _messageService = messageService;
+            config.EnsureIsInitialized();
             _config = config;
+
+            _messageService = new SlackService(config);
         }
 
         protected async Task SendMessageAsync(IEntity node, string subject, string templateName)
