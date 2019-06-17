@@ -8,7 +8,6 @@ using System;
 using System.Threading.Tasks;
 using Umbraco.Core.Composing;
 using uSlack.Configuration;
-using uSlack.Extensions;
 using uSlack.Services;
 
 namespace uSlack.Services
@@ -31,7 +30,7 @@ namespace uSlack.Services
 
             try
             {
-                var client = new SlackTaskClient(_config.AppConfiguration.Token);
+                var client = new USlackExendedSlackTaskClient(_config.AppConfiguration.Token);
                 var response = await client.PostMessageOnlyBlocksAsync(_config.AppConfiguration.SlackChannel, txt, blocks);
                 
                 if (!response.ok)
@@ -46,13 +45,14 @@ namespace uSlack.Services
 
         }
 
-        public async Task Get()
+
+        public async Task GetConversationsAsync()
         {
             try
             {
-                var client = new SlackTaskClient(_config.AppConfiguration.Token);
+                var client = new USlackExendedSlackTaskClient(_config.AppConfiguration.Token);
 
-                var response = await client.GetChannelListAsync();
+                var response = await client.GetConversationListAsync();
                 
                 if (!response.ok)
                 {

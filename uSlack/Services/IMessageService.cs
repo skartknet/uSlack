@@ -10,5 +10,6 @@ namespace uSlack.Services
     public interface IMessageService
     {
         Task SendMessageAsync(string txt, string blocks);
+        Task GetConversationsAsync();
     }
 }

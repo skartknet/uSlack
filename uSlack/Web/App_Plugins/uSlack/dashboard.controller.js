@@ -1,4 +1,4 @@
-﻿function uSlackDashboardController($scope, $http) {
+﻿function uSlackDashboardController($scope, $http, notificationsService) {
     var vm = this;
     vm.buttonState = "init";
 
@@ -9,24 +9,31 @@
     });
 
     vm.save = function () {
-
-        vm.buttonState = "busy";
-        $http.put("/umbraco/backoffice/uslack/configurationapi/saveconfiguration", vm.config).then(
+        return $http.put("/umbraco/backoffice/uslack/configurationapi/saveconfiguration", vm.config).then(
             function (res) {
                 vm.config = res.data;
-                console.log("saved succesful");
-                vm.buttonState = "success";
+                notificationsService.success("Success", "Configuration was saved succesfully");
 
             },
             function (res) {
                 //we revert changes if something went wrong
                 vm.config = vm.tempconfig;
-                console.log("error saving");
-                vm.buttonState = "error";
+                notificationsService.error("Error", "Configuration couldn't be saved!");
+
             }
         );
 
 
+    }
+
+    vm.btnSave = function(){
+        vm.buttonState = "busy";
+        vm.save().then(function () {
+            vm.buttonState = "success";
+        },
+            function () {
+                vm.buttonState = "error";
+            });
     }
 
     vm.toggleSwitch = function (section, param) {

@@ -9,10 +9,20 @@
                     <small><localize key="uslack_token_help" /></small>
                 </div>
                 <div class="sub-view-column-right">
-                    <input type="text" placeholder="your app token" ng-model="vm.config.token" />
+                    <input type="text" placeholder="your app token" ng-model="vm.config.token" no-validate/>
                 </div>
             </div>
             <div class="sub-view-columns">
+                <umb-button action="vm.btnSave()"
+                            type="button"
+                            button-style="action"
+                            state="vm.buttonState"
+                            shortcut="ctrl+c"
+                            label-key="buttons_save"
+                            disabled="vm.buttonState === 'busy'">
+                </umb-button>
+
+
                 <div class="sub-view-column-left">
                     <h5><localize key="uslack_channel" /></h5>
                     <small><localize key="uslack_channel_help" /></small>
@@ -22,7 +32,7 @@
                     <input type="text" placeholder="your app token" ng-model="vm.config.channel" />
                 </div>
             </div>
-            <umb-button action="vm.save()"
+            <umb-button action="vm.btnSave()"
                         type="button"
                         button-style="action"
                         state="vm.buttonState"

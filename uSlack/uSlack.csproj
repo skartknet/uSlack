@@ -278,7 +278,8 @@
     <Compile Include="EventHandlers\UserHandlers.cs" />
     <Compile Include="EventHandlers\EventHandlerBase.cs" />
     <Compile Include="Services\IMessageService.cs" />
-    <Compile Include="Extensions\SlackAPIExtensions.cs" />
+    <Compile Include="Services\Models\ConversationListResponse.cs" />
+    <Compile Include="Services\USlackExendedSlackTaskClient.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="TypesRegistration.cs" />

@@ -1,7 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using Umbraco.Core.Models;
-using uSlack.Extensions;
+using uSlack.Services;
 
 namespace uSlack.Tests
 {

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Umbraco.Core.Models.Entities;
 
-namespace uSlack.Extensions
+namespace uSlack.Services
 {
     public static class StringExtensions
     {
