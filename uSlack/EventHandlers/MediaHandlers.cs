@@ -15,13 +15,9 @@ namespace uSlack.EventHandlers
     public class MediaHandlers : EventHandlerBase
     {
 
-        public MediaHandlers(IConfigurationService config) : base(config)
-        { }
-
-
         public void MediaService_Trashed(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            if (_config.GetParameter<bool>("deleted", "mediaService") == false) return;
+            if (UslackConfiguration.Current.GetParameter<bool>("deleted", "mediaService") == false) return;
 
             foreach (MoveEventInfo<IMedia> info in e.MoveInfoCollection)
             {
@@ -31,7 +27,7 @@ namespace uSlack.EventHandlers
 
         public void MediaService_Saved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            if (_config.GetParameter<bool>("saved", "mediaService") == false) return;
+            if (UslackConfiguration.Current.GetParameter<bool>("saved", "mediaService") == false) return;
 
             foreach (var item in e.SavedEntities)
             {
@@ -41,7 +37,7 @@ namespace uSlack.EventHandlers
 
         public void MediaService_Moved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            if (_config.GetParameter<bool>("moved", "mediaService") == false) return;
+            if (UslackConfiguration.Current.GetParameter<bool>("moved", "mediaService") == false) return;
 
             foreach (MoveEventInfo<IMedia> info in e.MoveInfoCollection)
             {
@@ -51,7 +47,7 @@ namespace uSlack.EventHandlers
 
         public void MediaService_Deleted(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            if (_config.GetParameter<bool>("deleted", "mediaService") == false) return;
+            if (UslackConfiguration.Current.GetParameter<bool>("deleted", "mediaService") == false) return;
 
             foreach (var item in e.DeletedEntities)
             {

@@ -14,12 +14,10 @@ namespace uSlack.EventHandlers
     public class UserHandlers : EventHandlerBase
     {
 
-        public UserHandlers(IConfigurationService config) : base(config)
-        { }
 
         public void UserService_DeletedUser(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUser> e)
         {
-            if (_config.GetParameter<bool>("deletedUser", "userService") == false) return;
+            if (UslackConfiguration.Current.GetParameter<bool>("deletedUser", "userService") == false) return;
 
             foreach (var item in e.DeletedEntities)
             {
@@ -29,7 +27,7 @@ namespace uSlack.EventHandlers
 
         public void UserService_DeletedUserGroup(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUserGroup> e)
         {
-            if (_config.GetParameter<bool>("deletedUserGroup", "userService") == false) return;
+            if (UslackConfiguration.Current.GetParameter<bool>("deletedUserGroup", "userService") == false) return;
 
             foreach (IUserGroup item in e.DeletedEntities)
             {

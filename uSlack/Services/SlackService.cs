@@ -13,14 +13,8 @@ using uSlack.Services;
 namespace uSlack.Services
 {
     public class SlackService : IMessageService
-    {
+    {        
 
-        private readonly IConfigurationService _config;
-
-        public SlackService(IConfigurationService config)
-        {
-            _config = config ?? throw new ArgumentNullException(nameof(config));
-        }
         public async Task SendMessageAsync(string txt, string blocks)
         {
             if (string.IsNullOrEmpty(blocks))
@@ -30,8 +24,8 @@ namespace uSlack.Services
 
             try
             {
-                var client = new USlackExendedSlackTaskClient(_config.AppConfiguration.Token);
-                var response = await client.PostMessageOnlyBlocksAsync(_config.AppConfiguration.SlackChannel, txt, blocks);
+                var client = new USlackExendedSlackTaskClient(UslackConfiguration.Current.AppConfiguration.Token);
+                var response = await client.PostMessageOnlyBlocksAsync(UslackConfiguration.Current.AppConfiguration.SlackChannel, txt, blocks);
                 
                 if (!response.ok)
                 {                    
@@ -50,7 +44,7 @@ namespace uSlack.Services
         {
             try
             {
-                var client = new USlackExendedSlackTaskClient(_config.AppConfiguration.Token);
+                var client = new USlackExendedSlackTaskClient(UslackConfiguration.Current.AppConfiguration.Token);
 
                 var response = await client.GetConversationListAsync();
                 

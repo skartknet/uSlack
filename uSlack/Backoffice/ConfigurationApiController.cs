@@ -19,26 +19,18 @@ namespace uSlack.Backoffice
     [PluginController("uslack")]
     public class ConfigurationApiController : UmbracoAuthorizedJsonController
     {
-        private readonly IConfigurationService _config;
 
-        public ConfigurationApiController()
-        { }
-
-        public ConfigurationApiController(IConfigurationService config)
+             public IHttpActionResult GetConfiguration()
         {
-            _config = config;
-        }
-        public IHttpActionResult GetConfiguration()
-        {
-            return Ok(_config.AppConfiguration);
+            return Ok(UslackConfiguration.Current.AppConfiguration);
         }
 
         [HttpPut]
-        public IHttpActionResult SaveConfiguration(UslackConfiguration model)
+        public IHttpActionResult SaveConfiguration(AppConfiguration model)
         {
             try
             {
-                _config.SaveAppConfiguration(model);
+                UslackConfiguration.Current.SaveAppConfiguration(model);
             }
             catch (Exception ex)
             {

@@ -48,7 +48,7 @@ namespace uSlack.Tests
                                         }
                                         ");
 
-            var sut = new ConfigurationService();
+            var sut = new Configuration.Configuration();
             sut.EnsureIsInitialized();
 
             Assert.That(sut.AppConfiguration.Token, Is.EqualTo("123"));
@@ -62,10 +62,10 @@ namespace uSlack.Tests
         [Test]
         public void NotCrashIfconfigNotPresent()
         {
-            var sut = new ConfigurationService();
+            var sut = new Configuration.Configuration();
 
             Assert.DoesNotThrow(() => sut.EnsureIsInitialized());
-            Assert.That(sut.AppConfiguration, Is.InstanceOf<UslackConfiguration>());
+            Assert.That(sut.AppConfiguration, Is.InstanceOf<AppConfiguration>());
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace uSlack.Tests
                         }
                         ";
 
-            Assert.DoesNotThrow(() => JsonConvert.DeserializeObject<UslackConfiguration>(json));
+            Assert.DoesNotThrow(() => JsonConvert.DeserializeObject<AppConfiguration>(json));
         }
 
         [Test]
@@ -111,17 +111,17 @@ namespace uSlack.Tests
                                         }
                                         ");
 
-            var sut = new ConfigurationService();
+            var sut = new Configuration.Configuration();
             sut.EnsureIsInitialized(); ;
 
             var json = JsonConvert.SerializeObject(sut.AppConfiguration);
-            var model = JsonConvert.DeserializeObject<UslackConfiguration>(json);
+            var model = JsonConvert.DeserializeObject<AppConfiguration>(json);
 
             model.Token = "abc";
 
             sut.SaveAppConfiguration(model);
 
-            var tester = new ConfigurationService();
+            var tester = new Configuration.Configuration();
             tester.EnsureIsInitialized();
             Assert.That(tester.AppConfiguration.Token, Is.EqualTo("abc"));
 
@@ -145,7 +145,7 @@ namespace uSlack.Tests
                                         }
                                         ");
 
-            var sut = new ConfigurationService();
+            var sut = new Configuration.Configuration();
             sut.EnsureIsInitialized();
             Assert.That(sut.GetParameter<bool>("boolean", "contentService"), Is.EqualTo(true));
             Assert.That(sut.GetParameter<string>("string", "contentService"), Is.EqualTo("abc"));
@@ -171,7 +171,7 @@ namespace uSlack.Tests
                                         }
                                         ");
 
-            var sut = new ConfigurationService();
+            var sut = new Configuration.Configuration();
             sut.EnsureIsInitialized();
 
             Assert.That(sut.GetParameter<bool>("b", "contentService"), Is.EqualTo(default(bool)));
@@ -186,7 +186,7 @@ namespace uSlack.Tests
         [Test]
         public void ReturnsMessageFileContent()
         {
-            var sut = new ConfigurationService();
+            var sut = new Configuration.Configuration();
             sut.EnsureIsInitialized();
 
             var fileContent = sut.GetMessage("filetest");
@@ -196,7 +196,7 @@ namespace uSlack.Tests
         [Test]
         public void ReturnsNotFoundExceptionForWrongMessageAlias()
         {
-            var sut = new ConfigurationService();
+            var sut = new Configuration.Configuration();
             sut.EnsureIsInitialized();
 
             Assert.Throws<FileNotFoundException>(() => sut.GetMessage("wrongAlias"));

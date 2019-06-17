@@ -268,9 +268,9 @@
   <ItemGroup>
     <Compile Include="Backoffice\ConfigurationApiController.cs" />
     <Compile Include="Backoffice\Models\Configuration.cs" />
-    <Compile Include="Configuration\ConfigurationService.cs" />
+    <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\ConfigSection.cs" />
-    <Compile Include="Configuration\IConfigurationService.cs" />
+    <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\UslackConfiguration.cs" />
     <Compile Include="InitUSlack.cs" />
     <Compile Include="EventHandlers\MemberHandlers.cs" />

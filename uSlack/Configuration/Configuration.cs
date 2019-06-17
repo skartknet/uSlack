@@ -9,75 +9,106 @@ using System.Collections.Generic;
 using System.IO;
 using Umbraco.Core.IO;
 using Umbraco.Web.Composing;
+using uSlack.Configuration;
 
-namespace uSlack.Configuration
+namespace uSlack
 {
-    public class ConfigurationService : IConfigurationService
+    public class UslackConfiguration : IConfiguration
     {
         const string _filesLocation = "~/App_Plugins/uSlack/Config/";
+        private Lazy<Dictionary<string, string>> _messages;
+        private Lazy<AppConfiguration> _appConfiguration;
 
-        public Dictionary<string, string> Messages { get; } = new Dictionary<string, string>();
+        private static UslackConfiguration _config;
 
-        public bool IsInitialized { get; private set; }
-
-        private UslackConfiguration _appConfiguration = new UslackConfiguration();
-        public UslackConfiguration AppConfiguration
+        private UslackConfiguration()
         {
-            get { return _appConfiguration; }
-            private set
+            _messages = new Lazy<Dictionary<string, string>>(() =>
             {
-                _appConfiguration = value;
+                return InitializeMessages();
+            });
+
+            _appConfiguration = new Lazy<AppConfiguration>(() =>
+            {
+                return InitializeConfiguration();
+            });
+        }
+
+
+        public static UslackConfiguration Current
+        {
+            get
+            {
+                if(_config == null)
+                {
+                    _config = new UslackConfiguration();
+                }
+
+                return _config;
             }
         }
 
-        public void EnsureIsInitialized()
+
+        public Dictionary<string, string> Messages
         {
-            if (IsInitialized) return;
-            try
+            get
             {
-                InitializeConfiguration();
-                InitializeMessages();
-
-                IsInitialized = true;
+                return _messages.Value;
             }
-            catch (Exception ex)
-            {
-                Current.Logger.Error(typeof(ConfigurationService), ex, "Error initializing uSlack configuration.");
-            }
-
         }
 
-        private void InitializeConfiguration()
+        public AppConfiguration AppConfiguration
         {
+            get
+            {
+                return _appConfiguration.Value;
+            }
+            set
+            {
+                _appConfiguration = new Lazy<AppConfiguration>(() =>
+                {
+                    return value;
+                });
+            }
+        }
+
+        private static AppConfiguration InitializeConfiguration()
+        {
+            AppConfiguration config = null;
             var msgPath = IOHelper.MapPath(_filesLocation + "uslack.config");
 
             if (File.Exists(msgPath))
             {
                 var content = File.ReadAllText(msgPath);
-                JsonConvert.PopulateObject(content, AppConfiguration);
+                config = JsonConvert.DeserializeObject<AppConfiguration>(content);
             }
 
+            return config;
         }
 
-        private void InitializeMessages()
+        private static Dictionary<string, string> InitializeMessages()
         {
+            var messages = new Dictionary<string, string>();
+
             var msgPath = IOHelper.MapPath(_filesLocation);
-            if (Directory.Exists(msgPath) == false) return;
+            if (Directory.Exists(msgPath) == false) return null;
             var files = Directory.GetFiles(msgPath, "*.json");
 
             foreach (var file in files)
             {
-                if (Messages.ContainsKey(file)) continue;
+                if (messages.ContainsKey(file)) continue;
                 var content = File.ReadAllText(file);
-                Messages.Add(Path.GetFileNameWithoutExtension(file).ToUpperInvariant(), content);
+                messages.Add(Path.GetFileNameWithoutExtension(file).ToUpperInvariant(), content);
             }
+
+            return messages;
         }
 
         /// <summary>
         /// Saves the configuration
         /// </summary>
         /// <param name="model"></param>
-        public void SaveAppConfiguration(UslackConfiguration model)
+        public void SaveAppConfiguration(AppConfiguration model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
 

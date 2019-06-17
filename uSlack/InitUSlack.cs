@@ -16,19 +16,16 @@ namespace uSlack
 {
     public class InitUSlack : IComponent
     {
-        private readonly IConfigurationService _config;
         private readonly ContentHandlers _contentHandlers;
         private readonly MediaHandlers _mediaHandlers;
         private readonly MemberHandlers _memberHandlers;
         private readonly UserHandlers _userHandlers;
 
-        public InitUSlack(IConfigurationService config,
-                            ContentHandlers contentHandlers,
+        public InitUSlack(ContentHandlers contentHandlers,
                             MediaHandlers mediaHandlers,
                             MemberHandlers memberHandlers,
                             UserHandlers userHandlers)
         {
-            _config = config;
             _contentHandlers = contentHandlers;
             _mediaHandlers = mediaHandlers;
             _memberHandlers = memberHandlers;
@@ -37,7 +34,6 @@ namespace uSlack
         // initialize: runs once when Umbraco starts
         public void Initialize()
         {
-            _config.EnsureIsInitialized();
 
             try
             {

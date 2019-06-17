@@ -7,26 +7,21 @@ using System.Threading.Tasks;
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 using uSlack.Services;
-using uSlack.Services;
 
 namespace uSlack.EventHandlers
 {
     public abstract class EventHandlerBase
     {
-        protected readonly IMessageService _messageService;
-        protected readonly IConfigurationService _config;
+        protected readonly IMessageService _messageService;        
 
-        protected EventHandlerBase(IConfigurationService config)
-        {
-            config.EnsureIsInitialized();
-            _config = config;
-
-            _messageService = new SlackService(config);
+        protected EventHandlerBase()
+        {            
+            _messageService = new SlackService();
         }
 
         protected async Task SendMessageAsync(IEntity node, string subject, string templateName)
         {
-            var json = _config.GetMessage(templateName);
+            var json = UslackConfiguration.Current.GetMessage(templateName);
             var txtReplaced = json.ReplacePlaceholders(node);
 
             await _messageService.SendMessageAsync(subject, txtReplaced);

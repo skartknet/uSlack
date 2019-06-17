@@ -14,7 +14,7 @@ namespace uSlack.Tests
     public class SlackServiceShould
     {
         private Mock<IMessageService> _messageService;
-        private Mock<IConfigurationService> _configuration;
+        private Mock<IConfiguration> _configuration;
 
         [SetUp]
         public void Init()
@@ -26,9 +26,9 @@ namespace uSlack.Tests
         private void SetUpConfigurationMock()
         {
             _messageService = new Mock<IMessageService>();
-            _configuration = new Mock<IConfigurationService>();
+            _configuration = new Mock<IConfiguration>();
             var messagesConfig = new Dictionary<string, string>();
-            var appConfig = new UslackConfiguration();
+            var appConfig = new AppConfiguration();
             appConfig.Token = "xoxp-656657692176-645232876739-658179266944-834090019227aa80b4a9f33d43f615ab";
             appConfig.SlackChannel = "uslack";
 
