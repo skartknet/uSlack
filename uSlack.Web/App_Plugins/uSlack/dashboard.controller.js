@@ -1,12 +1,22 @@
 ﻿function uSlackDashboardController($scope, $http, notificationsService) {
     var vm = this;
     vm.buttonState = "init";
+    vm.loadChannelsState = "init";
+
+    vm.config = {};
 
 
+    function init() {
+        $http.get("/umbraco/backoffice/uslack/configurationapi/getconfiguration").then(function (res) {
+            vm.config = res.data;
 
-    $http.get("/umbraco/backoffice/uslack/configurationapi/getconfiguration").then(function (res) {
-        vm.config = res.data;
-    });
+            if (vm.config.token) {
+                vm.loadChannels();
+            }
+        });
+
+        
+    }
 
     vm.save = function () {
         return $http.put("/umbraco/backoffice/uslack/configurationapi/saveconfiguration", vm.config).then(
@@ -22,8 +32,18 @@
 
             }
         );
+    }
 
+    vm.loadChannels = function () {
+        vm.loadChannelsState = "busy";
+        $http.get("/umbraco/backoffice/uslack/configurationapi/loadchannels?token=" + vm.config.token).then(function (res) {
+            vm.channels = res.data;
+            vm.loadChannelsState = "success";
 
+        },
+            function () {
+                vm.loadChannelsState = "error";
+            });
     }
 
     vm.btnSave = function(){
@@ -43,6 +63,9 @@
         vm.config.sections[section].parameters[param] = !vm.config.sections[section].parameters[param];
         vm.save();
     }
+
+    init();
+
 }
 
 angular.module("umbraco").controller("uslack.dashboard.controller", uSlackDashboardController);

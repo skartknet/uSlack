@@ -268,6 +268,7 @@
   <ItemGroup>
     <Compile Include="Backoffice\ConfigurationApiController.cs" />
     <Compile Include="Backoffice\Models\Configuration.cs" />
+    <Compile Include="Backoffice\Models\SlackEntity.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\ConfigSection.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />

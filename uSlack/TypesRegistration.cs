@@ -19,8 +19,9 @@ namespace uSlack.EventHandlers
             composition.Register(typeof(UserHandlers));
             composition.Register(typeof(MemberHandlers));
 
-            composition.Register(typeof(SlackClientBase), typeof(SlackTaskClient));
-    
+            composition.Register(typeof(IMessageService), typeof(SlackService));
+
+
         }
     }
 }

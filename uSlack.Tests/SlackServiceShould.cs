@@ -61,8 +61,9 @@ namespace uSlack.Tests
         [Test]
         public async Task GetChannels()
         {
-            var sut = new SlackService();
-            await sut.GetConversationsAsync();
+            var client = new USlackExendedSlackTaskClient("xoxp-656657692176-645232876739-658179266944-834090019227aa80b4a9f33d43f615ab");
+
+            var resutls = await client.GetConversationListAsync();
         }
     }
 }

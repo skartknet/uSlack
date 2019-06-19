@@ -22,7 +22,7 @@ namespace uSlack.Services
             : base(token, proxySettings)
         { }
 
-        public Task<PostMessageResponse> PostMessageOnlyBlocksAsync(
+        public async Task<PostMessageResponse> PostMessageOnlyBlocksAsync(
             string channelId,
             string text,
             string blocks
@@ -35,12 +35,21 @@ namespace uSlack.Services
                 new Tuple<string, string>("blocks", blocks)
             };
 
-            return APIRequestWithTokenAsync<PostMessageResponse>(parameters.ToArray());
+            return await APIRequestWithTokenAsync<PostMessageResponse>(parameters.ToArray());
         }
 
-        public Task<ConversationListResponse> GetConversationListAsync(bool ExcludeArchived = true)
+        public async Task<ConversationListResponse> GetConversationListAsync(bool ExcludeArchived = true)
         {
-            return APIRequestWithTokenAsync<ConversationListResponse>(new Tuple<string, string>("exclude_archived", ExcludeArchived ? "1" : "0"));
+            try
+            {
+                var results = await APIRequestWithTokenAsync<ConversationListResponse>(new Tuple<string, string>("exclude_archived", ExcludeArchived ? "1" : "0"));
+                return results;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

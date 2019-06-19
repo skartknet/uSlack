@@ -9,27 +9,26 @@
                     <small><localize key="uslack_token_help" /></small>
                 </div>
                 <div class="sub-view-column-right">
-                    <input type="text" placeholder="your app token" ng-model="vm.config.token" no-validate/>
+                    <input type="text" placeholder="your app token" ng-model="vm.config.token" no-validate />                    
                 </div>
             </div>
             <div class="sub-view-columns">
-                <umb-button action="vm.btnSave()"
-                            type="button"
-                            button-style="action"
-                            state="vm.buttonState"
-                            shortcut="ctrl+c"
-                            label-key="buttons_save"
-                            disabled="vm.buttonState === 'busy'">
-                </umb-button>
-
-
                 <div class="sub-view-column-left">
                     <h5><localize key="uslack_channel" /></h5>
                     <small><localize key="uslack_channel_help" /></small>
-
                 </div>
                 <div class="sub-view-column-right">
-                    <input type="text" placeholder="your app token" ng-model="vm.config.channel" />
+                    <umb-button ng-show="!vm.channels"
+                                action="vm.loadChannels()"
+                                type="button"
+                                button-style="action"
+                                state="vm.loadChannelsState"
+                                label-key="uslack_loadChannelsBtn"
+                                disabled="vm.loadChannelsState === 'busy' || !vm.config.token">
+                    </umb-button>
+                    <select ng-model="vm.config.channel" ng-show="vm.channels">
+                        <option ng-repeat="channel in vm.channels" value="{{channel.id}}">{{channel.name}}</option>
+                    </select>
                 </div>
             </div>
             <umb-button action="vm.btnSave()"

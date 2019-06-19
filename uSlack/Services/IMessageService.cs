@@ -4,12 +4,13 @@
 // </copyright>
 
 using System.Threading.Tasks;
+using uSlack.Services.Models;
 
 namespace uSlack.Services
 {
     public interface IMessageService
     {
         Task SendMessageAsync(string txt, string blocks);
-        Task GetConversationsAsync();
+        Task<ConversationListResponse> GetChannelsAsync(string token = null);
     }
 }

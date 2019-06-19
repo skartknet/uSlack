@@ -3,24 +3,29 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
+using uSlack.Backoffice.Models;
 using uSlack.Configuration;
+using uSlack.Services;
 
 namespace uSlack.Backoffice
 {
     [PluginController("uslack")]
     public class ConfigurationApiController : UmbracoAuthorizedJsonController
     {
+        private readonly IMessageService _msgService;
 
-             public IHttpActionResult GetConfiguration()
+        public ConfigurationApiController(IMessageService msgService)
+        {
+            _msgService = msgService;
+        }
+
+        public IHttpActionResult GetConfiguration()
         {
             return Ok(UslackConfiguration.Current.AppConfiguration);
         }
@@ -40,6 +45,28 @@ namespace uSlack.Backoffice
             }
 
             return Ok(model);
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> LoadChannels(string token)
+        {
+            try
+            {
+                var channels = await _msgService.GetChannelsAsync(token);
+                var mappedModels = channels.channels.Select(c => new SlackEntity
+                {
+                    Id = c.id,
+                    Name = c.name
+                });
+
+                return Ok(mappedModels);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(typeof(ConfigurationApiController), ex);
+                return InternalServerError();
+            }
+
         }
     }
 }
