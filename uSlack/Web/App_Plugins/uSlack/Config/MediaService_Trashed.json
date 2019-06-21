@@ -1,9 +1,12 @@
-﻿[
-  {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "The media with name: @{Name} and Id: @{Id} has been trashed."
+﻿{
+  "text": "Media item has been trashed",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "The media with name: @{Name} and Id: @{Id} has been trashed."
+      }
     }
-  }
-]
+  ]
+}

@@ -1,9 +1,0 @@
-﻿[
-  {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "The user with name: @{Name} and Id: @{Id} has been saved."
-    }
-  }
-]

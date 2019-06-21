@@ -1,9 +1,12 @@
-﻿[
-  {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "The member with name: @{Name} and Id: @{Id} has been saved."
+﻿{
+  "text": "Member has been saved",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "The member with name: @{Name} and Id: @{Id} has been saved."
+      }
     }
-  }
-]
+  ]
+}

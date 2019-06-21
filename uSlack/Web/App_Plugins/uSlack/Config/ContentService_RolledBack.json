@@ -1,9 +1,12 @@
-﻿[
-  {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "The page with name: @{Name} and Id: @{Id} has been rolled back."
+﻿{
+  "text": "Content item has been rolled back",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "The page with name: @{Name} and Id: @{Id} has been rolled back."
+      }
     }
-  }
-]
+  ]
+}

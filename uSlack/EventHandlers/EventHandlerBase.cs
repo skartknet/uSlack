@@ -3,10 +3,11 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Umbraco.Core.Models.Entities;
-using uSlack.Configuration;
 using uSlack.Services;
+using SlackAPI;
 
 namespace uSlack.EventHandlers
 {
@@ -19,12 +20,17 @@ namespace uSlack.EventHandlers
             _messageService = new SlackService();
         }
 
-        protected async Task SendMessageAsync(IEntity node, string subject, string templateName)
+        protected async Task SendMessageAsync(IEntity node, string templateName)
         {
-            var json = UslackConfiguration.Current.GetMessage(templateName);
-            var txtReplaced = json.ReplacePlaceholders(node);
+            var msg = UslackConfiguration.Current.GetMessage(templateName);
+            var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
+                            .ReplacePlaceholders(node);
 
-            await _messageService.SendMessageAsync(subject, txtReplaced);
+            var blocks = JsonConvert.DeserializeObject<Block[]>(blocksJsonwithPlaceholdersReplaced);
+
+            var text = msg.Text.ReplacePlaceholders(node);
+
+            await _messageService.SendMessageAsync(text, blocks);
         }
 
     }

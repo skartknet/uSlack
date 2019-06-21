@@ -59,7 +59,7 @@ namespace uSlack.Tests
             Assert.That(sut.AppConfiguration.Sections, Has.Count.EqualTo(1));
             Assert.That(sut.AppConfiguration.Sections["contentService"].Parameters, Has.Count.EqualTo(5));
             Assert.That(sut.AppConfiguration.Sections["contentService"].Parameters["moved"], Is.EqualTo(true));
-        }       
+        }
 
         [Test]
         public void DeserializeAppConfigurationProperly()
@@ -172,12 +172,11 @@ namespace uSlack.Tests
         }
 
         [Test]
-        public void ReturnsMessageFileContent()
+        public void AllConfigMessagesAreDeserializing()
         {
             var sut = UslackConfiguration.Current;
-
-            var fileContent = sut.GetMessage("filetest");
-            Assert.That(fileContent, Is.EqualTo("testcontent"));
+            MessageConfiguration msg = null;
+            Assert.DoesNotThrow(() => { msg = sut.GetMessage("ContentService_Deleted"); });
         }
 
         [Test]

@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Umbraco.Core.Composing;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
 using uSlack.Backoffice.Models;
@@ -50,6 +51,7 @@ namespace uSlack.Backoffice
         [HttpGet]
         public async Task<IHttpActionResult> LoadChannels(string token)
         {
+
             try
             {
                 var channels = await _msgService.GetChannelsAsync(token);

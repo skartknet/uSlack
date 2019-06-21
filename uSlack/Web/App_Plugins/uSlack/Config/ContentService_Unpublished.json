@@ -1,9 +1,12 @@
-﻿[
-  {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "The page with name: @{Name} and Id: @{Id} has been unpublished."
+﻿{
+  "text": "Content item has been unpublished",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "The page with name: @{Name} and Id: @{Id} has been unpublished."
+      }
     }
-  }
-]
+  ]
+}

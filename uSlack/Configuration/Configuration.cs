@@ -16,14 +16,14 @@ namespace uSlack
     public class UslackConfiguration : IConfiguration
     {
         const string _filesLocation = "~/App_Plugins/uSlack/Config/";
-        private Lazy<Dictionary<string, string>> _messages;
+        private Lazy<Dictionary<string, MessageConfiguration>> _messages;
         private Lazy<AppConfiguration> _appConfiguration;
 
         private static UslackConfiguration _config;
 
         private UslackConfiguration()
         {
-            _messages = new Lazy<Dictionary<string, string>>(() =>
+            _messages = new Lazy<Dictionary<string, MessageConfiguration>>(() =>
             {
                 return InitializeMessages();
             });
@@ -39,7 +39,7 @@ namespace uSlack
         {
             get
             {
-                if(_config == null)
+                if (_config == null)
                 {
                     _config = new UslackConfiguration();
                 }
@@ -49,7 +49,7 @@ namespace uSlack
         }
 
 
-        public Dictionary<string, string> Messages
+        public Dictionary<string, MessageConfiguration> Messages
         {
             get
             {
@@ -86,9 +86,9 @@ namespace uSlack
             return config;
         }
 
-        private static Dictionary<string, string> InitializeMessages()
+        private static Dictionary<string, MessageConfiguration> InitializeMessages()
         {
-            var messages = new Dictionary<string, string>();
+            var messages = new Dictionary<string, MessageConfiguration>();
 
             var msgPath = IOHelper.MapPath(_filesLocation);
             if (Directory.Exists(msgPath) == false) return null;
@@ -98,7 +98,8 @@ namespace uSlack
             {
                 if (messages.ContainsKey(file)) continue;
                 var content = File.ReadAllText(file);
-                messages.Add(Path.GetFileNameWithoutExtension(file).ToUpperInvariant(), content);
+                var config = JsonConvert.DeserializeObject<MessageConfiguration>(content);
+                messages.Add(Path.GetFileNameWithoutExtension(file).ToUpperInvariant(), config);
             }
 
             return messages;
@@ -148,9 +149,9 @@ namespace uSlack
         /// </summary>
         /// <param name="alias"></param>
         /// <returns></returns>
-        public string GetMessage(string alias)
+        public MessageConfiguration GetMessage(string alias)
         {
-            if (Messages.TryGetValue(alias.ToUpperInvariant(), out string message))
+            if (Messages.TryGetValue(alias.ToUpperInvariant(), out MessageConfiguration message))
             {
                 return message;
             }

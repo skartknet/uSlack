@@ -272,6 +272,7 @@
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\ConfigSection.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
+    <Compile Include="Configuration\MessageConfiguration.cs" />
     <Compile Include="Configuration\UslackConfiguration.cs" />
     <Compile Include="InitUSlack.cs" />
     <Compile Include="EventHandlers\MemberHandlers.cs" />
@@ -294,9 +295,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="uSlack.licenseheader" />
+    <None Include="Web\App_Plugins\uSlack\Config\ContentService_SentTopublish.json" />
     <None Include="Web\App_Plugins\uSlack\Config\UserService_DeletedUser.json" />
     <None Include="Web\App_Plugins\uSlack\Config\UserService_DeletedUserGroup.json" />
-    <None Include="Web\App_Plugins\uSlack\Config\UserService_SavedUser.json" />
     <None Include="Web\App_Plugins\uSlack\Config\MemberService_Deleted.json" />
     <None Include="Web\App_Plugins\uSlack\Config\MemberService_Saved.json" />
     <None Include="Web\App_Plugins\uSlack\Config\ContentService_Moved.json" />
@@ -320,7 +321,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /S /Y /I "$(SolutionDir)uSlack\Web\App_Plugins\uSlack" "$(SolutionDir)uSlack.Web\App_Plugins\uSlack"</PostBuildEvent>
+    <PostBuildEvent>xcopy /S /Y /I "$(SolutionDir)uSlack\Web\App_Plugins\uSlack" "$(SolutionDir)uSlack.Web\App_Plugins\uSlack"
+xcopy /S /Y /I "$(SolutionDir)uSlack\Web\App_Plugins\uSlack\config" "$(SolutionDir)uSlack.Tests\App_Plugins\uSlack\config"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets" Condition="Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

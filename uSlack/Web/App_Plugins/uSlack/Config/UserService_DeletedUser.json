@@ -1,9 +1,12 @@
-﻿[
-  {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "The user with name: @{Name} and Id: @{Id} has been deleted."
+﻿{
+  "text": "User has been deleted",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "The user with name: @{Name} and Id: @{Id} has been deleted."
+      }
     }
-  }
-]
+  ]
+}

@@ -21,7 +21,7 @@ namespace uSlack.EventHandlers
 
             foreach (var item in e.DeletedEntities)
             {
-                Task.Run(async () => await SendMessageAsync(item, "User has been deleted", nameof(this.UserService_DeletedUser)));
+                Task.Run(async () => await SendMessageAsync(item, nameof(this.UserService_DeletedUser)));
             }
         }
 
@@ -31,7 +31,7 @@ namespace uSlack.EventHandlers
 
             foreach (IUserGroup item in e.DeletedEntities)
             {
-                Task.Run(async () => await SendMessageAsync(item, "User group has been deleted", nameof(this.UserService_DeletedUserGroup)));
+                Task.Run(async () => await SendMessageAsync(item, nameof(this.UserService_DeletedUserGroup)));
             }
         }
 

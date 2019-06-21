@@ -18,6 +18,8 @@
     <key alias="contentService_moved_label">Content item moved</key>
     <key alias="contentService_rolledBack_label">Content item rolled back</key>
     <key alias="contentService_trashed_label">Content item trashed</key>
+    <key alias="contentService_sentToPublish_label">Content item sent to publish</key>
+
 
     <key alias="mediaService_title">Media Service</key>
     <key alias="mediaService_saved_label">Media item saved</key>

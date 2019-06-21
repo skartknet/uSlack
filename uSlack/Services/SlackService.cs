@@ -16,17 +16,17 @@ namespace uSlack.Services
     public class SlackService : IMessageService
     {
 
-        public async Task SendMessageAsync(string txt, string blocks)
+        public async Task SendMessageAsync(string txt, IBlock[] blocks)
         {
-            if (string.IsNullOrEmpty(blocks))
+            if (blocks == null)
             {
-                throw new ArgumentException("blocks cannot be empty", nameof(blocks));
+                throw new ArgumentNullException(nameof(blocks));
             }
 
             try
             {
                 var client = new USlackExendedSlackTaskClient(UslackConfiguration.Current.AppConfiguration.Token);
-                var response = await client.PostMessageOnlyBlocksAsync(UslackConfiguration.Current.AppConfiguration.SlackChannel, txt, blocks);
+                var response = await client.PostMessageAsync(UslackConfiguration.Current.AppConfiguration.SlackChannel, txt, blocks: blocks);
 
                 if (!response.ok)
                 {
@@ -63,5 +63,7 @@ namespace uSlack.Services
 
             return response;
         }
+
+        
     }
 }

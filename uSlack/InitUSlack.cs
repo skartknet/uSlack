@@ -43,6 +43,7 @@ namespace uSlack
                 ContentService.RolledBack += _contentHandlers.ContentService_RolledBack;
                 ContentService.Deleted += _contentHandlers.ContentService_Deleted;
                 ContentService.Moved += _contentHandlers.ContentService_Moved;
+                ContentService.SentToPublish += _contentHandlers.ContentService_SentToPublish;
 
                 MediaService.Deleted += _mediaHandlers.MediaService_Deleted;
                 MediaService.Moved += _mediaHandlers.MediaService_Moved;
@@ -58,6 +59,7 @@ namespace uSlack
             catch { }
         }
 
+       
         // terminate: runs once when Umbraco stops
         public void Terminate()
         {

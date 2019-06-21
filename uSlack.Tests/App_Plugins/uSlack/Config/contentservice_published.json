@@ -1,10 +1,12 @@
-[
-  {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "Content published with name '@{Name}' and ID: @{Id}"
+﻿{
+  "text": "Content item has been published",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "The page with name: @{Name} and Id: @{Id} has been published."
+      }
     }
-  }
-
-]
+  ]
+}

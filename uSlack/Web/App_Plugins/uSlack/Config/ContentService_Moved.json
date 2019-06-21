@@ -1,9 +1,12 @@
-﻿[
-  {
-    "type": "section",
-    "text": {
-      "type": "mrkdwn",
-      "text": "The page with name: @{Name} and Id: @{Id} has been moved."
+﻿{
+  "text": "Content item has been moved",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "The page with name: @{Name} and Id: @{Id} has been moved."
+      }
     }
-  }
-]
+  ]
+}

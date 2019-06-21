@@ -22,7 +22,7 @@ namespace uSlack.EventHandlers
 
             foreach (var item in e.PublishedEntities)
             {
-                Task.Run(async () => await SendMessageAsync(item, "Content item has been published", nameof(this.ContentService_Published)));
+                Task.Run(async () => await SendMessageAsync(item, nameof(this.ContentService_Published)));
             }
         }
 
@@ -32,7 +32,7 @@ namespace uSlack.EventHandlers
 
             foreach (var item in e.PublishedEntities)
             {
-                Task.Run(async () => await SendMessageAsync(item, "Content item has been unpublished", nameof(this.ContentService_Unpublished)));
+                Task.Run(async () => await SendMessageAsync(item, nameof(this.ContentService_Unpublished)));
             }
 
         }
@@ -43,7 +43,7 @@ namespace uSlack.EventHandlers
 
             foreach (MoveEventInfo<IContent> info in e.MoveInfoCollection)
             {
-                Task.Run(async () => await SendMessageAsync(info.Entity, "Content item has been trashed", nameof(this.ContentService_Trashed)));
+                Task.Run(async () => await SendMessageAsync(info.Entity, nameof(this.ContentService_Trashed)));
             }
         }
 
@@ -51,7 +51,7 @@ namespace uSlack.EventHandlers
         {
             if (UslackConfiguration.Current.GetParameter<bool>("rolledBack", "contentService") == false) return;
 
-            Task.Run(async () => await SendMessageAsync(e.Entity, "Content item has been rolledback", nameof(this.ContentService_RolledBack)));
+            Task.Run(async () => await SendMessageAsync(e.Entity, nameof(this.ContentService_RolledBack)));
         }
 
         public void ContentService_Deleted(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IContent> e)
@@ -60,7 +60,7 @@ namespace uSlack.EventHandlers
 
             foreach (var item in e.DeletedEntities)
             {
-                Task.Run(async () => await SendMessageAsync(item, "Content item has been deleted", nameof(this.ContentService_Deleted)));
+                Task.Run(async () => await SendMessageAsync(item, nameof(this.ContentService_Deleted)));
             }
 
         }
@@ -71,9 +71,17 @@ namespace uSlack.EventHandlers
 
             foreach (MoveEventInfo<IContent> info in e.MoveInfoCollection)
             {
-                Task.Run(async () => await SendMessageAsync(info.Entity, "Content item has been moved", nameof(this.ContentService_Moved)));
+                Task.Run(async () => await SendMessageAsync(info.Entity, nameof(this.ContentService_Moved)));
             }
         }
+
+        public void ContentService_SentToPublish(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.SendToPublishEventArgs<Umbraco.Core.Models.IContent> e)
+        {
+            if (UslackConfiguration.Current.GetParameter<bool>("sentToPublish", "contentService") == false) return;
+
+            Task.Run(async () => await SendMessageAsync(e.Entity, nameof(this.ContentService_Moved)));
+        }
+
 
     }
 }

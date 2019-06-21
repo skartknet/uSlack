@@ -21,7 +21,7 @@ namespace uSlack.EventHandlers
 
             foreach (IMember item in e.DeletedEntities)
             {
-                Task.Run(async () => await SendMessageAsync(item, "Member has been deleted", nameof(this.MemberService_Deleted)));
+                Task.Run(async () => await SendMessageAsync(item, nameof(this.MemberService_Deleted)));
             }
         }
 
@@ -31,7 +31,7 @@ namespace uSlack.EventHandlers
 
             foreach (IMember item in e.SavedEntities)
             {
-                Task.Run(async () => await SendMessageAsync(item, "Member has been saved", nameof(this.MemberService_Deleted)));
+                Task.Run(async () => await SendMessageAsync(item, nameof(this.MemberService_Deleted)));
             }
         }
 

@@ -175,7 +175,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="App_Plugins\uSlack\Config\contentservice_published.json" />
-    <None Include="App_Plugins\uSlack\Config\filetest.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
