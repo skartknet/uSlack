@@ -10,12 +10,12 @@
         $http.get("/umbraco/backoffice/uslack/configurationapi/getconfiguration").then(function (res) {
             vm.config = res.data;
 
-            if (vm.config.token) {
-                vm.loadChannels();
+            for (var i = 0; i < vm.config.length; i++) {
+                if (vm.config[i].token) {
+                    vm.loadChannels(i);
+                }
             }
         });
-
-        
     }
 
     vm.save = function () {
@@ -34,19 +34,18 @@
         );
     }
 
-    vm.loadChannels = function () {
+    vm.loadChannels = function (index) {
         vm.loadChannelsState = "busy";
         $http.get("/umbraco/backoffice/uslack/configurationapi/loadchannels?token=" + vm.config.token).then(function (res) {
-            vm.channels = res.data;
+            vm.channels[index] = res.data;
             vm.loadChannelsState = "success";
-
         },
             function () {
                 vm.loadChannelsState = "error";
             });
     }
 
-    vm.btnSave = function(){
+    vm.btnSave = function () {
         vm.buttonState = "busy";
         vm.save().then(function () {
             vm.buttonState = "success";

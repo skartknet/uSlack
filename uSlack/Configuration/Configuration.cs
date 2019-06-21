@@ -17,7 +17,7 @@ namespace uSlack
     {
         const string _filesLocation = "~/App_Plugins/uSlack/Config/";
         private Lazy<Dictionary<string, MessageConfiguration>> _messages;
-        private Lazy<AppConfiguration> _appConfiguration;
+        private Lazy<AppConfigurationList> _appConfiguration;
 
         private static UslackConfiguration _config;
 
@@ -28,7 +28,7 @@ namespace uSlack
                 return InitializeMessages();
             });
 
-            _appConfiguration = new Lazy<AppConfiguration>(() =>
+            _appConfiguration = new Lazy<AppConfigurationList>(() =>
             {
                 return InitializeConfiguration();
             });
@@ -57,7 +57,7 @@ namespace uSlack
             }
         }
 
-        public AppConfiguration AppConfiguration
+        public AppConfigurationList AppConfiguration
         {
             get
             {
@@ -65,22 +65,22 @@ namespace uSlack
             }
             set
             {
-                _appConfiguration = new Lazy<AppConfiguration>(() =>
+                _appConfiguration = new Lazy<AppConfigurationList>(() =>
                 {
                     return value;
                 });
             }
         }
 
-        private static AppConfiguration InitializeConfiguration()
+        private static AppConfigurationList InitializeConfiguration()
         {
-            AppConfiguration config = null;
+            AppConfigurationList config = null;
             var msgPath = IOHelper.MapPath(_filesLocation + "uslack.config");
 
             if (File.Exists(msgPath))
             {
                 var content = File.ReadAllText(msgPath);
-                config = JsonConvert.DeserializeObject<AppConfiguration>(content);
+                config = JsonConvert.DeserializeObject<AppConfigurationList>(content);
             }
 
             return config;
@@ -109,7 +109,7 @@ namespace uSlack
         /// Saves the configuration
         /// </summary>
         /// <param name="model"></param>
-        public void SaveAppConfiguration(AppConfiguration model)
+        public void SaveAppConfiguration(AppConfigurationList model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
 
@@ -135,7 +135,8 @@ namespace uSlack
             // warn: casting to int will give an error. Always cast to Int64;
             try
             {
-                var val = (T)AppConfiguration.Sections[section].Parameters[parameter];
+
+                var val = (T)AppConfiguration[configIdx].Sections[section].Parameters[parameter];
                 return (T)val;
             }
             catch (KeyNotFoundException ex)

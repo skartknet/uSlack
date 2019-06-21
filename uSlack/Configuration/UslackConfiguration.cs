@@ -12,7 +12,11 @@ using System.Threading.Tasks;
 
 namespace uSlack.Configuration
 {
-    public class AppConfiguration
+    public class AppConfigurationList : List<AppConfig>
+    {
+    }
+
+    public class AppConfig
     {
         [JsonProperty("token")]
         public string Token { get; set; }

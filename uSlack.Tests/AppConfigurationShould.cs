@@ -81,7 +81,7 @@ namespace uSlack.Tests
                         }
                         ";
 
-            Assert.DoesNotThrow(() => JsonConvert.DeserializeObject<AppConfiguration>(json));
+            Assert.DoesNotThrow(() => JsonConvert.DeserializeObject<AppConfigurationList>(json));
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace uSlack.Tests
             var sut = UslackConfiguration.Current;
 
             var json = JsonConvert.SerializeObject(sut.AppConfiguration);
-            var model = JsonConvert.DeserializeObject<AppConfiguration>(json);
+            var model = JsonConvert.DeserializeObject<AppConfigurationList>(json);
 
             model.Token = "abc";
 

@@ -32,7 +32,7 @@ namespace uSlack.Backoffice
         }
 
         [HttpPut]
-        public IHttpActionResult SaveConfiguration(AppConfiguration model)
+        public IHttpActionResult SaveConfiguration(AppConfigurationList model)
         {
             try
             {

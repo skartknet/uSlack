@@ -28,7 +28,7 @@ namespace uSlack.Tests
             _messageService = new Mock<IMessageService>();
             _configuration = new Mock<IConfiguration>();
             var messagesConfig = new Dictionary<string, string>();
-            var appConfig = new AppConfiguration();
+            var appConfig = new AppConfigurationList();
             appConfig.Token = "xoxp-656657692176-645232876739-658179266944-834090019227aa80b4a9f33d43f615ab";
             appConfig.SlackChannel = "uslack";
 
