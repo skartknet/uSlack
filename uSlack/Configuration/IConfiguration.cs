@@ -13,7 +13,7 @@ namespace uSlack.Configuration
         Dictionary<string, MessageConfiguration> Messages { get; }
 
         MessageConfiguration GetMessage(string alias);
-        T GetParameter<T>(string parameter, string section);
+
         void SaveAppConfiguration(AppConfigurationList model);
     }
 }
