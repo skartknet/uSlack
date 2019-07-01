@@ -1,5 +1,5 @@
 ﻿<div ng-controller="uslack.dashboard.controller as vm">
-    <div class="umb-panel-group__details" ng-repeat="(idx, config) in vm.configurations" >
+    <div class="umb-panel-group__details" ng-repeat="(idx, config) in vm.configurations">
 
         <div class="umb-panel-group__details-group">
 
@@ -13,7 +13,7 @@
                 <umb-box-content>
                     <div class="sub-view-columns">
                         <div class="sub-view-column-left">
-                            <h5><localize key="uslack_configname" /></h5>                            
+                            <h5><localize key="uslack_configname" /></h5>
                         </div>
                         <div class="sub-view-column-right">
                             <input type="text" ng-model="config.name" />
@@ -79,4 +79,12 @@
 
         </div>
     </div>
+    <umb-button action="vm.btnSave(config)"
+                type="button"
+                button-style="action"
+                state="vm.buttonState"
+                shortcut="ctrl+c"
+                label-key="buttons_save"
+                disabled="vm.buttonState === 'busy'">
+    </umb-button>
 </div>

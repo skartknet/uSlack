@@ -4,6 +4,7 @@
 // </copyright>
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -32,7 +33,7 @@ namespace uSlack.Backoffice
         }
 
         [HttpPut]
-        public IHttpActionResult SaveConfiguration(AppConfigurationList model)
+        public IHttpActionResult SaveConfiguration(IEnumerable<AppConfig> model)
         {
             try
             {

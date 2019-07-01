@@ -12,24 +12,6 @@ using System.Threading.Tasks;
 
 namespace uSlack.Configuration
 {
-    public class AppConfigurationList : List<AppConfig>
-    {
-        public T GetParameter<T>(int configIdx, string section, string parameter)
-        {
-            // warn: casting to int will give an error. Always cast to Int64;
-            try
-            {
-                var val = (T)this[configIdx].Sections[section].Parameters[parameter];
-                return (T)val;
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return default(T);
-            }
-        }
-
-    }
-
     public class AppConfig
     {
         [JsonProperty("name")]

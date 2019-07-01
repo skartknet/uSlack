@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Umbraco.Core.IO;
 using Umbraco.Web.Composing;
 using uSlack.Configuration;
@@ -16,19 +17,19 @@ namespace uSlack
     public class UslackConfiguration : IConfiguration
     {
         const string _filesLocation = "~/App_Plugins/uSlack/Config/";
-        private Lazy<Dictionary<string, MessageConfiguration>> _messages;
-        private Lazy<AppConfigurationList> _appConfiguration;
+        private Lazy<IDictionary<string, MessageConfiguration>> _messages;
+        private Lazy<IEnumerable<AppConfig>> _appConfiguration;
 
         private static UslackConfiguration _config;
 
         private UslackConfiguration()
         {
-            _messages = new Lazy<Dictionary<string, MessageConfiguration>>(() =>
+            _messages = new Lazy<IDictionary<string, MessageConfiguration>>(() =>
             {
                 return InitializeMessages();
             });
 
-            _appConfiguration = new Lazy<AppConfigurationList>(() =>
+            _appConfiguration = new Lazy<IEnumerable<AppConfig>>(() =>
             {
                 return InitializeConfiguration();
             });
@@ -49,7 +50,7 @@ namespace uSlack
         }
 
 
-        public Dictionary<string, MessageConfiguration> Messages
+        public IDictionary<string, MessageConfiguration> Messages
         {
             get
             {
@@ -57,7 +58,7 @@ namespace uSlack
             }
         }
 
-        public AppConfigurationList AppConfiguration
+        public IEnumerable<AppConfig> AppConfiguration
         {
             get
             {
@@ -65,25 +66,40 @@ namespace uSlack
             }
             set
             {
-                _appConfiguration = new Lazy<AppConfigurationList>(() =>
+                _appConfiguration = new Lazy<IEnumerable<AppConfig>>(() =>
                 {
                     return value;
                 });
             }
         }
 
-        private static AppConfigurationList InitializeConfiguration()
+        private static IList<AppConfig> InitializeConfiguration()
         {
-            AppConfigurationList config = null;
+            IList<AppConfig> config = null;
             var msgPath = IOHelper.MapPath(_filesLocation + "uslack.config");
 
             if (File.Exists(msgPath))
             {
                 var content = File.ReadAllText(msgPath);
-                config = JsonConvert.DeserializeObject<AppConfigurationList>(content);
+                config = JsonConvert.DeserializeObject<AppConfig[]>(content);
             }
 
             return config;
+        }
+
+        public T GetParameter<T>(int configIdx, string section, string parameter)
+        {
+            // warn: casting to int will give an error. Always cast to Int64;
+            try
+            {
+                var list = AppConfiguration.ToList();
+                var val = (T)list[configIdx].Sections[section].Parameters[parameter];
+                return (T)val;
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return default(T);
+            }
         }
 
         private static Dictionary<string, MessageConfiguration> InitializeMessages()
@@ -109,7 +125,7 @@ namespace uSlack
         /// Saves the configuration
         /// </summary>
         /// <param name="model"></param>
-        public void SaveAppConfiguration(AppConfigurationList model)
+        public void SaveAppConfiguration(IEnumerable<AppConfig> model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
 
