@@ -14,25 +14,16 @@ namespace uSlack.EventHandlers
     public class MemberHandlers : EventHandlerBase
     {
 
+   
 
         public void MemberService_Deleted(Umbraco.Core.Services.IMemberService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMember> e)
         {
-            if (UslackConfiguration.Current.GetParameter<bool>("deleted", "memberService") == false) return;
-
-            foreach (IMember item in e.DeletedEntities)
-            {
-                Task.Run(async () => await SendMessageAsync(item, nameof(this.MemberService_Deleted)));
-            }
+            SendMessage("memberService", "deleted", e.DeletedEntities);
         }
 
         public void MemberService_Saved(Umbraco.Core.Services.IMemberService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMember> e)
         {
-            if (UslackConfiguration.Current.GetParameter<bool>("saved", "memberService") == false) return;
-
-            foreach (IMember item in e.SavedEntities)
-            {
-                Task.Run(async () => await SendMessageAsync(item, nameof(this.MemberService_Deleted)));
-            }
+            SendMessage("memberService", "saved", e.SavedEntities);
         }
 
     }

@@ -16,7 +16,7 @@ namespace uSlack.Services
     public class SlackService : IMessageService
     {
 
-        public async Task SendMessageAsync(string txt, IBlock[] blocks)
+        public async Task SendMessageAsync(string token, string channel, string txt, IBlock[] blocks)
         {
             if (blocks == null)
             {
@@ -25,8 +25,8 @@ namespace uSlack.Services
 
             try
             {
-                var client = new USlackExendedSlackTaskClient(UslackConfiguration.Current.AppConfiguration.Token);
-                var response = await client.PostMessageAsync(UslackConfiguration.Current.AppConfiguration.SlackChannel, txt, blocks: blocks);
+                var client = new SlackTaskClient(token);
+                var response = await client.PostMessageAsync(channel, txt, blocks: blocks);
 
                 if (!response.ok)
                 {
@@ -45,13 +45,8 @@ namespace uSlack.Services
         /// </summary>
         /// <param name="token">If no token is passed, the on in the config will be used.</param>
         /// <returns></returns>
-        public async Task<ConversationListResponse> GetChannelsAsync(string token = null)
-        {
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                token = UslackConfiguration.Current.AppConfiguration.Token;
-            }
-
+        public async Task<ConversationListResponse> GetChannelsAsync(string token)
+        {            
             var client = new USlackExendedSlackTaskClient(token);
 
             var response = await client.GetConversationListAsync();

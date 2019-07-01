@@ -11,7 +11,7 @@ namespace uSlack.Services
 {
     public interface IMessageService
     {
-        Task SendMessageAsync(string txt, IBlock[] blocks);
+        Task SendMessageAsync(string token, string channel, string txt, IBlock[] blocks);
         Task<ConversationListResponse> GetChannelsAsync(string token = null);
     }
 }

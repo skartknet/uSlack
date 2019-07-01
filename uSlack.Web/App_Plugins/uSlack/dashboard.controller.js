@@ -3,52 +3,61 @@
     vm.buttonState = "init";
     vm.loadChannelsState = "init";
 
-    vm.config = {};
-
+    vm.configurations = [];
+    vm.panelsVisibility = [];
 
     function init() {
         $http.get("/umbraco/backoffice/uslack/configurationapi/getconfiguration").then(function (res) {
-            vm.config = res.data;
+            vm.configurations = res.data;
 
-            if (vm.config.token) {
-                vm.loadChannels();
+            for (var i = 0; i < vm.configurations.length; i++) {
+
+                vm.panelsVisibility.push(false);
+
+                var config = vm.configurations[i];
+                if (config.token) {
+                    vm.loadChannels(config);
+                }
             }
         });
-
-        
     }
 
-    vm.save = function () {
-        return $http.put("/umbraco/backoffice/uslack/configurationapi/saveconfiguration", vm.config).then(
+    function save() {
+        return $http.put("/umbraco/backoffice/uslack/configurationapi/saveconfiguration", vm.configurations).then(
             function (res) {
-                vm.config = res.data;
+                vm.configurations = res.data;
                 notificationsService.success("Success", "Configuration was saved succesfully");
 
             },
             function (res) {
                 //we revert changes if something went wrong
-                vm.config = vm.tempconfig;
+                vm.configurations = vm.tempconfig;
                 notificationsService.error("Error", "Configuration couldn't be saved!");
-
+                throw "Error saving configuration";
             }
         );
     }
 
-    vm.loadChannels = function () {
-        vm.loadChannelsState = "busy";
-        $http.get("/umbraco/backoffice/uslack/configurationapi/loadchannels?token=" + vm.config.token).then(function (res) {
-            vm.channels = res.data;
-            vm.loadChannelsState = "success";
+    vm.togglePanel = function (idx) {
+        vm.panelsVisibility[idx] = !vm.panelsVisibility[idx];
+    }
 
+
+    vm.loadChannels = function (config) {
+        vm.loadChannelsState = "busy";
+        $http.get("/umbraco/backoffice/uslack/configurationapi/loadchannels?token=" + config.token).then(function (res) {
+            config.channels = res.data;
+            vm.loadChannelsState = "success";
         },
-            function () {
+            function (res) {
                 vm.loadChannelsState = "error";
+                notificationsService.error("Request failed", res.data);
             });
     }
 
-    vm.btnSave = function(){
+    vm.btnSave = function () {
         vm.buttonState = "busy";
-        vm.save().then(function () {
+        save().then(function () {
             vm.buttonState = "success";
         },
             function () {
@@ -56,12 +65,12 @@
             });
     }
 
-    vm.toggleSwitch = function (section, param) {
+    vm.toggleSwitch = function (config, section, param) {
 
-        vm.tempconfig = vm.config;
+        vm.tempconfig = vm.configurations;
 
-        vm.config.sections[section].parameters[param] = !vm.config.sections[section].parameters[param];
-        vm.save();
+        config.sections[section].parameters[param] = !config.sections[section].parameters[param];
+        save();
     }
 
     init();

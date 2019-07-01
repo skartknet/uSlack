@@ -1,19 +1,19 @@
 ﻿<div ng-controller="uslack.dashboard.controller as vm">
-    <div class="umb-panel-group__details" ng-repeat="(index, config) in vm.config">
+    <div class="umb-panel-group__details" ng-repeat="(idx, config) in vm.configurations">
 
         <div class="umb-panel-group__details-group">
 
-            <div class="umb-panel-group__details-group-title">
+            <div class="umb-panel-group__details-group-title" ng-click="vm.togglePanel(idx);">
                 <div class="umb-panel-group__details-group-name">
                     {{config.name}}
                 </div>
             </div>
 
-            <umb-box>
+            <umb-box ng-show="vm.panelsVisibility[idx]">
                 <umb-box-content>
                     <div class="sub-view-columns">
                         <div class="sub-view-column-left">
-                            <h5><localize key="uslack_configname" /></h5>                            
+                            <h5><localize key="uslack_configname" /></h5>
                         </div>
                         <div class="sub-view-column-right">
                             <input type="text" ng-model="config.name" />
@@ -38,20 +38,20 @@
                             <small><localize key="uslack_channel_help" /></small>
                         </div>
                         <div class="sub-view-column-right">
-                            <umb-button ng-show="!vm.channels[index]"
-                                        action="vm.loadChannels(index)"
+                            <umb-button ng-show="!config.channels"
+                                        action="vm.loadChannels(config)"
                                         type="button"
                                         button-style="action"
                                         state="vm.loadChannelsState"
                                         label-key="uslack_loadChannelsBtn"
                                         disabled="vm.loadChannelsState === 'busy' || !config.token">
                             </umb-button>
-                            <select ng-model="config.channel" ng-show="vm.channels[index]">
-                                <option ng-repeat="channel in vm.channels[index]" value="{{channel.id}}">{{channel.name}}</option>
+                            <select ng-model="config.channel" ng-show="config.channels">
+                                <option ng-repeat="channel in config.channels" value="{{channel.id}}">{{channel.name}}</option>
                             </select>
                         </div>
                     </div>
-                    <umb-button action="vm.btnSave()"
+                    <umb-button action="vm.btnSave(config)"
                                 type="button"
                                 button-style="action"
                                 state="vm.buttonState"
@@ -70,7 +70,7 @@
                             </div>
                             <div class="sub-view-column-right">
                                 <umb-toggle checked="config.sections[section].parameters[key]"
-                                            on-click="vm.toggleSwitch(section, key)"></umb-toggle>
+                                            on-click="vm.toggleSwitch(config, section, key)"></umb-toggle>
                             </div>
                         </div>
                     </umb-box-content>
@@ -79,4 +79,12 @@
 
         </div>
     </div>
+    <umb-button action="vm.btnSave(config)"
+                type="button"
+                button-style="action"
+                state="vm.buttonState"
+                shortcut="ctrl+c"
+                label-key="buttons_save"
+                disabled="vm.buttonState === 'busy'">
+    </umb-button>
 </div>

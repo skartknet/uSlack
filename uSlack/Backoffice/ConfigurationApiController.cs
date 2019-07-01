@@ -54,8 +54,14 @@ namespace uSlack.Backoffice
 
             try
             {
-                var channels = await _msgService.GetChannelsAsync(token);
-                var mappedModels = channels.channels.Select(c => new SlackEntity
+                var response = await _msgService.GetChannelsAsync(token);
+
+                if (!response.ok)
+                {
+                    return new SlackErrorResult(response.error, Request);
+                }
+
+                var mappedModels = response.channels.Select(c => new SlackEntity
                 {
                     Id = c.id,
                     Name = c.name

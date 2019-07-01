@@ -14,10 +14,27 @@ namespace uSlack.Configuration
 {
     public class AppConfigurationList : List<AppConfig>
     {
+        public T GetParameter<T>(int configIdx, string section, string parameter)
+        {
+            // warn: casting to int will give an error. Always cast to Int64;
+            try
+            {
+                var val = (T)this[configIdx].Sections[section].Parameters[parameter];
+                return (T)val;
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return default(T);
+            }
+        }
+
     }
 
     public class AppConfig
     {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
         [JsonProperty("token")]
         public string Token { get; set; }
 
@@ -31,16 +48,15 @@ namespace uSlack.Configuration
         /// Gets a value from the configuration dictionary and casts it to the provided type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="parameter">parameter alias</param>
         /// <param name="section">section alias</param>
+        /// <param name="parameter">parameter alias</param>
         /// <returns></returns>
-        public T GetParameter<T>(string parameter, string section)
+        public T GetParameter<T>(string section, string parameter)
         {
             // warn: casting to int will give an error. Always cast to Int64;
             try
             {
-
-                var val = (T)AppConfiguration[configIdx].Sections[section].Parameters[parameter];
+                var val = (T)this.Sections[section].Parameters[parameter];
                 return (T)val;
             }
             catch (KeyNotFoundException ex)

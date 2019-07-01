@@ -8,19 +8,49 @@ using System.Threading.Tasks;
 using Umbraco.Core.Models.Entities;
 using uSlack.Services;
 using SlackAPI;
+using System.Collections.Generic;
 
 namespace uSlack.EventHandlers
 {
     public abstract class EventHandlerBase
     {
-        protected readonly IMessageService _messageService;        
+           /// <summary>
+        ///  It sends a messsage for each of the available configurations.
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="evt"></param>        
+        protected virtual void SendMessage(string service, string evt, IEntity entity)
+        {
+            foreach (var c in UslackConfiguration.Current.AppConfiguration)
+            {
+                if (c.GetParameter<bool>(service, evt) == false) return;
 
-        protected EventHandlerBase()
-        {            
-            _messageService = new SlackService();
+                Task.Run(async () => await SendMessageAsync(c.Token, c.SlackChannel, entity, $"{service}_{evt}"));
+
+            }
         }
 
-        protected async Task SendMessageAsync(IEntity node, string templateName)
+        /// <summary>
+        ///  It sends a messsage for each of the available configurations.
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="evt"></param>        
+        protected virtual void SendMessage(string service, string evt, IEnumerable<IEntity> entities)
+        {
+            foreach (var c in UslackConfiguration.Current.AppConfiguration)
+            {
+                if (c.GetParameter<bool>(service, evt) == false) return;
+
+                foreach (var entity in entities)
+                {
+                    Task.Run(async () => await SendMessageAsync(c.Token, c.SlackChannel, entity, $"{service}_{evt}"));
+                }
+
+            }
+        }
+
+
+        private async Task SendMessageAsync(string token, string channel, IEntity node, string templateName)
         {
             var msg = UslackConfiguration.Current.GetMessage(templateName);
             var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
@@ -30,7 +60,9 @@ namespace uSlack.EventHandlers
 
             var text = msg.Text.ReplacePlaceholders(node);
 
-            await _messageService.SendMessageAsync(text, blocks);
+            //TODO: get from DI container
+            var messageService = new SlackService();
+            await messageService.SendMessageAsync(token, channel, text, blocks);
         }
 
     }
