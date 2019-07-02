@@ -18,7 +18,7 @@ namespace uSlack
     {
         const string _filesLocation = "~/App_Plugins/uSlack/Config/";
         private Lazy<IDictionary<string, MessageConfiguration>> _messages;
-        private Lazy<IEnumerable<AppConfig>> _appConfiguration;
+        private Lazy<IEnumerable<AppConfiguration>> _appConfiguration;
 
         private static UslackConfiguration _config;
 
@@ -29,7 +29,7 @@ namespace uSlack
                 return InitializeMessages();
             });
 
-            _appConfiguration = new Lazy<IEnumerable<AppConfig>>(() =>
+            _appConfiguration = new Lazy<IEnumerable<AppConfiguration>>(() =>
             {
                 return InitializeConfiguration();
             });
@@ -58,7 +58,7 @@ namespace uSlack
             }
         }
 
-        public IEnumerable<AppConfig> AppConfiguration
+        public IEnumerable<AppConfiguration> AppConfiguration
         {
             get
             {
@@ -66,42 +66,27 @@ namespace uSlack
             }
             set
             {
-                _appConfiguration = new Lazy<IEnumerable<AppConfig>>(() =>
+                _appConfiguration = new Lazy<IEnumerable<AppConfiguration>>(() =>
                 {
                     return value;
                 });
             }
         }
 
-        private static IList<AppConfig> InitializeConfiguration()
+        private static IList<AppConfiguration> InitializeConfiguration()
         {
-            IList<AppConfig> config = null;
+            IList<AppConfiguration> config = null;
             var msgPath = IOHelper.MapPath(_filesLocation + "uslack.config");
 
             if (File.Exists(msgPath))
             {
                 var content = File.ReadAllText(msgPath);
-                config = JsonConvert.DeserializeObject<AppConfig[]>(content);
+                config = JsonConvert.DeserializeObject<AppConfiguration[]>(content);
             }
 
             return config;
         }
-
-        public T GetParameter<T>(int configIdx, string section, string parameter)
-        {
-            // warn: casting to int will give an error. Always cast to Int64;
-            try
-            {
-                var list = AppConfiguration.ToList();
-                var val = (T)list[configIdx].Sections[section].Parameters[parameter];
-                return (T)val;
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return default(T);
-            }
-        }
-
+     
         private static Dictionary<string, MessageConfiguration> InitializeMessages()
         {
             var messages = new Dictionary<string, MessageConfiguration>();
@@ -121,11 +106,12 @@ namespace uSlack
             return messages;
         }
 
+
         /// <summary>
         /// Saves the configuration
         /// </summary>
         /// <param name="model"></param>
-        public void SaveAppConfiguration(IEnumerable<AppConfig> model)
+        public void SaveAppConfiguration(IEnumerable<AppConfiguration> model)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
 

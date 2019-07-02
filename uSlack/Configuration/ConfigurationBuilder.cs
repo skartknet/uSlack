@@ -16,9 +16,9 @@ namespace uSlack.Configuration
 
         protected static void Init()
         {
-            var template = new List<AppConfig>();
+            var template = new List<AppConfiguration>();
 
-            var baseConfig = new AppConfig();
+            var baseConfig = new AppConfiguration();
             baseConfig.Sections = BuildSections();
 
             template.Add(baseConfig);

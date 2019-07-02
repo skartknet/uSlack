@@ -25,7 +25,7 @@ namespace uSlack.Services
 
             try
             {
-                var client = new SlackTaskClient(token);
+                var client = new USlackExendedSlackTaskClient(token);
                 var response = await client.PostMessageAsync(channel, txt, blocks: blocks);
 
                 if (!response.ok)

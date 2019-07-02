@@ -33,7 +33,7 @@ namespace uSlack.Backoffice
         }
 
         [HttpPut]
-        public IHttpActionResult SaveConfiguration(IEnumerable<AppConfig> model)
+        public IHttpActionResult SaveConfiguration(IEnumerable<AppConfiguration> model)
         {
             try
             {
