@@ -277,11 +277,13 @@
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\MessageConfiguration.cs" />
     <Compile Include="Configuration\AppConfiguration.cs" />
+    <Compile Include="Controllers\SlackInteractiveApiController.cs" />
     <Compile Include="InitUSlack.cs" />
     <Compile Include="EventHandlers\MemberHandlers.cs" />
     <Compile Include="EventHandlers\MediaHandlers.cs" />
     <Compile Include="EventHandlers\UserHandlers.cs" />
     <Compile Include="EventHandlers\EventHandlerBase.cs" />
+    <Compile Include="Models\InteractiveResponse.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\Models\ConversationListResponse.cs" />
     <Compile Include="Services\USlackExendedSlackTaskClient.cs" />
