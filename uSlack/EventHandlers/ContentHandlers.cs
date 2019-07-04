@@ -15,7 +15,7 @@ using uSlack.Services;
 namespace uSlack.EventHandlers
 {
 
-
+    [SectionHandlers("contentService")]
     public class ContentHandlers : EventHandlerBase
     {
 

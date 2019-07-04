@@ -19,6 +19,7 @@ namespace uSlack
         const string _filesLocation = "~/App_Plugins/uSlack/Config/";
         private Lazy<IDictionary<string, MessageConfiguration>> _messages;
         private Lazy<IEnumerable<AppConfig>> _appConfiguration;
+        private Lazy<AppConfig> _defaultConfiguration;
 
         private static UslackConfiguration _config;
 
@@ -32,6 +33,12 @@ namespace uSlack
             _appConfiguration = new Lazy<IEnumerable<AppConfig>>(() =>
             {
                 return InitializeConfiguration();
+            });
+
+            _defaultConfiguration = new Lazy<AppConfig>(() =>
+            {
+                var builder = new ConfigurationBuilder();
+                return builder.CreateDefaultConfiguration();
             });
         }
 
@@ -49,7 +56,13 @@ namespace uSlack
             }
         }
 
-
+        public AppConfig DefaultConfiguration
+        {
+            get
+            {
+                return _defaultConfiguration.Value;
+            }
+        }
         public IDictionary<string, MessageConfiguration> Messages
         {
             get

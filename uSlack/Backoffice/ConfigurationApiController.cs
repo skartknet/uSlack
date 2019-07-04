@@ -27,9 +27,22 @@ namespace uSlack.Backoffice
             _msgService = msgService;
         }
 
+        /// <summary>
+        /// Returns all the uSlack configurations for the current site.
+        /// </summary>
+        /// <returns></returns>
         public IHttpActionResult GetConfiguration()
         {
             return Ok(UslackConfiguration.Current.AppConfiguration);
+        }
+
+        /// <summary>
+        /// Returns a default configuration. Used as a base to create custom configurations.
+        /// </summary>
+        /// <returns></returns>
+        public IHttpActionResult GetDefaultConfiguration()
+        {
+            return Ok(UslackConfiguration.Current.DefaultConfiguration);
         }
 
         [HttpPut]

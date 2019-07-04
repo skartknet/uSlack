@@ -6,8 +6,22 @@
     vm.configurations = [];
     vm.panelsVisibility = [];
 
-    function init() {
+    function init() {        
+        $http.get("/umbraco/backoffice/uslack/configurationapi/GetDefaultConfiguration").then(function (res) {
+            vm.defaultConfiguration = res.data;
+            
+            getCurrentConfigurations();
+        });
+    }
+
+    function getCurrentConfigurations() {
         $http.get("/umbraco/backoffice/uslack/configurationapi/getconfiguration").then(function (res) {
+
+            if (res.data.length <= 0) {
+                vm.configurations.push(vm.defaultConfiguration);
+                return;
+            }
+
             vm.configurations = res.data;
 
             for (var i = 0; i < vm.configurations.length; i++) {

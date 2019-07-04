@@ -11,41 +11,40 @@ namespace uSlack.Configuration
 {
     class ConfigurationBuilder
     {
-        private ConfigurationBuilder()
-        { }
-
-        protected static void Init()
+   
+        internal AppConfig CreateDefaultConfiguration()
         {
-            var template = new List<AppConfig>();
-
             var baseConfig = new AppConfig();
-            baseConfig.Sections = BuildSections();
+            baseConfig.Sections = BuildSections();                        
 
-            template.Add(baseConfig);
-
-            var config = JsonConvert.SerializeObject(template);
+            return baseConfig;
         }
 
-        private static Dictionary<string, ConfigSection> BuildSections()
+        protected Dictionary<string, ConfigSection> BuildSections()
         {
             var dict = new Dictionary<string, ConfigSection>();
             var registeredTypes = GetTypesWithConfigurationAttribute();
 
+            foreach (var type in registeredTypes)
+            {
+                var methods = type.GetMethods();
+                foreach (var method in methods)
+                {
+
+                }
+            }
+
             return dict;
         }
-
-        private void FindRegisteredConfiguration()
-        {
-
-        }
+     
 
         //https://stackoverflow.com/questions/607178/how-enumerate-all-classes-with-custom-class-attribute
-        static IEnumerable<Type> GetTypesWithConfigurationAttribute()
+        protected IEnumerable<Type> GetTypesWithConfigurationAttribute()
         {
             var configuredTypes =
                 from a in AppDomain.CurrentDomain.GetAssemblies().AsParallel()
                 from t in a.GetTypes()
-                let attributes = t.GetCustomAttributes(typeof(RegisterAsUslackConfigurationAttribute), true)
+                let attributes = t.GetCustomAttributes(typeof(SectionHandlersAttribute), true)
                 where attributes != null && attributes.Length > 0
                 select t;
 
