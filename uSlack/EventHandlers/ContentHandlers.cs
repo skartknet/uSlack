@@ -3,25 +3,19 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
-using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Umbraco.Core.Events;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
-using uSlack.Services;
 
 namespace uSlack.EventHandlers
 {
 
-    [SectionHandlers("contentService")]
+    [SectionHandler("contentService")]
     public class ContentHandlers : EventHandlerBase
     {
-
+        [EventHandler("published", true)]
         public void ContentService_Published(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.ContentPublishedEventArgs e)
         {
-            SendMessage("contentService", "published", e.PublishedEntities);
+            SendMessage(this, "published", e.PublishedEntities);
         }
 
         public void ContentService_Unpublished(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.PublishEventArgs<Umbraco.Core.Models.IContent> e)

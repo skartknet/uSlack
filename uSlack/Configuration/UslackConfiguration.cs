@@ -9,33 +9,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Umbraco.Core.IO;
-using Umbraco.Web.Composing;
 using uSlack.Configuration;
 
 namespace uSlack
 {
     public class UslackConfiguration : IConfiguration
     {
-        const string _filesLocation = "~/App_Plugins/uSlack/Config/";
-        private Lazy<IDictionary<string, MessageConfiguration>> _messages;
-        private Lazy<IEnumerable<AppConfig>> _appConfiguration;
-        private Lazy<AppConfig> _defaultConfiguration;
+        const string FilesLocation = "~/App_Plugins/uSlack/Config/";
+        private readonly Lazy<IDictionary<string, MessageConfiguration>> _messages;
+        private Lazy<IEnumerable<AppConfiguration>> _appConfiguration;
+        private readonly Lazy<AppConfiguration> _defaultConfiguration;
 
         private static UslackConfiguration _config;
 
         private UslackConfiguration()
         {
-            _messages = new Lazy<IDictionary<string, MessageConfiguration>>(() =>
-            {
-                return InitializeMessages();
-            });
+            _messages = new Lazy<IDictionary<string, MessageConfiguration>>(InitializeMessages);
 
-            _appConfiguration = new Lazy<IEnumerable<AppConfig>>(() =>
-            {
-                return InitializeConfiguration();
-            });
+            _appConfiguration = new Lazy<IEnumerable<AppConfiguration>>(InitializeConfiguration);
 
-            _defaultConfiguration = new Lazy<AppConfig>(() =>
+            _defaultConfiguration = new Lazy<AppConfiguration>(() =>
             {
                 var builder = new ConfigurationBuilder();
                 return builder.CreateDefaultConfiguration();
@@ -56,45 +49,28 @@ namespace uSlack
             }
         }
 
-        public AppConfig DefaultConfiguration
-        {
-            get
-            {
-                return _defaultConfiguration.Value;
-            }
-        }
-        public IDictionary<string, MessageConfiguration> Messages
-        {
-            get
-            {
-                return _messages.Value;
-            }
-        }
+        public AppConfiguration DefaultConfiguration => _defaultConfiguration.Value;
 
-        public IEnumerable<AppConfig> AppConfiguration
+        public IDictionary<string, MessageConfiguration> Messages => _messages.Value;
+
+        public IEnumerable<AppConfiguration> AppConfiguration
         {
-            get
-            {
-                return _appConfiguration.Value;
-            }
+            get => _appConfiguration.Value;
             set
             {
-                _appConfiguration = new Lazy<IEnumerable<AppConfig>>(() =>
-                {
-                    return value;
-                });
+                _appConfiguration = new Lazy<IEnumerable<AppConfiguration>>(() => value);
             }
         }
 
-        private static IList<AppConfig> InitializeConfiguration()
+        private static IList<AppConfiguration> InitializeConfiguration()
         {
-            IList<AppConfig> config = null;
-            var msgPath = IOHelper.MapPath(_filesLocation + "uslack.config");
+            IList<AppConfiguration> config = null;
+            var msgPath = IOHelper.MapPath(FilesLocation + "uslack.config");
 
             if (File.Exists(msgPath))
             {
                 var content = File.ReadAllText(msgPath);
-                config = JsonConvert.DeserializeObject<AppConfig[]>(content);
+                config = JsonConvert.DeserializeObject<AppConfiguration[]>(content);
             }
 
             return config;
@@ -109,7 +85,7 @@ namespace uSlack
                 var val = (T)list[configIdx].Sections[section].Parameters[parameter];
                 return (T)val;
             }
-            catch (KeyNotFoundException ex)
+            catch
             {
                 return default(T);
             }
@@ -119,7 +95,7 @@ namespace uSlack
         {
             var messages = new Dictionary<string, MessageConfiguration>();
 
-            var msgPath = IOHelper.MapPath(_filesLocation);
+            var msgPath = IOHelper.MapPath(FilesLocation);
             if (Directory.Exists(msgPath) == false) return null;
             var files = Directory.GetFiles(msgPath, "*.json");
 
@@ -138,15 +114,13 @@ namespace uSlack
         /// Saves the configuration
         /// </summary>
         /// <param name="model"></param>
-        public void SaveAppConfiguration(IEnumerable<AppConfig> model)
+        public void SaveAppConfiguration(IEnumerable<AppConfiguration> model)
         {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-
             //update config in memory
-            AppConfiguration = model;
+            AppConfiguration = model ?? throw new ArgumentNullException(nameof(model));
 
             //update config in file
-            var msgPath = IOHelper.MapPath(_filesLocation + "uslack.config");
+            var msgPath = IOHelper.MapPath(FilesLocation + "uslack.config");
             var json = JsonConvert.SerializeObject(model);
 
             File.WriteAllText(msgPath, json);

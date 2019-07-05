@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack", "uSlack\uSlack.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack.Tests", "uSlack.Tests\uSlack.Tests.csproj", "{76085590-FA77-4BE5-AD75-C669512024D1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B9FD22B6-353D-48C9-832A-971021D666A8}"
+	ProjectSection(SolutionItems) = preProject
+		createTunnel.bat = createTunnel.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

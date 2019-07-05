@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace uSlack.Configuration
 {
-    public class AppConfig
+    public class AppConfiguration
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -33,9 +33,18 @@ namespace uSlack.Configuration
         /// <param name="section">section alias</param>
         /// <param name="parameter">parameter alias</param>
         /// <returns></returns>
-        public T GetParameter<T>(string section, string parameter)
+        public T GetParameter<T>(string section, string parameter) where T : struct
         {
-            // warn: casting to int will give an error. Always cast to Int64;
+            if (string.IsNullOrWhiteSpace(section))
+            {
+                throw new ArgumentException("section cannot be empty", nameof(section));
+            }
+
+            if (string.IsNullOrWhiteSpace(parameter))
+            {
+                throw new ArgumentException("parameter cannot be empty", nameof(parameter));
+            }
+
             try
             {
                 var val = (T)this.Sections[section].Parameters[parameter];

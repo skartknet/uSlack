@@ -6,23 +6,24 @@ using System.Threading.Tasks;
 
 namespace uSlack.Configuration
 {
-    [System.AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+    /// <summary>
+    /// It registers a method or the methods of a class as a property of the uSlack configuration.
+    /// </summary>
+
+    [System.AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     sealed class EventHandlerAttribute : Attribute
     {
         // See the attribute guidelines at 
         //  http://go.microsoft.com/fwlink/?LinkId=85236
-        readonly string alias;
 
-        // This is a positional argument
-        public EventHandlerAttribute(string alias)
+        public EventHandlerAttribute(string alias, object defaultValue)
         {
-            this.alias = alias;
+            Alias = alias;
+            DefaultValue = defaultValue;
         }
 
-        public string Alias
-        {
-            get { return alias; }
-        }
-
+        public string Alias { get; }
+        public object DefaultValue { get; }
     }
+
 }
