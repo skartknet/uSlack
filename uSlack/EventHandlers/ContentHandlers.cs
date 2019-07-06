@@ -15,7 +15,7 @@ namespace uSlack.EventHandlers
         [EventHandler("published", true)]
         public void ContentService_Published(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.ContentPublishedEventArgs e)
         {
-            SendMessage(this, "published", e.PublishedEntities);
+            SendMessage("contentService", "published", e.PublishedEntities);
         }
 
         public void ContentService_Unpublished(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.PublishEventArgs<Umbraco.Core.Models.IContent> e)

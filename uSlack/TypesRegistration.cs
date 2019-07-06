@@ -20,6 +20,8 @@ namespace uSlack.EventHandlers
             composition.Register(typeof(MemberHandlers));
 
             composition.Register(typeof(IMessageService), typeof(SlackService));
+            composition.Register(typeof(IConfigurationBuilder), typeof(ConfigurationBuilder));
+
 
 
         }

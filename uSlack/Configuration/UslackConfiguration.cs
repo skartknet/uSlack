@@ -19,35 +19,24 @@ namespace uSlack
         private readonly Lazy<IDictionary<string, MessageConfiguration>> _messages;
         private Lazy<IEnumerable<AppConfiguration>> _appConfiguration;
         private readonly Lazy<AppConfiguration> _defaultConfiguration;
-
+        private readonly IConfigurationBuilder _configurationBuilder;
         private static UslackConfiguration _config;
 
-        private UslackConfiguration()
+        private UslackConfiguration(IConfigurationBuilder configurationBuilder)
         {
-            _messages = new Lazy<IDictionary<string, MessageConfiguration>>(InitializeMessages);
+            _messages = new Lazy<IDictionary<string, MessageConfiguration>>(LoadMessages);
 
-            _appConfiguration = new Lazy<IEnumerable<AppConfiguration>>(InitializeConfiguration);
+            _appConfiguration = new Lazy<IEnumerable<AppConfiguration>>(LoadConfiguration);
 
             _defaultConfiguration = new Lazy<AppConfiguration>(() =>
             {
-                var builder = new ConfigurationBuilder();
-                return builder.CreateDefaultConfiguration();
+                return configurationBuilder.CreateDefaultConfiguration();
             });
+            _configurationBuilder = configurationBuilder;
         }
 
 
-        public static UslackConfiguration Current
-        {
-            get
-            {
-                if (_config == null)
-                {
-                    _config = new UslackConfiguration();
-                }
-
-                return _config;
-            }
-        }
+   
 
         public AppConfiguration DefaultConfiguration => _defaultConfiguration.Value;
 
@@ -62,7 +51,7 @@ namespace uSlack
             }
         }
 
-        private static IList<AppConfiguration> InitializeConfiguration()
+        private static IList<AppConfiguration> LoadConfiguration()
         {
             IList<AppConfiguration> config = null;
             var msgPath = IOHelper.MapPath(FilesLocation + "uslack.config");
@@ -91,7 +80,7 @@ namespace uSlack
             }
         }
 
-        private static Dictionary<string, MessageConfiguration> InitializeMessages()
+        private static Dictionary<string, MessageConfiguration> LoadMessages()
         {
             var messages = new Dictionary<string, MessageConfiguration>();
 

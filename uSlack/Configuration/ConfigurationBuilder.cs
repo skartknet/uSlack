@@ -11,33 +11,33 @@ using uSlack.Configuration;
 
 namespace uSlack.Configuration
 {
-    class ConfigurationBuilder
+    public class ConfigurationBuilder : IConfigurationBuilder
     {
 
-        internal AppConfiguration CreateDefaultConfiguration()
+        public AppConfiguration CreateDefaultConfiguration()
         {
-            var baseConfig = new AppConfiguration {Sections = BuildSections()};
+            var registeredTypes = GetConfigurationSections();
+            
+            var baseConfig = new AppConfiguration {Sections = BuildSections(registeredTypes)};
 
             return baseConfig;
         }
 
-        protected Dictionary<string, ConfigSection> BuildSections()
+        public virtual Dictionary<string, ConfigSection> BuildSections(IEnumerable<Type> registeredSections)
         {
             var dict = new Dictionary<string, ConfigSection>();
-            var registeredTypes = GetConfigurationSections();
 
-            foreach (var sectionType in registeredTypes)
-            {
-                //var section = new KeyValuePair<string, ConfigSection>
-                //(
-                //    sectionType.GetCustomAttribute<EventHandlerAttribute>().Alias
-                //);
-
+            foreach (var sectionType in registeredSections)
+            {             
                 var methods = GetConfigurationEventHandlers(sectionType);
                 var configSection = new ConfigSection();
+                configSection.Parameters = new Dictionary<string, object>();
                 foreach (var method in methods)
                 {
                     var attr = method.GetCustomAttribute<EventHandlerAttribute>();
+
+                    if (attr == null) continue;
+
                     configSection.Parameters.Add(attr.Alias, attr.DefaultValue);
                 }
 
@@ -48,14 +48,14 @@ namespace uSlack.Configuration
             return dict;
         }
 
-        protected IEnumerable<MethodInfo> GetConfigurationEventHandlers(Type section)
+        private IEnumerable<MethodInfo> GetConfigurationEventHandlers(Type section)
         {
             return section.GetMethods().Where(m => m.GetCustomAttributes().Any(att => att is EventHandlerAttribute));
         }
 
 
         //https://stackoverflow.com/questions/607178/how-enumerate-all-classes-with-custom-class-attribute
-        protected IEnumerable<Type> GetConfigurationSections()
+        private IEnumerable<Type> GetConfigurationSections()
         {
             var configuredTypes =
                 from a in AppDomain.CurrentDomain.GetAssemblies().AsParallel()
