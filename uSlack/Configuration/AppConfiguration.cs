@@ -55,5 +55,16 @@ namespace uSlack.Configuration
                 return default(T);
             }
         }
+
+        public ConfigSection AddSection(string alias, Action<ConfigSection> configSection)
+        {
+            return AddSection(new ConfigSection(alias, configSection));
+        }
+
+        public ConfigSection AddSection(ConfigSection section{
+            Sections.Add(section.Alias, section);
+
+            return section;
+        })
     }
 }

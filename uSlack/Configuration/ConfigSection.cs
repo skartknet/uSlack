@@ -14,8 +14,40 @@ namespace uSlack.Configuration
 {
     public class ConfigSection
     {
+        [JsonProperty("alias")]
+        public string Alias { get; set; }
+
         [JsonProperty("parameters")]
-        public Dictionary<string, object> Parameters { get; set; }
+        public Dictionary<string, bool> Parameters { get; set; }
+
+        public ConfigSection(string alias, Action<ConfigSection> config)
+        {
+            Alias = alias;
+            config?.Invoke(this);
+        }
+
+
+        public ConfigEvent SetEvent("alias", Action<ConfigEvent> config)
+        {
+
+        }
+
+        public ConfigSection SetHandler(string alias, bool defaultValue)
+        {
+            Parameters.Add(alias, defaultValue);
+            return this;
+        }
+    }
+
+
+    public class ConfigEvent
+    {
+        private IEnumerable<Dictionary<string, Func<>> _handlers;
+
+        public ConfigEvent SetHandler()
+        {
+
+        }
     }
 
 }

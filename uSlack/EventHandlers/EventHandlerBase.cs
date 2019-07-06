@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace uSlack.EventHandlers
 {
-    public abstract class EventHandlerBase
+    public class EventHandler
     {
            /// <summary>
         ///  It sends a messsage for each of the available configurations.
