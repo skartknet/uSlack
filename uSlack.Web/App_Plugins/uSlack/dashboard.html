@@ -79,9 +79,17 @@
 
         </div>
     </div>
+    <umb-button action="vm.btnSave(config)"
+                type="button"
+                button-style="action"
+                state="vm.buttonState"
+                shortcut="ctrl+s"
+                label-key="buttons_save"
+                disabled="vm.buttonState === 'busy'">
+    </umb-button>
     <umb-button action="vm.addNewConfig()"
                 type="button"
                 button-style="action"
-                label-key="uslack_AddConfigBtn">
+                label-key="buttons_add">
     </umb-button>
 </div>

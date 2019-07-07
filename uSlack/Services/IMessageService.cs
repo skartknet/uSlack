@@ -13,5 +13,8 @@ namespace uSlack.Services
     {
         Task SendMessageAsync(string token, string channel, string txt, IBlock[] blocks);
         Task<ConversationListResponse> GetChannelsAsync(string token = null);
+        void SendMessage(string service, string evt, Umbraco.Core.Models.Entities.IEntity entity);
+        void SendMessage(string service, string evt, System.Collections.Generic.IEnumerable<Umbraco.Core.Models.Entities.IEntity> entities);
+        Task SendMessageAsync(string token, string channel, Umbraco.Core.Models.Entities.IEntity node, string templateName);
     }
 }

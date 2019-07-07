@@ -3,10 +3,13 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
+using Newtonsoft.Json;
 using SlackAPI;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Umbraco.Core.Composing;
+using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 using uSlack.Services;
 using uSlack.Services.Models;
@@ -15,7 +18,12 @@ namespace uSlack.Services
 {
     public class SlackService : IMessageService
     {
+        private readonly IConfiguration configuration;
 
+        public SlackService(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         public async Task SendMessageAsync(string token, string channel, string txt, IBlock[] blocks)
         {
             if (blocks == null)
@@ -59,6 +67,55 @@ namespace uSlack.Services
             return response;
         }
 
-        
+
+        /// <summary>
+        ///  It sends a messsage for each of the available configurations.
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="evt"></param>        
+        public virtual void SendMessage(string service, string evt, IEntity entity)
+        {
+            foreach (var c in configuration.AppConfiguration)
+            {
+                if (c.GetParameter<bool>(service, evt) == false) return;
+
+                Task.Run(async () => await SendMessageAsync(c.Token, c.SlackChannel, entity, $"{service}_{evt}"));
+
+            }
+        }
+
+        /// <summary>
+        ///  It sends a messsage for each of the available configurations.
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="evt"></param>        
+        public virtual void SendMessage(string service, string evt, IEnumerable<IEntity> entities)
+        {
+            foreach (var c in configuration.AppConfiguration)
+            {
+                if (c.GetParameter<bool>(service, evt) == false) return;
+
+                foreach (var entity in entities)
+                {
+                    Task.Run(async () => await SendMessageAsync(c.Token, c.SlackChannel, entity, $"{service}_{evt}"));
+                }
+
+            }
+        }
+
+
+        public async Task SendMessageAsync(string token, string channel, IEntity node, string templateName)
+        {
+            var msg = configuration.GetMessage(templateName);
+            var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
+                            .ReplacePlaceholders(node);
+
+            var blocks = JsonConvert.DeserializeObject<Block[]>(blocksJsonwithPlaceholdersReplaced);
+
+            var text = msg.Text.ReplacePlaceholders(node);
+
+            //TODO: get from DI container
+            await this.SendMessageAsync(token, channel, text, blocks);
+        }
     }
 }

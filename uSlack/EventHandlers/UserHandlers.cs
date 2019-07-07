@@ -13,19 +13,20 @@ namespace uSlack.EventHandlers
 {
     public class UserHandlers : EventHandlerBase
     {
+        private readonly IMessageService _messagingService;
 
-        public UserHandlers(IConfiguration config) : base(config)
+        public UserHandlers(IMessageService messagingService)
         {
-
+            _messagingService = messagingService;
         }
         public void UserService_DeletedUser(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUser> e)
         {
-            SendMessage("userService", "deletedUser", e.DeletedEntities);
+            _messagingService.SendMessage("userService", "deletedUser", e.DeletedEntities);
         }
 
         public void UserService_DeletedUserGroup(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUserGroup> e)
         {
-            SendMessage("userService", "deletedUserGroup", e.DeletedEntities);
+            _messagingService.SendMessage("userService", "deletedUserGroup", e.DeletedEntities);
         }
 
 

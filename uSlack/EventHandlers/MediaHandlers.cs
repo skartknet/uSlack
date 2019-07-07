@@ -15,31 +15,32 @@ namespace uSlack.EventHandlers
 {
     public class MediaHandlers : EventHandlerBase
     {
+        private readonly IMessageService _messagingService;
 
-        public MediaHandlers(IConfiguration config):base(config)
+        public MediaHandlers(IMessageService messagingService)
         {
-
+            _messagingService = messagingService;
         }
 
         public void MediaService_Trashed(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
 
-            SendMessage("mediaService", "trashed", e.MoveInfoCollection.Select(mi => mi.Entity));
+            _messagingService.SendMessage("mediaService", "trashed", e.MoveInfoCollection.Select(mi => mi.Entity));
         }
 
         public void MediaService_Saved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            SendMessage("mediaService", "saved", e.SavedEntities);
+            _messagingService.SendMessage("mediaService", "saved", e.SavedEntities);
         }
 
         public void MediaService_Moved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            SendMessage("mediaService", "moved", e.MoveInfoCollection.Select(mi => mi.Entity));
+            _messagingService.SendMessage("mediaService", "moved", e.MoveInfoCollection.Select(mi => mi.Entity));
         }
 
         public void MediaService_Deleted(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            SendMessage("mediaService", "deleted", e.DeletedEntities);
+            _messagingService.SendMessage("mediaService", "deleted", e.DeletedEntities);
         }
 
     }
