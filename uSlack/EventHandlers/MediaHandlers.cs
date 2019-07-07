@@ -15,7 +15,12 @@ namespace uSlack.EventHandlers
 {
     public class MediaHandlers : EventHandlerBase
     {
-   
+
+        public MediaHandlers(IConfiguration config):base(config)
+        {
+
+        }
+
         public void MediaService_Trashed(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
 

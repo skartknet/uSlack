@@ -11,7 +11,7 @@ namespace uSlack.Configuration
     /// </summary>
 
     [System.AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-    sealed class EventHandlerAttribute : Attribute
+    public class EventHandlerAttribute : Attribute
     {
         // See the attribute guidelines at 
         //  http://go.microsoft.com/fwlink/?LinkId=85236

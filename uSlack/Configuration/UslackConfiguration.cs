@@ -20,9 +20,8 @@ namespace uSlack
         private Lazy<IEnumerable<AppConfiguration>> _appConfiguration;
         private readonly Lazy<AppConfiguration> _defaultConfiguration;
         private readonly IConfigurationBuilder _configurationBuilder;
-        private static UslackConfiguration _config;
 
-        private UslackConfiguration(IConfigurationBuilder configurationBuilder)
+        public UslackConfiguration(IConfigurationBuilder configurationBuilder)
         {
             _messages = new Lazy<IDictionary<string, MessageConfiguration>>(LoadMessages);
 

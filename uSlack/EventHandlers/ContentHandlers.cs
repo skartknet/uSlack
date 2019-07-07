@@ -12,6 +12,10 @@ namespace uSlack.EventHandlers
     [SectionHandler("contentService")]
     public class ContentHandlers : EventHandlerBase
     {
+
+        public ContentHandlers(IConfiguration config) : base(config)
+        { }
+
         [EventHandler("published", true)]
         public void ContentService_Published(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.ContentPublishedEventArgs e)
         {

@@ -11,6 +11,7 @@ namespace uSlack.Configuration
     {
         IEnumerable<AppConfiguration> AppConfiguration { get; }
         IDictionary<string, MessageConfiguration> Messages { get; }
+        AppConfiguration DefaultConfiguration { get; }
 
         MessageConfiguration GetMessage(string alias);
 

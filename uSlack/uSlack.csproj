@@ -272,6 +272,7 @@
     <Compile Include="Backoffice\SlackErrorResult.cs" />
     <Compile Include="Configuration\ConfigurationBuilder.cs" />
     <Compile Include="Configuration\EventHandlerAttribute.cs" />
+    <Compile Include="Configuration\IConfigurationBuilder.cs" />
     <Compile Include="Configuration\SectionHandlerAttribute.cs" />
     <Compile Include="Configuration\UslackConfiguration.cs" />
     <Compile Include="Configuration\ConfigSection.cs" />

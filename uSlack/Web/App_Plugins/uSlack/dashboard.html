@@ -83,8 +83,13 @@
                 type="button"
                 button-style="action"
                 state="vm.buttonState"
-                shortcut="ctrl+c"
+                shortcut="ctrl+s"
                 label-key="buttons_save"
                 disabled="vm.buttonState === 'busy'">
+    </umb-button>
+    <umb-button action="vm.addNewConfig()"
+                type="button"
+                button-style="action"
+                label-key="buttons_add">
     </umb-button>
 </div>

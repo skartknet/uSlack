@@ -168,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfigurationTests.cs" />
+    <Compile Include="ConfigurationBuilderTests.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SlackClientTests.cs" />

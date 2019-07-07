@@ -65,7 +65,7 @@
         },
             function (res) {
                 vm.loadChannelsState = "error";
-                notificationsService.error("Request failed", res.data);
+                notificationsService.error(res.data.Message, res.data.ExceptionMessage);
             });
     }
 
@@ -85,6 +85,10 @@
 
         config.sections[section].parameters[param] = !config.sections[section].parameters[param];
         save();
+    }
+
+    vm.addNewConfig = function () {
+        vm.configurations.push(vm.defaultConfiguration);
     }
 
     init();

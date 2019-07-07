@@ -9,11 +9,19 @@ using Umbraco.Core.Models.Entities;
 using uSlack.Services;
 using SlackAPI;
 using System.Collections.Generic;
+using uSlack.Configuration;
 
 namespace uSlack.EventHandlers
 {
     public abstract class EventHandlerBase
     {
+        private readonly IConfiguration configuration;
+
+        public EventHandlerBase(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
            /// <summary>
         ///  It sends a messsage for each of the available configurations.
         /// </summary>
@@ -21,7 +29,7 @@ namespace uSlack.EventHandlers
         /// <param name="evt"></param>        
         protected virtual void SendMessage(string service, string evt, IEntity entity)
         {
-            foreach (var c in UslackConfiguration.Current.AppConfiguration)
+            foreach (var c in configuration.AppConfiguration)
             {
                 if (c.GetParameter<bool>(service, evt) == false) return;
 
@@ -37,7 +45,7 @@ namespace uSlack.EventHandlers
         /// <param name="evt"></param>        
         protected virtual void SendMessage(string service, string evt, IEnumerable<IEntity> entities)
         {
-            foreach (var c in UslackConfiguration.Current.AppConfiguration)
+            foreach (var c in configuration.AppConfiguration)
             {
                 if (c.GetParameter<bool>(service, evt) == false) return;
 
@@ -52,7 +60,7 @@ namespace uSlack.EventHandlers
 
         private async Task SendMessageAsync(string token, string channel, IEntity node, string templateName)
         {
-            var msg = UslackConfiguration.Current.GetMessage(templateName);
+            var msg = configuration.GetMessage(templateName);
             var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
                             .ReplacePlaceholders(node);
 

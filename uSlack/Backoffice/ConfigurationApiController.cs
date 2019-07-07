@@ -21,10 +21,13 @@ namespace uSlack.Backoffice
     public class ConfigurationApiController : UmbracoAuthorizedJsonController
     {
         private readonly IMessageService _msgService;
+        private readonly IConfiguration _configuration;
 
-        public ConfigurationApiController(IMessageService msgService)
+        public ConfigurationApiController(IMessageService msgService,
+                                            IConfiguration configuration)
         {
             _msgService = msgService;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace uSlack.Backoffice
         /// <returns></returns>
         public IHttpActionResult GetConfiguration()
         {
-            return Ok(UslackConfiguration.Current.AppConfiguration);
+            return Ok(_configuration.AppConfiguration);
         }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace uSlack.Backoffice
         /// <returns></returns>
         public IHttpActionResult GetDefaultConfiguration()
         {
-            return Ok(UslackConfiguration.Current.DefaultConfiguration);
+            return Ok(_configuration.DefaultConfiguration);
         }
 
         [HttpPut]
@@ -50,7 +53,7 @@ namespace uSlack.Backoffice
         {
             try
             {
-                UslackConfiguration.Current.SaveAppConfiguration(model);
+                _configuration.SaveAppConfiguration(model);
             }
             catch (Exception ex)
             {
@@ -86,7 +89,7 @@ namespace uSlack.Backoffice
             catch (Exception ex)
             {
                 Logger.Error(typeof(ConfigurationApiController), ex);
-                return InternalServerError();
+                return InternalServerError(ex);
             }
 
         }

@@ -14,7 +14,10 @@ namespace uSlack.EventHandlers
     public class MemberHandlers : EventHandlerBase
     {
 
-   
+        public MemberHandlers(IConfiguration config): base(config)
+        {
+
+        }
 
         public void MemberService_Deleted(Umbraco.Core.Services.IMemberService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMember> e)
         {

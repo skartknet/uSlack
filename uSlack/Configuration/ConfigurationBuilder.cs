@@ -41,7 +41,7 @@ namespace uSlack.Configuration
                     configSection.Parameters.Add(attr.Alias, attr.DefaultValue);
                 }
 
-                dict.Add(sectionType.GetCustomAttribute<EventHandlerAttribute>().Alias,
+                dict.Add(sectionType.GetCustomAttribute<SectionHandlerAttribute>().Alias,
                         configSection);
             }
 
