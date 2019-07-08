@@ -17,8 +17,8 @@
     function getCurrentConfigurations() {
         $http.get("/umbraco/backoffice/uslack/configurationapi/getconfiguration").then(function (res) {
 
-            if (res.data.length <= 0) {
-                vm.configurations.push(vm.defaultConfiguration);
+            if (res.data == null || res.data.length <= 0) {
+                addNewConfigGroup();
                 return;
             }
 
@@ -34,6 +34,12 @@
                 }
             }
         });
+    }
+
+    function addNewConfigGroup() {
+        var configCopy = angular.copy(vm.defaultConfiguration);
+        configCopy.name = "Configuration " + (vm.configurations.length + 1);
+        vm.configurations.push(configCopy);
     }
 
     function save() {
@@ -88,7 +94,7 @@
     }
 
     vm.addNewConfig = function () {
-        vm.configurations.push(vm.defaultConfiguration);
+        addNewConfigGroup();
     }
 
     init();
