@@ -11,12 +11,12 @@ namespace uSlack.Tests
     [TestFixture]
     public class AppConfigurationTests
     {
-        private AppConfiguration _appConfig;
+        private ConfigurationGroup _config;
 
         [SetUp]
         public void CreateConfiguration()
         {
-            _appConfig = new AppConfiguration();
+            _config = new ConfigurationGroup();
 
             var sections = new Dictionary<string, ConfigSection>();
             sections.Add("contentService", new ConfigSection
@@ -28,15 +28,15 @@ namespace uSlack.Tests
                 }
             });
 
-            _appConfig.Sections = sections;
+            _config.Sections = sections;
 
         }
 
         [Test]
         public void ShouldReturnParameter()
         {
-            var paramTrue = _appConfig.GetParameter<bool>("contentService", "create");
-            var paramFalse = _appConfig.GetParameter<bool>("contentService", "delete");
+            var paramTrue = _config.GetParameter<bool>("contentService", "create");
+            var paramFalse = _config.GetParameter<bool>("contentService", "delete");
 
             Assert.That(paramTrue, Is.True);
             Assert.That(paramFalse, Is.False);
@@ -45,7 +45,7 @@ namespace uSlack.Tests
         [Test]
         public void ShouldReturnFalse()
         {
-            var paramFalse = _appConfig.GetParameter<bool>("unknownService", "unknownMethod");
+            var paramFalse = _config.GetParameter<bool>("unknownService", "unknownMethod");
 
             Assert.That(paramFalse, Is.False);
         }

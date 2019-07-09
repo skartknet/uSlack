@@ -3,83 +3,95 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using Umbraco.Core.IO;
-using uSlack.Configuration;
 
-namespace uSlack
+namespace uSlack.Configuration
 {
     public class UslackConfiguration : IConfiguration
     {
         const string FilesLocation = "~/App_Plugins/uSlack/Config/";
-        private readonly Lazy<IDictionary<string, MessageConfiguration>> _messages;
-        private Lazy<IEnumerable<AppConfiguration>> _appConfiguration;
-        private readonly Lazy<AppConfiguration> _defaultConfiguration;
+        private readonly Lazy<IReadOnlyDictionary<string, MessageConfiguration>> _messages;
+        private Lazy<IEnumerable<ConfigurationGroup>> _appConfiguration;
+        private readonly Lazy<ConfigurationGroup> _defaultConfiguration;
         private readonly IConfigurationBuilder _configurationBuilder;
 
         public UslackConfiguration(IConfigurationBuilder configurationBuilder)
         {
-            _messages = new Lazy<IDictionary<string, MessageConfiguration>>(LoadMessages);
-
-            _appConfiguration = new Lazy<IEnumerable<AppConfiguration>>(LoadConfiguration);
-
-            _defaultConfiguration = new Lazy<AppConfiguration>(() =>
-            {
-                return configurationBuilder.CreateDefaultConfiguration();
-            });
+            _messages = new Lazy<IReadOnlyDictionary<string, MessageConfiguration>>(LoadMessages);
+            _appConfiguration = new Lazy<IEnumerable<ConfigurationGroup>>(LoadConfiguration);
+            _defaultConfiguration = new Lazy<ConfigurationGroup>(configurationBuilder.CreateDefaultConfiguration);
             _configurationBuilder = configurationBuilder;
         }
 
 
-   
+        
+        public ConfigurationGroup DefaultConfigurationGroup => _defaultConfiguration.Value;
 
-        public AppConfiguration DefaultConfiguration => _defaultConfiguration.Value;
+        public IReadOnlyDictionary<string, MessageConfiguration> Messages => _messages.Value;
 
-        public IDictionary<string, MessageConfiguration> Messages => _messages.Value;
-
-        public IEnumerable<AppConfiguration> AppConfiguration
+        public IEnumerable<ConfigurationGroup> AppConfiguration
         {
             get => _appConfiguration.Value;
             set
             {
-                _appConfiguration = new Lazy<IEnumerable<AppConfiguration>>(() => value);
+                _appConfiguration = new Lazy<IEnumerable<ConfigurationGroup>>(() => value);
             }
         }
 
-        private static IList<AppConfiguration> LoadConfiguration()
+        /// <summary>
+        /// Saves the configuration
+        /// </summary>
+        /// <param name="model"></param>
+        public void SaveAppConfiguration(IEnumerable<ConfigurationGroup> model)
         {
-            IList<AppConfiguration> config = null;
+            //update config in memory
+            AppConfiguration = model ?? throw new ArgumentNullException(nameof(model));
+
+            //update config in file
+            var msgPath = IOHelper.MapPath(FilesLocation + "uslack.config");
+            var json = JsonConvert.SerializeObject(model);
+
+            File.WriteAllText(msgPath, json);
+        }
+
+        
+        /// <summary>
+        /// Gets a message body
+        /// </summary>
+        /// <param name="alias"></param>
+        /// <returns></returns>
+        public MessageConfiguration GetMessage(string alias)
+        {
+            if (Messages.TryGetValue(alias.ToUpperInvariant(), out MessageConfiguration message))
+            {
+                return message;
+            }
+
+            throw new FileNotFoundException($"Content for alias {alias} couldn't be found");
+
+        }
+
+
+        private static IList<ConfigurationGroup> LoadConfiguration()
+        {
+            IList<ConfigurationGroup> config = null;
             var msgPath = IOHelper.MapPath(FilesLocation + "uslack.config");
 
             if (File.Exists(msgPath))
             {
                 var content = File.ReadAllText(msgPath);
-                config = JsonConvert.DeserializeObject<AppConfiguration[]>(content);
+                config = JsonConvert.DeserializeObject<ConfigurationGroup[]>(content);
             }
 
             return config;
         }
 
-        public T GetParameter<T>(int configIdx, string section, string parameter)
-        {
-            // warn: casting to int will give an error. Always cast to Int64;
-            try
-            {
-                var list = AppConfiguration.ToList();
-                var val = (T)list[configIdx].Sections[section].Parameters[parameter];
-                return (T)val;
-            }
-            catch
-            {
-                return default(T);
-            }
-        }
-
-        private static Dictionary<string, MessageConfiguration> LoadMessages()
+        private static IReadOnlyDictionary<string, MessageConfiguration> LoadMessages()
         {
             var messages = new Dictionary<string, MessageConfiguration>();
 
@@ -96,40 +108,6 @@ namespace uSlack
             }
 
             return messages;
-        }
-
-        /// <summary>
-        /// Saves the configuration
-        /// </summary>
-        /// <param name="model"></param>
-        public void SaveAppConfiguration(IEnumerable<AppConfiguration> model)
-        {
-            //update config in memory
-            AppConfiguration = model ?? throw new ArgumentNullException(nameof(model));
-
-            //update config in file
-            var msgPath = IOHelper.MapPath(FilesLocation + "uslack.config");
-            var json = JsonConvert.SerializeObject(model);
-
-            File.WriteAllText(msgPath, json);
-        }
-
-  
-
-        /// <summary>
-        /// Gets a message body
-        /// </summary>
-        /// <param name="alias"></param>
-        /// <returns></returns>
-        public MessageConfiguration GetMessage(string alias)
-        {
-            if (Messages.TryGetValue(alias.ToUpperInvariant(), out MessageConfiguration message))
-            {
-                return message;
-            }
-
-            throw new FileNotFoundException($"Content for alias {alias} couldn't found");
-
         }
     }
 }

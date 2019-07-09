@@ -9,12 +9,10 @@ namespace uSlack.Configuration
 {
     public interface IConfiguration
     {
-        IEnumerable<AppConfiguration> AppConfiguration { get; }
-        IDictionary<string, MessageConfiguration> Messages { get; }
-        AppConfiguration DefaultConfiguration { get; }
-
+        IEnumerable<ConfigurationGroup> AppConfiguration { get; }
+        IReadOnlyDictionary<string, MessageConfiguration> Messages { get; }
+        ConfigurationGroup DefaultConfigurationGroup { get; }
         MessageConfiguration GetMessage(string alias);
-
-        void SaveAppConfiguration(IEnumerable<AppConfiguration> model);
+        void SaveAppConfiguration(IEnumerable<ConfigurationGroup> model);
     }
 }

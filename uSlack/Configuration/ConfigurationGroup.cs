@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace uSlack.Configuration
 {
-    public class AppConfiguration
+    public class ConfigurationGroup
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -22,6 +22,9 @@ namespace uSlack.Configuration
 
         [JsonProperty("channel")]
         public string SlackChannel { get; set; }
+
+        [JsonProperty("groups")]
+        public IEnumerable<string> Groups { get; set; }
 
         [JsonProperty("sections")]
         public Dictionary<string, ConfigSection> Sections { get; set; }

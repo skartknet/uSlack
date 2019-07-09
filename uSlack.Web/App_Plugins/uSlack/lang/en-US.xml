@@ -12,6 +12,13 @@
     <key alias="channel_help">Channel where you want to receive the alerts</key>
     <key alias="loadChannelsBtn">Load Channels</key>
     <key alias="AddConfigBtn">Add new configuration group</key>
+    <key alias="security">Security</key>
+    <key alias="groups_label">User Groups</key>
+    <key alias="groups_help">The messages will only be sent if the events are created by users in the selected groups. Only those groups you have access will display.</key>
+    <key alias="all">All</key>
+
+
+
 
 
     <key alias="contentService_title">Content Service</key>

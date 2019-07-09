@@ -21,6 +21,22 @@
                     </div>
                 </umb-box-content>
 
+                <umb-box-header title-key="uslack_security"></umb-box-header>
+                <umb-box-content>
+                    <div class="sub-view-columns">
+                        <div class="sub-view-column-left">
+                            <h5><localize key="uslack_groups_label" /></h5>
+                            <small><localize key="uslack_groups_help" /></small>
+                        </div>
+                        <div class="sub-view-column-right">
+                            <select type="text" ng-model="config.groups" multiple>
+                                <option ng-repeat="group in vm.userGroups" value="{{group}}">{{group}}</option>
+                            </select>
+                            <p><a href prevent-default><small ng-click="vm.selectAllGroups(config)">Select all</small></a></p>
+                        </div>
+                    </div>
+                </umb-box-content>
+
                 <umb-box-header title-key="uslack_config"></umb-box-header>
                 <umb-box-content>
                     <div class="sub-view-columns">

@@ -278,7 +278,7 @@
     <Compile Include="Configuration\ConfigSection.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\MessageConfiguration.cs" />
-    <Compile Include="Configuration\AppConfiguration.cs" />
+    <Compile Include="Configuration\ConfigurationGroup.cs" />
     <Compile Include="Controllers\SlackInteractiveApiController.cs" />
     <Compile Include="InitUSlack.cs" />
     <Compile Include="EventHandlers\MemberHandlers.cs" />

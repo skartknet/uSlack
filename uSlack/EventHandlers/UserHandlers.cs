@@ -11,6 +11,7 @@ using uSlack.Services;
 
 namespace uSlack.EventHandlers
 {
+    [SectionHandler("userService")]
     public class UserHandlers : EventHandlerBase
     {
         private readonly IMessageService _messagingService;
@@ -19,11 +20,14 @@ namespace uSlack.EventHandlers
         {
             _messagingService = messagingService;
         }
+
+        [EventHandler("deletedUser", true)]
         public void UserService_DeletedUser(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUser> e)
         {
             _messagingService.SendMessage("userService", "deletedUser", e.DeletedEntities);
         }
 
+        [EventHandler("deletedUserGroup", true)]
         public void UserService_DeletedUserGroup(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUserGroup> e)
         {
             _messagingService.SendMessage("userService", "deletedUserGroup", e.DeletedEntities);

@@ -1,4 +1,4 @@
-﻿function uSlackDashboardController($scope, $http, notificationsService) {
+﻿function uSlackDashboardController($scope, $http, notificationsService, authResource) {
     var vm = this;
     vm.buttonState = "init";
     vm.loadChannelsState = "init";
@@ -11,6 +11,13 @@
             vm.defaultConfiguration = res.data;
             
             getCurrentConfigurations();
+            getUserGroups();
+        });
+    }
+
+    function getUserGroups() {
+        authResource.getCurrentUser().then(function(data) {
+            vm.userGroups = data.userGroups;
         });
     }
 
@@ -41,6 +48,7 @@
         configCopy.name = "Configuration " + (vm.configurations.length + 1);
         vm.configurations.push(configCopy);
     }
+
 
     function save() {
         return $http.put("/umbraco/backoffice/uslack/configurationapi/saveconfiguration", vm.configurations).then(
@@ -73,6 +81,11 @@
                 vm.loadChannelsState = "error";
                 notificationsService.error(res.data.Message, res.data.ExceptionMessage);
             });
+    }
+
+    vm.selectAllGroups = function(config)
+    {
+        config.groups = angular.copy(vm.userGroups);
     }
 
     vm.btnSave = function () {

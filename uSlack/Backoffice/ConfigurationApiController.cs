@@ -45,11 +45,11 @@ namespace uSlack.Backoffice
         /// <returns></returns>
         public IHttpActionResult GetDefaultConfiguration()
         {
-            return Ok(_configuration.DefaultConfiguration);
+            return Ok(_configuration.DefaultConfigurationGroup);
         }
 
         [HttpPut]
-        public IHttpActionResult SaveConfiguration(IEnumerable<AppConfiguration> model)
+        public IHttpActionResult SaveConfiguration(IEnumerable<ConfigurationGroup> model)
         {
             try
             {

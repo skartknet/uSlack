@@ -14,16 +14,16 @@ namespace uSlack.Configuration
     public class ConfigurationBuilder : IConfigurationBuilder
     {
 
-        public AppConfiguration CreateDefaultConfiguration()
+        public ConfigurationGroup CreateDefaultConfiguration()
         {
             var registeredTypes = GetConfigurationSections();
             
-            var baseConfig = new AppConfiguration {Sections = BuildSections(registeredTypes)};
+            var baseConfig = new ConfigurationGroup {Sections = BuildSections(registeredTypes)};
 
             return baseConfig;
         }
 
-        public virtual Dictionary<string, ConfigSection> BuildSections(IEnumerable<Type> registeredSections)
+        protected virtual Dictionary<string, ConfigSection> BuildSections(IEnumerable<Type> registeredSections)
         {
             var dict = new Dictionary<string, ConfigSection>();
 
@@ -32,6 +32,7 @@ namespace uSlack.Configuration
                 var methods = GetConfigurationEventHandlers(sectionType);
                 var configSection = new ConfigSection();
                 configSection.Parameters = new Dictionary<string, object>();
+
                 foreach (var method in methods)
                 {
                     var attr = method.GetCustomAttribute<EventHandlerAttribute>();
