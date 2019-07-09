@@ -11,8 +11,8 @@ namespace uSlack.Backoffice
 {
     public class SlackErrorResult : IHttpActionResult
     {
-        string _error;
-        HttpRequestMessage _request;
+        readonly string _error;
+        readonly HttpRequestMessage _request;
 
         public SlackErrorResult(string error, HttpRequestMessage request)
         {

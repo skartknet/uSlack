@@ -279,7 +279,9 @@
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\MessageConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationGroup.cs" />
-    <Compile Include="Controllers\SlackInteractiveApiController.cs" />
+    <Compile Include="Controllers\AuthorizeSlackAttribute.cs" />
+    <Compile Include="Controllers\ContentInteractiveController.cs" />
+    <Compile Include="Controllers\InteractiveController.cs" />
     <Compile Include="InitUSlack.cs" />
     <Compile Include="EventHandlers\MemberHandlers.cs" />
     <Compile Include="EventHandlers\MediaHandlers.cs" />
