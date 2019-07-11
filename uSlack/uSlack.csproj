@@ -287,7 +287,12 @@
     <Compile Include="EventHandlers\MediaHandlers.cs" />
     <Compile Include="EventHandlers\UserHandlers.cs" />
     <Compile Include="EventHandlers\EventHandlerBase.cs" />
+    <Compile Include="Models\Action.cs" />
+    <Compile Include="Models\Container.cs" />
     <Compile Include="Models\InteractiveResponse.cs" />
+    <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Security\Security.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\Models\ConversationListResponse.cs" />
     <Compile Include="Services\USlackExendedSlackTaskClient.cs" />

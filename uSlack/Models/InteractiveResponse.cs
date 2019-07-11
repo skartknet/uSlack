@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
 using SlackAPI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace uSlack.Models
 {
+    using uSlack.Models;
+
     public class InteractiveResponse
     {
         [JsonProperty("type")]
@@ -19,24 +16,19 @@ namespace uSlack.Models
         [JsonProperty("response_url")]
         public string ResponseUrl { get; set; }
 
+        [JsonProperty("api_app_id")]
+        public string ApiAppId { get; set; }
+
         [JsonProperty("user")]
-        public string User { get; set; }
+        public User User { get; set; }
 
         [JsonProperty("actions")]
         public Action[] Actions { get; set; }
+
+        [JsonProperty("team")]
+        public Team Team { get; set; }
     }
 
-    public class Action : Element
-    {
-
-        [JsonProperty("action_ts")]
-        public string ActionTs { get; set; }
-
-        [JsonProperty("block_id")]
-        public string BlockId { get; set; }
-
-    }
-
-    
+   
 
 }
