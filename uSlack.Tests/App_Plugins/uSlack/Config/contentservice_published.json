@@ -6,6 +6,15 @@
       "text": {
         "type": "mrkdwn",
         "text": "The page with name: @{Name} and Id: @{Id} has been published."
+      },
+      "accessory": {
+        "type": "button",
+        "text": {
+          "type": "plain_text",
+          "text": "Unpublish",
+          "emoji": true
+        },
+        "value": "content/unpublish/@{Id}"
       }
     }
   ]

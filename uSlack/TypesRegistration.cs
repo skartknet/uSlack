@@ -3,6 +3,8 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
+using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using SlackAPI;
 using Umbraco.Core.Composing;
 using uSlack.Configuration;
@@ -23,8 +25,7 @@ namespace uSlack.EventHandlers
             composition.Register(typeof(IConfigurationBuilder), typeof(ConfigurationBuilder));
 
             composition.Register(typeof(IConfiguration), typeof(UslackConfiguration),Lifetime.Singleton);
-
-
+            composition.Register(typeof(IInteractiveRouter), typeof(InteractiveRouter), Lifetime.Singleton);      
 
         }
     }

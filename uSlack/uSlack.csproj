@@ -279,8 +279,9 @@
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\MessageConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationGroup.cs" />
+    <Compile Include="Controllers\API\ContentController.cs" />
     <Compile Include="Controllers\AuthorizeSlackAttribute.cs" />
-    <Compile Include="Controllers\ContentInteractiveController.cs" />
+    <Compile Include="Controllers\InteractiveApiController.cs" />
     <Compile Include="Controllers\InteractiveController.cs" />
     <Compile Include="InitUSlack.cs" />
     <Compile Include="EventHandlers\MemberHandlers.cs" />
@@ -293,7 +294,13 @@
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Security\Security.cs" />
+    <Compile Include="Services\IInteractiveControllerTypeResolver.cs" />
+    <Compile Include="Services\IInteractiveRouter.cs" />
     <Compile Include="Services\IMessageService.cs" />
+    <Compile Include="Services\InteractiveControllerSelector.cs" />
+    <Compile Include="Services\InteractiveControllerTypeCache.cs" />
+    <Compile Include="Services\InteractiveControllerTypeResolver.cs" />
+    <Compile Include="Services\InteractiveRouter.cs" />
     <Compile Include="Services\Models\ConversationListResponse.cs" />
     <Compile Include="Services\USlackExendedSlackTaskClient.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
