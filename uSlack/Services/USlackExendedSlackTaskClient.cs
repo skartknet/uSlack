@@ -12,17 +12,17 @@ using uSlack.Services.Models;
 
 namespace uSlack.Services
 {
-    public class USlackExendedSlackTaskClient : SlackTaskClient
+    internal class USlackExendedSlackTaskClient : SlackTaskClient
     {
-        public USlackExendedSlackTaskClient(string token)
+        internal USlackExendedSlackTaskClient(string token)
             : base(token)
         { }
 
-        public USlackExendedSlackTaskClient(string token, IWebProxy proxySettings)
+        internal USlackExendedSlackTaskClient(string token, IWebProxy proxySettings)
             : base(token, proxySettings)
         { }
 
-        public async Task<PostMessageResponse> PostMessageOnlyBlocksAsync(
+        internal async Task<PostMessageResponse> PostMessageOnlyBlocksAsync(
             string channelId,
             string text,
             string blocks
@@ -38,7 +38,12 @@ namespace uSlack.Services
             return await APIRequestWithTokenAsync<PostMessageResponse>(parameters.ToArray());
         }
 
-        public async Task<ConversationListResponse> GetConversationListAsync(bool ExcludeArchived = true)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ExcludeArchived"></param>
+        /// <returns></returns>
+        internal async Task<ConversationListResponse> GetConversationListAsync(bool ExcludeArchived = true)
         {
             try
             {

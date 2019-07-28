@@ -14,8 +14,8 @@ namespace uSlack.Configuration
 {
     public class ConfigSection
     {
-        [JsonProperty("parameters")]
-        public Dictionary<string, object> Parameters { get; set; }
+        [JsonProperty("handlers")]
+        public Dictionary<string, object> SectionHandlers { get; set; }
     }
 
 }

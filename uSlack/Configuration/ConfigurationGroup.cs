@@ -50,7 +50,7 @@ namespace uSlack.Configuration
 
             try
             {
-                var val = (T)this.Sections[section].Parameters[parameter];
+                var val = (T)this.Sections[section].SectionHandlers[parameter];
                 return (T)val;
             }
             catch (KeyNotFoundException ex)

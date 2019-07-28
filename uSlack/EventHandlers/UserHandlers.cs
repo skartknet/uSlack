@@ -5,6 +5,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Umbraco.Core.Models.Entities;
 using Umbraco.Core.Models.Membership;
 using uSlack.Configuration;
 using uSlack.Services;
@@ -12,11 +13,11 @@ using uSlack.Services;
 namespace uSlack.EventHandlers
 {
     [SectionHandler("userService")]
-    public class UserHandlers : EventHandlerBase
+    public class UserHandlers
     {
-        private readonly IMessageService _messagingService;
+        private readonly IMessageService<IEntity> _messagingService;
 
-        public UserHandlers(IMessageService messagingService)
+        public UserHandlers(IMessageService<IEntity> messagingService)
         {
             _messagingService = messagingService;
         }

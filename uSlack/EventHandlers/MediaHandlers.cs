@@ -8,17 +8,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Umbraco.Core.Events;
 using Umbraco.Core.Models;
+using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 using uSlack.Services;
 
 namespace uSlack.EventHandlers
 {
     [SectionHandler("mediaService")]
-    public class MediaHandlers : EventHandlerBase
+    public class MediaHandlers
     {
-        private readonly IMessageService _messagingService;
+        private readonly IMessageService<IEntity> _messagingService;
 
-        public MediaHandlers(IMessageService messagingService)
+        public MediaHandlers(IMessageService<IEntity> messagingService)
         {
             _messagingService = messagingService;
         }

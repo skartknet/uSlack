@@ -287,7 +287,6 @@
     <Compile Include="EventHandlers\MemberHandlers.cs" />
     <Compile Include="EventHandlers\MediaHandlers.cs" />
     <Compile Include="EventHandlers\UserHandlers.cs" />
-    <Compile Include="EventHandlers\EventHandlerBase.cs" />
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\Container.cs" />
     <Compile Include="Models\InteractiveResponse.cs" />
