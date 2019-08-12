@@ -31,7 +31,7 @@ namespace uSlack.Configuration
             {             
                 var methods = GetConfigurationEventHandlers(sectionType);
                 var configSection = new ConfigSection();
-                configSection.Parameters = new Dictionary<string, object>();
+                configSection.SectionHandlers = new Dictionary<string, object>();
 
                 foreach (var method in methods)
                 {
@@ -39,7 +39,7 @@ namespace uSlack.Configuration
 
                     if (attr == null) continue;
 
-                    configSection.Parameters.Add(attr.Alias, attr.DefaultValue);
+                    configSection.SectionHandlers.Add(attr.Alias, attr.DefaultValue);
                 }
 
                 dict.Add(sectionType.GetCustomAttribute<SectionHandlerAttribute>().Alias,

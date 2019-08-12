@@ -4,6 +4,7 @@
 // </copyright>
 
 using Umbraco.Core.Composing;
+using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 using uSlack.EventHandlers;
 using uSlack.Security;
@@ -20,7 +21,7 @@ namespace uSlack
             composition.Register(typeof(UserHandlers));
             composition.Register(typeof(MemberHandlers));
 
-            composition.Register(typeof(IMessageService), typeof(SlackService));
+            composition.Register(typeof(IMessageService<IEntity>), typeof(SlackService));
             composition.Register(typeof(IConfigurationBuilder), typeof(ConfigurationBuilder));
 
             composition.Register(typeof(IConfiguration), typeof(UslackConfiguration),Lifetime.Singleton);            

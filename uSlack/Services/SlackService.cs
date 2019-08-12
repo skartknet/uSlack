@@ -11,12 +11,11 @@ using System.Threading.Tasks;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
-using uSlack.Services;
 using uSlack.Services.Models;
 
 namespace uSlack.Services
 {
-    public class SlackService : IMessageService
+    public class SlackService : IMessageService<IEntity>
     {
         private readonly IConfiguration configuration;
 
@@ -24,6 +23,15 @@ namespace uSlack.Services
         {
             this.configuration = configuration;
         }
+
+        /// <summary>
+        /// Send a message to a Slack channel
+        /// </summary>
+        /// <param name="token">OAuth token</param>
+        /// <param name="channel">Target channel</param>
+        /// <param name="txt">Message text</param>
+        /// <param name="blocks">Slack blocks</param>
+        /// <returns></returns>
         public async Task SendMessageAsync(string token, string channel, string txt, IBlock[] blocks)
         {
             if (blocks == null)
@@ -51,7 +59,7 @@ namespace uSlack.Services
         /// <summary>
         /// Get all Slack conversations
         /// </summary>
-        /// <param name="token">If no token is passed, the on in the config will be used.</param>
+        /// <param name="token">If no token is passed, the one in the config will be used.</param>
         /// <returns></returns>
         public async Task<ConversationListResponse> GetChannelsAsync(string token)
         {            

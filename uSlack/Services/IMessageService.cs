@@ -4,17 +4,18 @@
 // </copyright>
 
 using SlackAPI;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using uSlack.Services.Models;
 
 namespace uSlack.Services
 {
-    public interface IMessageService
+    public interface IMessageService<T> where T : class
     {
         Task SendMessageAsync(string token, string channel, string txt, IBlock[] blocks);
-        Task<ConversationListResponse> GetChannelsAsync(string token = null);
-        void SendMessage(string service, string evt, Umbraco.Core.Models.Entities.IEntity entity);
-        void SendMessage(string service, string evt, System.Collections.Generic.IEnumerable<Umbraco.Core.Models.Entities.IEntity> entities);
-        Task SendMessageAsync(string token, string channel, Umbraco.Core.Models.Entities.IEntity node, string templateName);
+        Task<ConversationListResponse> GetChannelsAsync(string token);
+        void SendMessage(string service, string evt, T entity);
+        void SendMessage(string service, string evt, IEnumerable<T> entities);
+        Task SendMessageAsync(string token, string channel, T node, string templateName);
     }
 }

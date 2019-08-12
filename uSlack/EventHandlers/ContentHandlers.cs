@@ -4,6 +4,7 @@
 // </copyright>
 
 using System.Linq;
+using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 using uSlack.Services;
 
@@ -11,11 +12,11 @@ namespace uSlack.EventHandlers
 {
 
     [SectionHandler("contentService")]
-    public class ContentHandlers : EventHandlerBase
+    public class ContentHandlers 
     {
-        private readonly IMessageService _messagingService;
+        private readonly IMessageService<IEntity> _messagingService;
 
-        public ContentHandlers(IMessageService messagingService)
+        public ContentHandlers(IMessageService<IEntity> messagingService)
         {
             _messagingService = messagingService;
         }

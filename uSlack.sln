@@ -14,6 +14,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B9FD22B6
 		createTunnel.bat = createTunnel.bat
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack.Plumber", "uSlack.Plumber\uSlack.Plumber.csproj", "{2C2C6480-1602-49E7-B0B3-681AD9AA6E4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack.UmbracoForms", "uSlack.UmbracoForms\uSlack.UmbracoForms.csproj", "{F3747020-2471-4CEC-AF7B-24FF882F0A52}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "uSlack.Docs", "uSlack.Docs\", "{298E8A23-E2CF-4047-BAA7-A37310707E37}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_53135"
+		Debug.AspNetCompiler.PhysicalPath = "uSlack.Docs\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53135\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_53135"
+		Release.AspNetCompiler.PhysicalPath = "uSlack.Docs\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53135\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "53135"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +56,18 @@ Global
 		{76085590-FA77-4BE5-AD75-C669512024D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76085590-FA77-4BE5-AD75-C669512024D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76085590-FA77-4BE5-AD75-C669512024D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C2C6480-1602-49E7-B0B3-681AD9AA6E4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C2C6480-1602-49E7-B0B3-681AD9AA6E4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C2C6480-1602-49E7-B0B3-681AD9AA6E4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C2C6480-1602-49E7-B0B3-681AD9AA6E4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3747020-2471-4CEC-AF7B-24FF882F0A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3747020-2471-4CEC-AF7B-24FF882F0A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3747020-2471-4CEC-AF7B-24FF882F0A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3747020-2471-4CEC-AF7B-24FF882F0A52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

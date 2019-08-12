@@ -12,6 +12,15 @@ using uSlack.Services.Models;
 
 namespace uSlack.Services
 {
+<<<<<<< HEAD:uSlack/Services/USlackExtendedSlackTaskClient.cs
+    public class USlackExtendedSlackTaskClient : SlackTaskClient
+    {
+        public USlackExtendedSlackTaskClient(string token)
+            : base(token)
+        { }
+
+        public USlackExtendedSlackTaskClient(string token, IWebProxy proxySettings)
+=======
     internal class USlackExendedSlackTaskClient : SlackTaskClient
     {
         internal USlackExendedSlackTaskClient(string token)
@@ -19,6 +28,7 @@ namespace uSlack.Services
         { }
 
         internal USlackExendedSlackTaskClient(string token, IWebProxy proxySettings)
+>>>>>>> c50e86734e94b0505b943752b2000ddf60441461:uSlack/Services/USlackExendedSlackTaskClient.cs
             : base(token, proxySettings)
         { }
 
