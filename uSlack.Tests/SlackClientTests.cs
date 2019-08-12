@@ -14,7 +14,7 @@ namespace uSlack.Tests
         [Test]
         public async Task SendMessage()
         {
-            var token = "xoxp-656657692176-645232876739-658179266944-834090019227aa80b4a9f33d43f615ab";
+            var token = "xoxp-656657692176-645232876739-707926362085-36c540618998851513c7122bbc58dd8d";
             var channel = "CKCEGGARM";
             var blocks = @"[
 	{
@@ -52,7 +52,7 @@ namespace uSlack.Tests
 		]
 	}
 ]";
-            var client = new USlackExendedSlackTaskClient(token);
+            var client = new USlackExtendedSlackTaskClient(token);
             await client.PostMessageOnlyBlocksAsync(channel, "test1", blocks);
 
         }

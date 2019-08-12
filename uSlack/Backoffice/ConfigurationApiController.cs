@@ -71,6 +71,7 @@ namespace uSlack.Backoffice
 
             try
             {
+                //TODO: properly manage response and display error messages
                 var response = await _msgService.GetChannelsAsync(token);
 
                 if (!response.ok)

@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http.Dispatcher;
+using uSlack.Controllers;
 
 namespace uSlack.Services
 {
-    internal class InteractiveControllerTypeResolver : IInteractiveControllerTypeResolver
+    public class InteractiveControllerTypeResolver
     {
-        private Func<Assembly, Type[]> _getTypesFunc = new Func<Assembly, Type[]>(InteractiveControllerTypeResolver.GetTypes);
-
+        private readonly Func<Assembly, Type[]> _getTypesFunc = new Func<Assembly, Type[]>(InteractiveControllerTypeResolver.GetTypes);
 
         public virtual ICollection<Type> GetControllerTypes(
             ICollection<Assembly> assemblies)
@@ -41,7 +38,7 @@ namespace uSlack.Services
                             typeList.AddRange(((IEnumerable<Type>)typeArray).Where<Type>((Func<Type, bool>)(x =>
                             {
                                 if (this.TypeIsVisible(x))
-                                    return this.IsControllerTypePredicate(x);
+                                    return this.IsControllerType(x);
                                 return false;
                             })));
                     }
@@ -61,6 +58,13 @@ namespace uSlack.Services
         internal static Type[] GetTypes(Assembly assembly)
         {
             return assembly.GetTypes();
+        }
+
+        internal bool IsControllerType(Type t)
+        {
+            if (t != (Type)null && t.IsClass && (t.IsVisible && !t.IsAbstract) && typeof(InteractiveController).IsAssignableFrom(t))
+                return InteractiveControllerTypeResolver.HasValidControllerName(t);
+            return false;
         }
 
         private bool TypeIsVisible(Type type)

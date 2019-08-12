@@ -11,11 +11,11 @@ namespace uSlack.Services
 {
     internal sealed class InteractiveControllerTypeCache
     {
-        private readonly IInteractiveControllerTypeResolver _typeResolver;
+        private readonly InteractiveControllerTypeResolver _typeResolver;
 
         private readonly Lazy<Dictionary<string, ILookup<string, Type>>> _cache;
 
-        public InteractiveControllerTypeCache(IInteractiveControllerTypeResolver typeResolver)
+        public InteractiveControllerTypeCache(InteractiveControllerTypeResolver typeResolver)
         {
             _typeResolver = typeResolver;
             this._cache = new Lazy<Dictionary<string, ILookup<string, Type>>>(new Func<Dictionary<string, ILookup<string, Type>>>(this.InitializeCache));
@@ -43,7 +43,9 @@ namespace uSlack.Services
 
         private Dictionary<string, ILookup<string, Type>> InitializeCache()
         {
-            return this._typeResolver.GetControllerTypes(this.GetAssemblies()).GroupBy<Type, string>((Func<Type, string>)(t => t.Name.Substring(0, t.Name.Length - DefaultHttpControllerSelector.ControllerSuffix.Length)), (IEqualityComparer<string>)StringComparer.OrdinalIgnoreCase).ToDictionary<IGrouping<string, Type>, string, ILookup<string, Type>>((Func<IGrouping<string, Type>, string>)(g => g.Key), (Func<IGrouping<string, Type>, ILookup<string, Type>>)(g => g.ToLookup<Type, string>((Func<Type, string>)(t => t.Namespace ?? string.Empty), (IEqualityComparer<string>)StringComparer.OrdinalIgnoreCase)), (IEqualityComparer<string>)StringComparer.OrdinalIgnoreCase);
+            return this._typeResolver.GetControllerTypes(this.GetAssemblies())
+                .GroupBy<Type, string>((Func<Type, string>)(t => t.Name.Substring(0, t.Name.Length - InteractiveControllerSelector.ControllerSuffix.Length)), (IEqualityComparer<string>)StringComparer.OrdinalIgnoreCase)
+                .ToDictionary<IGrouping<string, Type>, string, ILookup<string, Type>>((Func<IGrouping<string, Type>, string>)(g => g.Key), (Func<IGrouping<string, Type>, ILookup<string, Type>>)(g => g.ToLookup<Type, string>((Func<Type, string>)(t => t.Namespace ?? string.Empty), (IEqualityComparer<string>)StringComparer.OrdinalIgnoreCase)), (IEqualityComparer<string>)StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>

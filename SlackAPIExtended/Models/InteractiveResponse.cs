@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using uSlack.Deserialisation;
 
-namespace uSlack.Models
+namespace SlackAPIExtended.Models
 {
     // https://api.slack.com/messaging/interactivity/enabling (3. Prepare to receive request payloads)
     public class InteractiveResponse
@@ -20,7 +19,7 @@ namespace uSlack.Models
         public string TriggerId { get; set; }
 
         [JsonProperty("channel")]
-        public Channel Channel { get; set; }
+        public string Channel { get; set; }
 
         [JsonProperty("response_url")]
         public string ResponseUrl { get; set; }
@@ -30,9 +29,14 @@ namespace uSlack.Models
 
         [JsonProperty("actions")]
         [JsonConverter(typeof(InteractiveActionConverter))]
-        public IList<IAction> Actions { get; set; }
+        public IEnumerable<IAction> Actions { get; set; }
+
+    
+
+        [JsonProperty("message")]
+        public string Message { get; set; }       
     }
 
-
+   
 
 }

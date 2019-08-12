@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace uSlack.Models
+namespace SlackAPIExtended.Models
 {
     public class Team
     {

@@ -1,55 +1,78 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Umbraco.Web.WebApi;
 using System.Web.Http;
 using Newtonsoft.Json;
-using Umbraco.Core;
-using uSlack.Models;
+using uSlack.Security;
 using uSlack.Services;
+using uSlack.Services.Models;
+using uSlack.Models;
 
 namespace uSlack.Controllers
 {
-    
+
     public class InteractiveApiController : UmbracoApiController
     {
-        private readonly IInteractiveRouter _interactiveRouter;
+        private readonly InteractiveControllerSelector _controllerSelector;
+        private readonly ISecurityService _securityService;
 
-        public InteractiveApiController(IInteractiveRouter interactiveRouter)
+        public InteractiveApiController(InteractiveControllerSelector controllerSelector,
+                                        ISecurityService securityService)
         {
-            _interactiveRouter = interactiveRouter;
+            _controllerSelector = controllerSelector;
+            _securityService = securityService;
         }
 
         [HttpPost]
         public async Task<IHttpActionResult> ProcessResponse()
         {
 
-
-            var rawPayload = await Request.Content.ReadAsStringAsync();
-            var slackSignature = Request.Headers.GetValues("X-Slack-Signature").FirstOrDefault();
-            var timestampString = Request.Headers.GetValues("X-Slack-Request-Timestamp").FirstOrDefault();
-            var signingSecret = ConfigurationManager.AppSettings["SlackSigningSecret"];
-
-            if (slackSignature.IsNullOrWhiteSpace() || timestampString.IsNullOrWhiteSpace()) return Unauthorized();
-            if (!int.TryParse(timestampString, out int timestamp)) return BadRequest();
-            if (DateTimeOffset.Now.ToUnixTimeSeconds() - timestamp > 60 * 5) return BadRequest();
-            if (signingSecret.IsNullOrWhiteSpace()) return InternalServerError();
-            
-
-            var isValidSignature = uSlack.Security.Security.IsValidSlackSignature(timestamp, rawPayload, slackSignature, signingSecret);
+            var isValidSignature = await _securityService.IsValidRequestAttemptAsync(Request);
 
             if (!isValidSignature) return Unauthorized();
 
             var content = await Request.Content.ReadAsFormDataAsync();
-            var responseModel = JsonConvert.DeserializeObject<InteractiveResponse>(content.Get("payload"));
+            try
+            {
+                var responseModel = JsonConvert.DeserializeObject<InteractiveResponse>(content.Get("payload"));
+            
             foreach (var action in responseModel.Actions)
             {
-                _interactiveRouter.RouteRequestValue();
+                var route = new InteractiveRoute
+                {
+                    Controller = action.BlockId,
+                    Method = action.ActionTs
+                };
+
+
+
+                switch (action)
+                {
+                    case ButtonElementInteractive act:
+                        route.Value = act.value;
+                        break;
+                    case DatePickerElementInteractive act:
+                        route.Value = act.SelectedDate.ToString("yy-MM-dd");
+                        break;
+                }
+
+
+                var controller = _controllerSelector.SelectController(route.Controller);
+
+
+                var methodInfo = controller.ControllerType.GetMethod(route.Method);
+                if (methodInfo == null) throw new Exception("Method not found");
+
+                //methodInfo.Invoke()
+
+            }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
             return Ok();

@@ -12,13 +12,13 @@ using uSlack.Services.Models;
 
 namespace uSlack.Services
 {
-    public class USlackExendedSlackTaskClient : SlackTaskClient
+    public class USlackExtendedSlackTaskClient : SlackTaskClient
     {
-        public USlackExendedSlackTaskClient(string token)
+        public USlackExtendedSlackTaskClient(string token)
             : base(token)
         { }
 
-        public USlackExendedSlackTaskClient(string token, IWebProxy proxySettings)
+        public USlackExtendedSlackTaskClient(string token, IWebProxy proxySettings)
             : base(token, proxySettings)
         { }
 

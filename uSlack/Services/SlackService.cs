@@ -33,7 +33,7 @@ namespace uSlack.Services
 
             try
             {
-                var client = new USlackExendedSlackTaskClient(token);
+                var client = new USlackExtendedSlackTaskClient(token);
                 var response = await client.PostMessageAsync(channel, txt, blocks: blocks);
 
                 if (!response.ok)
@@ -55,7 +55,7 @@ namespace uSlack.Services
         /// <returns></returns>
         public async Task<ConversationListResponse> GetChannelsAsync(string token)
         {            
-            var client = new USlackExendedSlackTaskClient(token);
+            var client = new USlackExtendedSlackTaskClient(token);
 
             var response = await client.GetConversationListAsync();
 
