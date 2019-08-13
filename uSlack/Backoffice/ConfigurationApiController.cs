@@ -20,13 +20,13 @@ namespace uSlack.Backoffice
     [PluginController("uslack")]
     public class ConfigurationApiController : UmbracoAuthorizedJsonController
     {
-        private readonly IMessageService _msgService;
+        private readonly ManagingService _slackService;
         private readonly IConfiguration _configuration;
 
-        public ConfigurationApiController(IMessageService msgService,
+        public ConfigurationApiController(ManagingService slackService,
                                             IConfiguration configuration)
         {
-            _msgService = msgService;
+            _slackService = slackService;
             _configuration = configuration;
         }
 
@@ -72,7 +72,7 @@ namespace uSlack.Backoffice
             try
             {
                 //TODO: properly manage response and display error messages
-                var response = await _msgService.GetChannelsAsync(token);
+                var response = await _slackService.GetChannelsAsync(token);
 
                 if (!response.ok)
                 {

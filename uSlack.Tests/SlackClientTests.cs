@@ -19,7 +19,7 @@ namespace uSlack.Tests
             var blocks = @"[
 	{
 		'type': 'actions',
-
+        'block_id':'content',
         'elements': [
 			{
 				'type': 'button',
@@ -29,32 +29,21 @@ namespace uSlack.Tests
 					'emoji': true
 
                 },
-				'value': 'click_me_123'
-			},
-			{
-				'type': 'button',
-				'text': {
-					'type': 'plain_text',
-					'text': 'Kin Khao',
-					'emoji': true
-				},
-				'value': 'click_me_123'
-			},
-			{
-				'type': 'button',
-				'text': {
-					'type': 'plain_text',
-					'text': 'Ler Ros',
-					'emoji': true
-				},
-				'value': 'click_me_123'
+				'value': 'click_me_123',
+                'action_id' : 'unpublish'
 			}
 		]
 	}
 ]";
+
+            try{
             var client = new USlackExtendedSlackTaskClient(token);
             await client.PostMessageOnlyBlocksAsync(channel, "test1", blocks);
-
+            }
+            catch
+            {
+                throw new Exception();
+            }
         }
     }
 }

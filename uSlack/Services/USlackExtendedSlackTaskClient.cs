@@ -12,17 +12,17 @@ using uSlack.Services.Models;
 
 namespace uSlack.Services
 {
-    internal class USlackExendedSlackTaskClient : SlackTaskClient
+    public class USlackExtendedSlackTaskClient : SlackTaskClient
     {
-        internal USlackExendedSlackTaskClient(string token)
+        public USlackExtendedSlackTaskClient(string token)
             : base(token)
         { }
 
-        internal USlackExendedSlackTaskClient(string token, IWebProxy proxySettings)
+        public USlackExtendedSlackTaskClient(string token, IWebProxy proxySettings)
             : base(token, proxySettings)
         { }
 
-        internal async Task<PostMessageResponse> PostMessageOnlyBlocksAsync(
+        public async Task<PostMessageResponse> PostMessageOnlyBlocksAsync(
             string channelId,
             string text,
             string blocks

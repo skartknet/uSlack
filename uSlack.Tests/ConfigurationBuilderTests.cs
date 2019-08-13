@@ -29,16 +29,16 @@ namespace uSlack.Tests
     }
 
     //To test protected methods
-    public class TestConfigBuilder : ConfigurationBuilder
-    {
-        public void TestBuildSections()
-        {
-            var types = new Type[] { typeof(TestSection) };
+    //public class TestConfigBuilder : ConfigurationBuilder
+    //{
+    //    public void TestBuildSections()
+    //    {
+    //        var types = new Type[] { typeof(TestSection) };
 
-            var result = this.BuildSections(types);
+    //        var result = this.BuildSections(types);
 
-            Assert.That(result.ContainsKey("contentService"), Is.True);
-            Assert.That(result["contentService"].Parameters.ContainsKey("published"), Is.True);
-        }
-    }
+    //        Assert.That(result.ContainsKey("contentService"), Is.True);
+    //        Assert.That(result["contentService"].Parameters.ContainsKey("published"), Is.True);
+    //    }
+    //}
 }

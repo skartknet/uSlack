@@ -43,7 +43,7 @@ namespace uSlack.Controllers
                 var route = new InteractiveRoute
                 {
                     Controller = action.BlockId,
-                    Method = action.ActionTs
+                    Method = action.action_id
                 };
 
 

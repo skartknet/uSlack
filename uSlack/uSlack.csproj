@@ -288,13 +288,13 @@
     <Compile Include="EventHandlers\MemberHandlers.cs" />
     <Compile Include="EventHandlers\MediaHandlers.cs" />
     <Compile Include="EventHandlers\UserHandlers.cs" />
-    <Compile Include="EventHandlers\EventHandlerBase.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\InteractiveElements.cs" />
     <Compile Include="Models\InteractiveResponse.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Security\Security.cs" />
+    <Compile Include="Services\ManagingService.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\InteractiveControllerSelector.cs" />
     <Compile Include="Services\InteractiveControllerTypeCache.cs" />

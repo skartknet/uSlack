@@ -6,7 +6,8 @@ namespace uSlack.Models
 {
     public interface IAction
     {
-        string ActionTs { get; set; }
+
+        string action_id { get; set; }
 
         string BlockId { get; set; }
 
@@ -15,8 +16,7 @@ namespace uSlack.Models
 
     public class ButtonElementInteractive : ButtonElement, IAction
     {
-        [JsonProperty("action_ts")]
-        public string ActionTs { get; set; }
+
 
         [JsonProperty("block_id")]
         public string BlockId { get; set; }
@@ -24,8 +24,7 @@ namespace uSlack.Models
 
     public class DatePickerElementInteractive : DatePickerElement, IAction
     {
-        [JsonProperty("action_ts")]
-        public string ActionTs { get; set; }
+
 
         [JsonProperty("block_id")]
         public string BlockId { get; set; }
@@ -37,8 +36,7 @@ namespace uSlack.Models
 
     public class StaticSelectElementInteractive : StaticSelectElement, IAction
     {
-        [JsonProperty("action_ts")]
-        public string ActionTs { get; set; }
+
 
         [JsonProperty("block_id")]
         public string BlockId { get; set; }
@@ -48,8 +46,7 @@ namespace uSlack.Models
     }
     public class ExternalSelectElementInteractive : ExternalSelectElement, IAction
     {
-        [JsonProperty("action_ts")]
-        public string ActionTs { get; set; }
+
 
         [JsonProperty("block_id")]
         public string BlockId { get; set; }
@@ -60,8 +57,7 @@ namespace uSlack.Models
 
     public class UserSelectElementInteractive : UserSelectElement, IAction
     {
-        [JsonProperty("action_ts")]
-        public string ActionTs { get; set; }
+
 
         [JsonProperty("block_id")]
         public string BlockId { get; set; }
@@ -71,8 +67,7 @@ namespace uSlack.Models
     }
     public class ConversationSelectElementInteractive : ConversationSelectElement, IAction
     {
-        [JsonProperty("action_ts")]
-        public string ActionTs { get; set; }
+
 
         [JsonProperty("block_id")]
         public string BlockId { get; set; }
@@ -82,8 +77,7 @@ namespace uSlack.Models
     }
     public class ChannelSelectElementInteractive : ChannelSelectElement, IAction
     {
-        [JsonProperty("action_ts")]
-        public string ActionTs { get; set; }
+
 
         [JsonProperty("block_id")]
         public string BlockId { get; set; }
@@ -93,8 +87,7 @@ namespace uSlack.Models
     }
     public class OverflowElementInteractive : OverflowElement, IAction
     {
-        [JsonProperty("action_ts")]
-        public string ActionTs { get; set; }
+
 
         [JsonProperty("block_id")]
         public string BlockId { get; set; }
