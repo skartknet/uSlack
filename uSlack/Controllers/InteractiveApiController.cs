@@ -9,6 +9,8 @@ using uSlack.Security;
 using uSlack.Services;
 using uSlack.Services.Models;
 using uSlack.Models;
+using Umbraco.Core;
+using System.Reflection;
 
 namespace uSlack.Controllers
 {
@@ -37,37 +39,47 @@ namespace uSlack.Controllers
             try
             {
                 var responseModel = JsonConvert.DeserializeObject<InteractiveResponse>(content.Get("payload"));
-            
-            foreach (var action in responseModel.Actions)
-            {
-                var route = new InteractiveRoute
+
+                foreach (var action in responseModel.Actions)
                 {
-                    Controller = action.BlockId,
-                    Method = action.action_id
-                };
+                    var route = new InteractiveRoute
+                    {
+                        Controller = action.BlockId,
+                        Method = action.action_id
+                    };
 
 
 
-                switch (action)
-                {
-                    case ButtonElementInteractive act:
-                        route.Value = act.value;
-                        break;
-                    case DatePickerElementInteractive act:
-                        route.Value = act.SelectedDate.ToString("yy-MM-dd");
-                        break;
+                    switch (action)
+                    {
+                        case ButtonElementInteractive act:
+                            route.Value = act.value;
+                            break;
+                        case DatePickerElementInteractive act:
+                            route.Value = act.SelectedDate.ToString("yy-MM-dd");
+                            break;
+                    }
+
+
+                    var controller = _controllerSelector.SelectController(route.Controller);
+
+
+                    var methodInfo = controller.ControllerType.GetMethod(route.Method, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                    if (methodInfo == null) throw new Exception("Method not found");
+
+                    object classInstance = Activator.CreateInstance(controller.ControllerType, null);
+                    if (route.Value.IsNullOrWhiteSpace())
+                    {
+                        methodInfo.Invoke(classInstance, null);
+
+                    }
+                    else
+                    {
+
+                        methodInfo.Invoke(classInstance, new object[] { route.Value });
+                    }
+
                 }
-
-
-                var controller = _controllerSelector.SelectController(route.Controller);
-
-
-                var methodInfo = controller.ControllerType.GetMethod(route.Method);
-                if (methodInfo == null) throw new Exception("Method not found");
-
-                //methodInfo.Invoke()
-
-            }
 
             }
             catch (Exception ex)
