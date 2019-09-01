@@ -5,13 +5,13 @@
 
 using Newtonsoft.Json;
 using SlackAPI;
+using SlackAPI.Interactive;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
-using uSlack.Services.Models;
 
 namespace uSlack.Services
 {
@@ -41,7 +41,7 @@ namespace uSlack.Services
 
             try
             {
-                var client = new USlackExtendedSlackTaskClient(token);
+                var client = new SlackTaskClient(token);
                 var response = await client.PostMessageAsync(channel, txt, blocks: blocks);
 
                 if (!response.ok)
@@ -63,7 +63,7 @@ namespace uSlack.Services
         /// <returns></returns>
         public async Task<ConversationListResponse> GetChannelsAsync(string token)
         {            
-            var client = new USlackExtendedSlackTaskClient(token);
+            var client = new SlackTaskClient(token);
 
             var response = await client.GetConversationListAsync();
 

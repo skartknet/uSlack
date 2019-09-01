@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SlackAPI;
+using SlackAPI.Interactive;
 using System.Threading.Tasks;
-using uSlack.Services.Models;
 
 namespace uSlack.Services
 {
@@ -12,7 +9,7 @@ namespace uSlack.Services
 
         public Task<ConversationListResponse> GetChannelsAsync(string token)
         {
-            var client = new USlackExtendedSlackTaskClient(token);
+            var client = new SlackTaskClient(token);
             return client.GetConversationListAsync();
         }
     }

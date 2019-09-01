@@ -1,18 +1,17 @@
-﻿using System;
-using System.IO;
+﻿using Newtonsoft.Json;
+using SlackAPI.Interactive;
+using System;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
-using Umbraco.Web.WebApi;
 using System.Web.Http;
-using Newtonsoft.Json;
+using Umbraco.Core;
+using Umbraco.Web.WebApi;
 using uSlack.Security;
 using uSlack.Services;
 using uSlack.Services.Models;
-using uSlack.Models;
-using Umbraco.Core;
-using System.Reflection;
 
-namespace uSlack.Controllers
+namespace uSlack.Interactive
 {
 
     public class InteractiveApiController : UmbracoApiController
@@ -88,19 +87,6 @@ namespace uSlack.Controllers
             }
 
             return Ok();
-        }
-
-
-        private async Task<string> Read(HttpRequestMessage req)
-        {
-            using (var contentStream = await req.Content.ReadAsStreamAsync())
-            {
-                contentStream.Seek(0, SeekOrigin.Begin);
-                using (var sr = new StreamReader(contentStream))
-                {
-                    return sr.ReadToEnd();
-                }
-            }
         }
 
     }

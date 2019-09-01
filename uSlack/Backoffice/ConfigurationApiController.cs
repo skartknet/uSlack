@@ -8,12 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Umbraco.Core.Composing;
 using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
 using uSlack.Backoffice.Models;
 using uSlack.Configuration;
 using uSlack.Services;
+
 
 namespace uSlack.Backoffice
 {
@@ -81,8 +81,8 @@ namespace uSlack.Backoffice
 
                 var mappedModels = response.channels.Select(c => new SlackEntity
                 {
-                    Id = c.id,
-                    Name = c.name
+                    Id = c.Id,
+                    Name = c.Name
                 });
 
                 return Ok(mappedModels);

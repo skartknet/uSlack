@@ -1,20 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.UI.WebControls;
 using Umbraco.Core;
-using Umbraco.Web.Security;
 
 namespace uSlack.Security
 {
     public class SecurityService : ISecurityService
     {
+        public async Task<bool> IsValidRequestAttemptAsync(HttpRequestMessage request)
+        {
+            var rawPayload = await request.Content.ReadAsStringAsync();
+            var slackSignature = request.Headers.GetValues("X-Slack-Signature").FirstOrDefault();
+            var timestampString = request.Headers.GetValues("X-Slack-Request-Timestamp").FirstOrDefault();
+            var signingSecret = ConfigurationManager.AppSettings["SlackSigningSecret"];
+
+            if (slackSignature.IsNullOrWhiteSpace() || timestampString.IsNullOrWhiteSpace()) return false;
+            var timestamp = int.Parse(timestampString);
+
+            if (DateTimeOffset.Now.ToUnixTimeSeconds() - timestamp > 60 * 5) return false;
+            if (signingSecret.IsNullOrWhiteSpace()) return false;
+
+            return IsValidSlackSignature(timestamp, rawPayload, slackSignature, signingSecret);
+        }
+
+
         private string HashMessage(string key, string message)
         {
             System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
@@ -53,25 +66,7 @@ namespace uSlack.Security
             return computedSignature.Equals(slackSignature);
         }
 
-        public async Task<bool> IsValidRequestAttemptAsync(HttpRequestMessage request)
-        {
-            var rawPayload = await request.Content.ReadAsStringAsync();
-            var slackSignature = request.Headers.GetValues("X-Slack-Signature").FirstOrDefault();
-            var timestampString = request.Headers.GetValues("X-Slack-Request-Timestamp").FirstOrDefault();
-            var signingSecret = ConfigurationManager.AppSettings["SlackSigningSecret"];
-
-            if (slackSignature.IsNullOrWhiteSpace() || timestampString.IsNullOrWhiteSpace()) return false;
-            var timestamp = int.Parse(timestampString);
-
-            if (DateTimeOffset.Now.ToUnixTimeSeconds() - timestamp > 60 * 5) return false;
-            if (signingSecret.IsNullOrWhiteSpace()) return false;
-
-            return IsValidSlackSignature(timestamp, rawPayload, slackSignature, signingSecret);
-        }
     }
 
-    public interface ISecurityService
-    {
-        Task<bool> IsValidRequestAttemptAsync(HttpRequestMessage request);
-    }
+
 }

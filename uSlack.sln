@@ -36,7 +36,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "uSlack.Docs", "uSlack.Docs\
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "53135"
+		SlnRelativePath = "uSlack.Docs\"
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackAPI", "..\SlackAPI\SlackAPI\SlackAPI.csproj", "{87A75F18-12AB-464D-A1CA-ADC95A8E50D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +71,10 @@ Global
 		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{87A75F18-12AB-464D-A1CA-ADC95A8E50D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87A75F18-12AB-464D-A1CA-ADC95A8E50D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87A75F18-12AB-464D-A1CA-ADC95A8E50D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87A75F18-12AB-464D-A1CA-ADC95A8E50D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

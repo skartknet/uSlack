@@ -150,9 +150,6 @@
     <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
-    <Reference Include="SlackAPI, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SlackAPI.1.1.1\lib\net45\SlackAPI.dll</HintPath>
-    </Reference>
     <Reference Include="Superpower, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7, processorArchitecture=MSIL">
       <HintPath>..\packages\Superpower.2.0.0\lib\net45\Superpower.dll</HintPath>
     </Reference>
@@ -279,30 +276,22 @@
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\MessageConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationGroup.cs" />
-    <Compile Include="Controllers\API\ContentController.cs" />
-    <Compile Include="Controllers\AuthorizeSlackAttribute.cs" />
-    <Compile Include="Controllers\InteractiveApiController.cs" />
-    <Compile Include="Controllers\InteractiveController.cs" />
-    <Compile Include="Deserialisation\InteractiveActionConverter.cs" />
+    <Compile Include="API\ContentController.cs" />
+    <Compile Include="Interactive\InteractiveApiController.cs" />
+    <Compile Include="Interactive\InteractiveControllerBase.cs" />
     <Compile Include="InitUSlack.cs" />
     <Compile Include="EventHandlers\MemberHandlers.cs" />
     <Compile Include="EventHandlers\MediaHandlers.cs" />
     <Compile Include="EventHandlers\UserHandlers.cs" />
-    <Compile Include="Models\Channel.cs" />
-    <Compile Include="Models\InteractiveElements.cs" />
-    <Compile Include="Models\InteractiveResponse.cs" />
-    <Compile Include="Models\Team.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Security\ISecurityService.cs" />
     <Compile Include="Security\Security.cs" />
     <Compile Include="Services\ManagingService.cs" />
     <Compile Include="Services\IMessageService.cs" />
-    <Compile Include="Services\InteractiveControllerSelector.cs" />
-    <Compile Include="Services\InteractiveControllerTypeCache.cs" />
-    <Compile Include="Services\InteractiveControllerTypeResolver.cs" />
-    <Compile Include="Services\Models\ConversationListResponse.cs" />
+    <Compile Include="Interactive\InteractiveControllerSelector.cs" />
+    <Compile Include="Interactive\InteractiveControllerTypeCache.cs" />
+    <Compile Include="Interactive\InteractiveControllerTypeResolver.cs" />
     <Compile Include="Services\Models\InteractiveControllerDescriptor.cs" />
     <Compile Include="Services\Models\InteractiveRequestMessage.cs" />
-    <Compile Include="Services\USlackExtendedSlackTaskClient.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="TypesRegistration.cs" />
@@ -338,6 +327,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web\App_Plugins\uSlack\dashboard.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SlackAPI\SlackAPI\SlackAPI.csproj">
+      <Project>{87a75f18-12ab-464d-a1ca-adc95a8e50d4}</Project>
+      <Name>SlackAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 
-namespace uSlack.Controllers
+namespace uSlack.Interactive
 {
-    public class InteractiveController
+    public abstract class InteractiveControllerBase
     {
-        public InteractiveController()
+        public InteractiveControllerBase()
         {
 
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using uSlack.Controllers;
+using uSlack.Interactive;
 
 namespace uSlack.Services
 {
@@ -62,7 +62,7 @@ namespace uSlack.Services
 
         internal bool IsControllerType(Type t)
         {
-            if (t != (Type)null && t.IsClass && (t.IsVisible && !t.IsAbstract) && typeof(InteractiveController).IsAssignableFrom(t))
+            if (t != (Type)null && t.IsClass && (t.IsVisible && !t.IsAbstract) && typeof(InteractiveControllerBase).IsAssignableFrom(t))
                 return InteractiveControllerTypeResolver.HasValidControllerName(t);
             return false;
         }
