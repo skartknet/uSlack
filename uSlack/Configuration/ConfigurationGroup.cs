@@ -6,19 +6,23 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace uSlack.Configuration
 {
+
+    public class AppConfiguration
+    {
+        [JsonProperty("token")]
+        public string Token { get; set; }
+
+        [JsonProperty("groups")]
+        public IEnumerable<ConfigurationGroup> Groups { get; set; }
+    }
+
     public class ConfigurationGroup
     {
         [JsonProperty("name")]
         public string Name { get; set; }
-
-        [JsonProperty("token")]
-        public string Token { get; set; }
 
         [JsonProperty("channel")]
         public string SlackChannel { get; set; }

@@ -17,15 +17,13 @@ namespace uSlack.Configuration
         const string FilesLocation = "~/App_Plugins/uSlack/Config/";
         private readonly Lazy<IReadOnlyDictionary<string, MessageConfiguration>> _messages;
         private Lazy<IEnumerable<ConfigurationGroup>> _appConfiguration;
-        private readonly Lazy<ConfigurationGroup> _defaultConfiguration;
-        private readonly IConfigurationBuilder _configurationBuilder;
+        private readonly Lazy<ConfigurationGroup> _defaultConfiguration;        
 
         public UslackConfiguration(IConfigurationBuilder configurationBuilder)
         {
             _messages = new Lazy<IReadOnlyDictionary<string, MessageConfiguration>>(LoadMessages);
             _appConfiguration = new Lazy<IEnumerable<ConfigurationGroup>>(LoadConfiguration);
-            _defaultConfiguration = new Lazy<ConfigurationGroup>(configurationBuilder.CreateDefaultConfiguration);
-            _configurationBuilder = configurationBuilder;
+            _defaultConfiguration = new Lazy<ConfigurationGroup>(configurationBuilder.CreateDefaultConfiguration);            
         }
 
 
@@ -34,7 +32,7 @@ namespace uSlack.Configuration
 
         public IReadOnlyDictionary<string, MessageConfiguration> Messages => _messages.Value;
 
-        public IEnumerable<ConfigurationGroup> AppConfiguration
+        public IEnumerable<ConfigurationGroup> Groups
         {
             get => _appConfiguration.Value;
             set
@@ -42,6 +40,7 @@ namespace uSlack.Configuration
                 _appConfiguration = new Lazy<IEnumerable<ConfigurationGroup>>(() => value);
             }
         }
+        
 
         /// <summary>
         /// Saves the configuration
@@ -50,7 +49,7 @@ namespace uSlack.Configuration
         public void SaveAppConfiguration(IEnumerable<ConfigurationGroup> model)
         {
             //update config in memory
-            AppConfiguration = model ?? throw new ArgumentNullException(nameof(model));
+            Groups = model ?? throw new ArgumentNullException(nameof(model));
 
             //update config in file
             var msgPath = IOHelper.MapPath(FilesLocation + "uslack.config");
@@ -59,7 +58,6 @@ namespace uSlack.Configuration
             File.WriteAllText(msgPath, json);
         }
 
-        
         /// <summary>
         /// Gets a message body
         /// </summary>
@@ -73,9 +71,7 @@ namespace uSlack.Configuration
             }
 
             throw new FileNotFoundException($"Content for alias {alias} couldn't be found");
-
         }
-
 
         private static IList<ConfigurationGroup> LoadConfiguration()
         {

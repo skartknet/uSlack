@@ -19,20 +19,91 @@ namespace uSlack.Services
     {
         private readonly IConfiguration configuration;
 
+        private Lazy<SlackTaskClient> client;
+
         public SlackService(IConfiguration configuration)
         {
             this.configuration = configuration;
+            client = new Lazy<SlackTaskClient>(InitSlackClient);
+        }
+
+        private SlackTaskClient InitSlackClient()
+        {
+            return new SlackTaskClient()
+        }
+
+
+
+        /// <summary>
+        /// Get all Slack conversations
+        /// </summary>
+        /// <param name="token">If no token is passed, the one in the config will be used.</param>
+        /// <returns></returns>
+        public async Task<ConversationListResponse> GetChannelsAsync(string token)
+        {            
+            var client = new SlackTaskClient();
+
+            var response = await client.GetConversationListAsync();
+
+            if (!response.ok)
+            {
+                Current.Logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);
+            }
+
+            return response;
+        }
+
+
+        /// <summary>
+        ///  It sends a messsage for each of the available configurations.
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="evt"></param>        
+        public virtual async Task SendMessage(string service, string evt, IEntity entity)
+        {
+            foreach (var c in configuration.Groups)
+            {
+                if (c.GetParameter<bool>(service, evt) == false) return;
+
+                await SendMessageAsync(c.Token, c.SlackChannel, entity, $"{service}_{evt}");
+
+            }
         }
 
         /// <summary>
-        /// Send a message to a Slack channel
+        ///  It sends a messsage for each of the available configurations.
         /// </summary>
-        /// <param name="token">OAuth token</param>
-        /// <param name="channel">Target channel</param>
-        /// <param name="txt">Message text</param>
-        /// <param name="blocks">Slack blocks</param>
-        /// <returns></returns>
-        public async Task SendMessageAsync(string token, string channel, string txt, IBlock[] blocks)
+        /// <param name="service"></param>
+        /// <param name="evt"></param>        
+        public virtual void SendMessage(string service, string evt, IEnumerable<IEntity> entities)
+        {
+            foreach (var c in configuration.Groups)
+            {
+                if (c.GetParameter<bool>(service, evt) == false) return;
+
+                foreach (var entity in entities)
+                {
+                    Task.Run(async () => await SendMessageAsync(c.Token, c.SlackChannel, entity, $"{service}_{evt}"));
+                }
+
+            }
+        }
+
+
+        private async Task SendMessageAsync(string token, string channel, IEntity node, string templateName)
+        {
+            var msg = configuration.GetMessage(templateName);
+            var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
+                            .ReplacePlaceholders(node);
+
+            var blocks = JsonConvert.DeserializeObject<Block[]>(blocksJsonwithPlaceholdersReplaced);
+
+            var text = msg.Text.ReplacePlaceholders(node);
+            
+            await this.SendMessageAsync(token, channel, text, blocks);
+        }
+
+        private async Task SendMessageAsync(string token, string channel, string txt, IBlock[] blocks)
         {
             if (blocks == null)
             {
@@ -56,74 +127,5 @@ namespace uSlack.Services
 
         }
 
-        /// <summary>
-        /// Get all Slack conversations
-        /// </summary>
-        /// <param name="token">If no token is passed, the one in the config will be used.</param>
-        /// <returns></returns>
-        public async Task<ConversationListResponse> GetChannelsAsync(string token)
-        {            
-            var client = new SlackTaskClient(token);
-
-            var response = await client.GetConversationListAsync();
-
-            if (!response.ok)
-            {
-                Current.Logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);
-            }
-
-            return response;
-        }
-
-
-        /// <summary>
-        ///  It sends a messsage for each of the available configurations.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <param name="evt"></param>        
-        public virtual void SendMessage(string service, string evt, IEntity entity)
-        {
-            foreach (var c in configuration.AppConfiguration)
-            {
-                if (c.GetParameter<bool>(service, evt) == false) return;
-
-                Task.Run(async () => await SendMessageAsync(c.Token, c.SlackChannel, entity, $"{service}_{evt}"));
-
-            }
-        }
-
-        /// <summary>
-        ///  It sends a messsage for each of the available configurations.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <param name="evt"></param>        
-        public virtual void SendMessage(string service, string evt, IEnumerable<IEntity> entities)
-        {
-            foreach (var c in configuration.AppConfiguration)
-            {
-                if (c.GetParameter<bool>(service, evt) == false) return;
-
-                foreach (var entity in entities)
-                {
-                    Task.Run(async () => await SendMessageAsync(c.Token, c.SlackChannel, entity, $"{service}_{evt}"));
-                }
-
-            }
-        }
-
-
-        public async Task SendMessageAsync(string token, string channel, IEntity node, string templateName)
-        {
-            var msg = configuration.GetMessage(templateName);
-            var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
-                            .ReplacePlaceholders(node);
-
-            var blocks = JsonConvert.DeserializeObject<Block[]>(blocksJsonwithPlaceholdersReplaced);
-
-            var text = msg.Text.ReplacePlaceholders(node);
-
-            //TODO: get from DI container
-            await this.SendMessageAsync(token, channel, text, blocks);
-        }
     }
 }

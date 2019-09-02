@@ -36,7 +36,7 @@ namespace uSlack.Backoffice
         /// <returns></returns>
         public IHttpActionResult GetConfiguration()
         {
-            return Ok(_configuration.AppConfiguration);
+            return Ok(_configuration.Groups);
         }
 
         /// <summary>
