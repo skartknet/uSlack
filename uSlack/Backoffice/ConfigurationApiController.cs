@@ -36,7 +36,7 @@ namespace uSlack.Backoffice
         /// <returns></returns>
         public IHttpActionResult GetConfiguration()
         {
-            return Ok(_configuration.Groups);
+            return Ok(_configuration.AppSettings);
         }
 
         /// <summary>
@@ -49,11 +49,11 @@ namespace uSlack.Backoffice
         }
 
         [HttpPut]
-        public IHttpActionResult SaveConfiguration(IEnumerable<ConfigurationGroup> model)
+        public IHttpActionResult SaveConfiguration(AppSettings model)
         {
             try
             {
-                _configuration.SaveAppConfiguration(model);
+                _configuration.SaveSettings(model);
             }
             catch (Exception ex)
             {

@@ -29,7 +29,7 @@ namespace uSlack.Services
 
         private SlackTaskClient InitSlackClient()
         {
-            return new SlackTaskClient()
+            return new SlackTaskClient(configuration.AppSettings.Token);
         }
 
 
@@ -40,10 +40,9 @@ namespace uSlack.Services
         /// <param name="token">If no token is passed, the one in the config will be used.</param>
         /// <returns></returns>
         public async Task<ConversationListResponse> GetChannelsAsync(string token)
-        {            
-            var client = new SlackTaskClient();
+        {
 
-            var response = await client.GetConversationListAsync();
+            var response = await client.Value.GetConversationListAsync();
 
             if (!response.ok)
             {
@@ -54,56 +53,37 @@ namespace uSlack.Services
         }
 
 
-        /// <summary>
-        ///  It sends a messsage for each of the available configurations.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <param name="evt"></param>        
-        public virtual async Task SendMessage(string service, string evt, IEntity entity)
-        {
-            foreach (var c in configuration.Groups)
-            {
-                if (c.GetParameter<bool>(service, evt) == false) return;
-
-                await SendMessageAsync(c.Token, c.SlackChannel, entity, $"{service}_{evt}");
-
-            }
-        }
 
         /// <summary>
         ///  It sends a messsage for each of the available configurations.
         /// </summary>
         /// <param name="service"></param>
         /// <param name="evt"></param>        
-        public virtual void SendMessage(string service, string evt, IEnumerable<IEntity> entities)
+        public virtual async Task SendMessageAsync(string service, string evt, IDictionary<string, string> properties)
         {
-            foreach (var c in configuration.Groups)
+            foreach (var c in configuration.AppSettings.ConfigurationGroups)
             {
-                if (c.GetParameter<bool>(service, evt) == false) return;
+                if (c.GetParameter<bool>(service, evt) == false) return Task.CompletedTask;
 
-                foreach (var entity in entities)
-                {
-                    Task.Run(async () => await SendMessageAsync(c.Token, c.SlackChannel, entity, $"{service}_{evt}"));
-                }
-
+                await SendMessageAsync(c.SlackChannel, properties, $"{service}_{evt}");
             }
         }
 
 
-        private async Task SendMessageAsync(string token, string channel, IEntity node, string templateName)
+        private async Task SendMessageAsync(string channel, IDictionary<string, string> properties, string templateName)
         {
             var msg = configuration.GetMessage(templateName);
             var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
-                            .ReplacePlaceholders(node);
+                            .ReplacePlaceholders(properties);
 
             var blocks = JsonConvert.DeserializeObject<Block[]>(blocksJsonwithPlaceholdersReplaced);
 
-            var text = msg.Text.ReplacePlaceholders(node);
-            
-            await this.SendMessageAsync(token, channel, text, blocks);
+            var text = msg.Text.ReplacePlaceholders(properties);
+
+            await this.SendMessageAsync(channel, text, blocks);
         }
 
-        private async Task SendMessageAsync(string token, string channel, string txt, IBlock[] blocks)
+        private async Task SendMessageAsync(string channel, string txt, IBlock[] blocks)
         {
             if (blocks == null)
             {
@@ -112,8 +92,7 @@ namespace uSlack.Services
 
             try
             {
-                var client = new SlackTaskClient(token);
-                var response = await client.PostMessageAsync(channel, txt, blocks: blocks);
+                var response = await client.Value.PostMessageAsync(channel, txt, blocks: blocks);
 
                 if (!response.ok)
                 {
@@ -127,5 +106,9 @@ namespace uSlack.Services
 
         }
 
+        Task IMessageService<IEntity>.SendMessage(string service, string evt, IDictionary<string, string> properties)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

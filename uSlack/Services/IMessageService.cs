@@ -3,18 +3,14 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
-using SlackAPI;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using uSlack.Services.Models;
 
 namespace uSlack.Services
 {
     public interface IMessageService<T> where T : class
     {
-        Task SendMessageAsync(string token, string channel, string txt, IBlock[] blocks);
-        void SendMessage(string service, string evt, T entity);
-        void SendMessage(string service, string evt, IEnumerable<T> entities);
-        Task SendMessageAsync(string token, string channel, T node, string templateName);
+        Task<SlackAPI.Interactive.ConversationListResponse> GetChannelsAsync(string token);
+        Task SendMessage(string service, string evt, IDictionary<string, string> properties);        
     }
 }

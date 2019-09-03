@@ -3,16 +3,18 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
+using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
+using uSlack.Models;
 using uSlack.Services;
 
 namespace uSlack.EventHandlers
 {
 
     [SectionHandler("contentService")]
-    public class ContentHandlers 
+    public class ContentHandlers
     {
         private readonly IMessageService<IEntity> _messagingService;
 
@@ -24,19 +26,32 @@ namespace uSlack.EventHandlers
         [EventHandler("published", true)]
         public void ContentService_Published(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.ContentPublishedEventArgs e)
         {
-            _messagingService.SendMessage("contentService", "published", e.PublishedEntities);
+            foreach (var item in e.PublishedEntities)
+            {
+                var properties = new PropertiesDictionary(item);
+                _messagingService.SendMessage("contentService", "published", properties);
+            }
         }
 
         [EventHandler("unpublished", true)]
         public void ContentService_Unpublished(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.PublishEventArgs<Umbraco.Core.Models.IContent> e)
         {
-            _messagingService.SendMessage("contentService", "unpublished", e.PublishedEntities);
+            foreach (var item in e.PublishedEntities)
+            {
+                var properties = new PropertiesDictionary(item);
+                _messagingService.SendMessage("contentService", "unpublished", properties);
+            }
         }
 
         [EventHandler("trashed", true)]
         public void ContentService_Trashed(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IContent> e)
         {
-            _messagingService.SendMessage("contentService", "trashed", e.MoveInfoCollection.Select(mi => mi.Entity));
+            foreach (var item in e.MoveInfoCollection.Select(mi => mi.Entity))
+            {
+                var properties = new PropertiesDictionary(item);
+
+                _messagingService.SendMessage("contentService", "trashed", properties);
+            }
         }
 
         [EventHandler("rolledBack", true)]

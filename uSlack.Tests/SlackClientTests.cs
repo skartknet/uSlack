@@ -24,9 +24,14 @@ namespace uSlack.Tests
             try
             {
                 var config = new Mock<IConfiguration>();
+                config.Setup(c=>c.AppSettings).Returns(new AppSettings
+                {
+                    Token = token
+                });
+
                 config.Setup(c => c.GetMessage(It.IsAny<string>())).Returns(new MessageConfiguration { Text = text, Blocks = blocks });
                 var client = new SlackService(config.Object);
-                await client.SendMessageAsync(;
+                await client.SendMessage("contentservice", "published");
             }
             catch
             {

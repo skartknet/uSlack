@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace uSlack.Tests
 {
@@ -14,8 +13,9 @@ namespace uSlack.Tests
             string slackSignature = "v0=a2114d57b48eac39b9ad189dd8316235a7b4a8d21a10bd27519666489c69b503";
             string signingSecret = "8f742231b10e8888abcd99yyyzzz85a5";
 
+            var obj = new PrivateObject(new Security.SecurityService());
 
-            var isValid = Security.SecurityService.IsValidSlackSignature(1531420618, payload, slackSignature, signingSecret);
+            var isValid = (bool)obj.Invoke("IsValidSlackSignature", 1531420618, payload, slackSignature, signingSecret);
 
             Assert.IsTrue(isValid);
         }
@@ -30,7 +30,10 @@ namespace uSlack.Tests
             int timespan = 1562806230;
 
 
-            var isValid = Security.SecurityService.IsValidSlackSignature(timespan, payload, slackSignature, signingSecret);
+            var obj = new PrivateObject(new Security.SecurityService());
+
+            var isValid = (bool)obj.Invoke("IsValidSlackSignature", timespan, payload, slackSignature, signingSecret);
+
 
             Assert.IsTrue(isValid);
         }

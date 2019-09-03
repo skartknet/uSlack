@@ -10,13 +10,13 @@ using System.Collections.Generic;
 namespace uSlack.Configuration
 {
 
-    public class AppConfiguration
+    public class AppSettings
     {
         [JsonProperty("token")]
         public string Token { get; set; }
 
-        [JsonProperty("groups")]
-        public IEnumerable<ConfigurationGroup> Groups { get; set; }
+        [JsonProperty("configurationGroups")]
+        public IEnumerable<ConfigurationGroup> ConfigurationGroups { get; set; }
     }
 
     public class ConfigurationGroup

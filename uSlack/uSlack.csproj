@@ -283,6 +283,7 @@
     <Compile Include="EventHandlers\MemberHandlers.cs" />
     <Compile Include="EventHandlers\MediaHandlers.cs" />
     <Compile Include="EventHandlers\UserHandlers.cs" />
+    <Compile Include="Models\PropertiesDictionary.cs" />
     <Compile Include="Security\ISecurityService.cs" />
     <Compile Include="Security\Security.cs" />
     <Compile Include="Services\ManagingService.cs" />
@@ -329,8 +330,8 @@
     <Content Include="Web\App_Plugins\uSlack\dashboard.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SlackAPI\SlackAPI\SlackAPI.csproj">
-      <Project>{87a75f18-12ab-464d-a1ca-adc95a8e50d4}</Project>
+    <ProjectReference Include="..\..\..\..\source\repos\SlackAPI\SlackAPI\SlackAPI.csproj">
+      <Project>{e184eb11-fa35-4ac4-83b1-6486862b3345}</Project>
       <Name>SlackAPI</Name>
     </ProjectReference>
   </ItemGroup>
