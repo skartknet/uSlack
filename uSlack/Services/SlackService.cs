@@ -63,15 +63,20 @@ namespace uSlack.Services
         {
             foreach (var c in configuration.AppSettings.ConfigurationGroups)
             {
-                if (c.GetParameter<bool>(service, evt) == false) return Task.CompletedTask;
+                if (c.GetParameter<bool>(service, evt) == false) return;
 
-                await SendMessageAsync(c.SlackChannel, properties, $"{service}_{evt}");
+                await Send(c.SlackChannel, $"{service}_{evt}", properties);
             }
         }
 
 
-        private async Task SendMessageAsync(string channel, IDictionary<string, string> properties, string templateName)
+        private async Task Send(string channel, string templateName, IDictionary<string, string> properties = null)
         {
+            if (channel is null)
+            {
+                throw new ArgumentNullException(nameof(channel));
+            }
+
             var msg = configuration.GetMessage(templateName);
             var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
                             .ReplacePlaceholders(properties);

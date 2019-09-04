@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using SlackAPI;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using uSlack.Configuration;
 using uSlack.Services;
@@ -24,14 +25,33 @@ namespace uSlack.Tests
             try
             {
                 var config = new Mock<IConfiguration>();
-                config.Setup(c=>c.AppSettings).Returns(new AppSettings
+                config.Setup(c => c.AppSettings).Returns(new AppSettings
                 {
-                    Token = token
+                    Token = token,
+                    ConfigurationGroups = new ConfigurationGroup[]
+                    {
+                        new ConfigurationGroup
+                        {
+                            SlackChannel = channel,
+                            Sections = new System.Collections.Generic.Dictionary<string, ConfigSection>()
+                            {
+                                { "contentservice", new ConfigSection
+                                    {
+                                        SectionHandlers = new Dictionary<string, object>()
+                                        {
+                                            { "published", true }
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
                 });
 
                 config.Setup(c => c.GetMessage(It.IsAny<string>())).Returns(new MessageConfiguration { Text = text, Blocks = blocks });
                 var client = new SlackService(config.Object);
-                await client.SendMessage("contentservice", "published");
+                await client.SendMessageAsync("contentservice", "published", null);
             }
             catch
             {

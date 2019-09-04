@@ -10,6 +10,7 @@ using Umbraco.Core.Events;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
+using uSlack.Models;
 using uSlack.Services;
 
 namespace uSlack.EventHandlers
@@ -27,26 +28,44 @@ namespace uSlack.EventHandlers
         [EventHandler("trashed", true)]
         public void MediaService_Trashed(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
+            foreach (var item in e.MoveInfoCollection.Select(mi => mi.Entity))
+            {
+                var properties = new PropertiesDictionary(item);
 
-            _messagingService.SendMessage("mediaService", "trashed", e.MoveInfoCollection.Select(mi => mi.Entity));
+                _messagingService.SendMessage("mediaService", "trashed", properties);
+            }
         }
 
         [EventHandler("saved", true)]
         public void MediaService_Saved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            _messagingService.SendMessage("mediaService", "saved", e.SavedEntities);
+            foreach (var item in e.SavedEntities)
+            {
+                var properties = new PropertiesDictionary(item);
+                _messagingService.SendMessage("mediaService", "saved", properties);
+            }
         }
 
         [EventHandler("moved", true)]
         public void MediaService_Moved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            _messagingService.SendMessage("mediaService", "moved", e.MoveInfoCollection.Select(mi => mi.Entity));
+            foreach (var item in e.MoveInfoCollection.Select(mi => mi.Entity))
+            {
+                var properties = new PropertiesDictionary(item);
+
+                _messagingService.SendMessage("mediaService", "moved", properties);
+            }
         }
 
         [EventHandler("deleted", true)]
         public void MediaService_Deleted(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMedia> e)
         {
-            _messagingService.SendMessage("mediaService", "deleted", e.DeletedEntities);
+            foreach (var item in e.DeletedEntities)
+            {
+                var properties = new PropertiesDictionary(item);
+
+                _messagingService.SendMessage("mediaService", "deleted", properties);
+            }
         }
 
     }

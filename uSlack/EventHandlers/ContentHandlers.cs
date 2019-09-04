@@ -57,25 +57,40 @@ namespace uSlack.EventHandlers
         [EventHandler("rolledBack", true)]
         public void ContentService_RolledBack(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.RollbackEventArgs<Umbraco.Core.Models.IContent> e)
         {
-            _messagingService.SendMessage("contentService", "rolledBack", e.Entity);
+
+            var properties = new PropertiesDictionary(e.Entity);
+
+            _messagingService.SendMessage("contentService", "rolledBack", properties);
+
         }
 
         [EventHandler("deleted", true)]
         public void ContentService_Deleted(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IContent> e)
         {
-            _messagingService.SendMessage("contentService", "deleted", e.DeletedEntities);
+            foreach (var item in e.DeletedEntities)
+            {
+                var properties = new PropertiesDictionary(item);
+                _messagingService.SendMessage("contentService", "deleted", properties);
+            }
         }
 
         [EventHandler("moved", true)]
         public void ContentService_Moved(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IContent> e)
         {
-            _messagingService.SendMessage("contentService", "moved", e.MoveInfoCollection.Select(mi => mi.Entity));
+            foreach (var item in e.MoveInfoCollection.Select(mi => mi.Entity))
+            {
+                var properties = new PropertiesDictionary(item);
+
+                _messagingService.SendMessage("contentService", "moved", properties);
+            }
         }
 
         [EventHandler("sentToPublish", true)]
         public void ContentService_SentToPublish(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.SendToPublishEventArgs<Umbraco.Core.Models.IContent> e)
         {
-            _messagingService.SendMessage("contentService", "sentToPublish", e.Entity);
+            var properties = new PropertiesDictionary(e.Entity);
+
+            _messagingService.SendMessage("contentService", "sentToPublish", properties);
         }
 
 
