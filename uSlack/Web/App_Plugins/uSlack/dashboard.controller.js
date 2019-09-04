@@ -2,21 +2,22 @@
     var vm = this;
     vm.buttonState = "init";
     vm.loadChannelsState = "init";
-
-    vm.configurations = [];
+    vm.channels;
+    vm.appsettings;
     vm.panelsVisibility = [];
 
-    function init() {        
+    function init() {
         $http.get("/umbraco/backoffice/uslack/configurationapi/GetDefaultConfiguration").then(function (res) {
             vm.defaultConfiguration = res.data;
-            
+
             getCurrentConfigurations();
             getUserGroups();
+            vm.loadChannels();
         });
     }
 
     function getUserGroups() {
-        authResource.getCurrentUser().then(function(data) {
+        authResource.getCurrentUser().then(function (data) {
             vm.userGroups = data.userGroups;
         });
     }
@@ -28,15 +29,14 @@
                 addNewConfigGroup();
                 return;
             }
+            vm.appsettings = res.data;
 
-            vm.configurations = res.data;
-
-            for (var i = 0; i < vm.configurations.length; i++) {
+            for (var i = 0; i < vm.appsettings.configurationGroups.length; i++) {
 
                 vm.panelsVisibility.push(false);
 
-                var config = vm.configurations[i];
-                if (config.token) {
+                var config = vm.appsettings.configurationGroups[i];
+                if (vm.appsettings.token) {
                     vm.loadChannels(config);
                 }
             }
@@ -45,21 +45,21 @@
 
     function addNewConfigGroup() {
         var configCopy = angular.copy(vm.defaultConfiguration);
-        configCopy.name = "Configuration " + (vm.configurations.length + 1);
-        vm.configurations.push(configCopy);
+        configCopy.name = "Configuration " + (vm.appsettings.configurationGroups.length + 1);
+        vm.appsettings.configurationGroups.push(configCopy);
     }
 
 
     function save() {
-        return $http.put("/umbraco/backoffice/uslack/configurationapi/saveconfiguration", vm.configurations).then(
+        return $http.put("/umbraco/backoffice/uslack/configurationapi/saveconfiguration", vm.appsettings).then(
             function (res) {
-                vm.configurations = res.data;
+                vm.appsettings = res.data;
                 notificationsService.success("Success", "Configuration was saved succesfully");
 
             },
             function (res) {
                 //we revert changes if something went wrong
-                vm.configurations = vm.tempconfig;
+                vm.appsettings = vm.tempconfig;
                 notificationsService.error("Error", "Configuration couldn't be saved!");
                 throw "Error saving configuration";
             }
@@ -71,10 +71,13 @@
     }
 
 
-    vm.loadChannels = function (config) {
+    vm.loadChannels = function () {
+
+        if (!vm.appsettings.token) return;
+
         vm.loadChannelsState = "busy";
-        $http.get("/umbraco/backoffice/uslack/configurationapi/loadchannels?token=" + config.token).then(function (res) {
-            config.channels = res.data;
+        $http.get("/umbraco/backoffice/uslack/configurationapi/loadchannels?token=" + vm.appsettings.token).then(function (res) {
+            vm.channels = res.data;
             vm.loadChannelsState = "success";
         },
             function (res) {
@@ -83,8 +86,7 @@
             });
     }
 
-    vm.selectAllGroups = function(config)
-    {
+    vm.selectAllGroups = function (config) {
         config.groups = angular.copy(vm.userGroups);
     }
 
@@ -100,7 +102,7 @@
 
     vm.toggleSwitch = function (config, section, param) {
 
-        vm.tempconfig = vm.configurations;
+        vm.tempconfig = vm.appsettings;
 
         config.sections[section].parameters[param] = !config.sections[section].parameters[param];
         save();

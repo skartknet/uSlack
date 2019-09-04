@@ -27,8 +27,8 @@ namespace uSlack.Configuration
         [JsonProperty("channel")]
         public string SlackChannel { get; set; }
 
-        [JsonProperty("groups")]
-        public IEnumerable<string> Groups { get; set; }
+        [JsonProperty("securityGroups")]
+        public IEnumerable<string> SecurityGroups { get; set; }
 
         [JsonProperty("sections")]
         public Dictionary<string, ConfigSection> Sections { get; set; }

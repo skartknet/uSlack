@@ -1,5 +1,17 @@
 ﻿<div ng-controller="uslack.dashboard.controller as vm">
-    <div class="umb-panel-group__details" ng-repeat="(idx, config) in vm.configurations">
+
+    <div class="sub-view-columns">
+        <div class="sub-view-column-left">
+            <h5><localize key="uslack_token" /></h5>
+            <small><localize key="uslack_token_help" /></small>
+        </div>
+        <div class="sub-view-column-right">
+            <input type="text" placeholder="your app token" ng-model="vm.appsettings.token" no-validate />
+        </div>
+    </div>
+     
+
+    <div class="umb-panel-group__details" ng-repeat="(idx, config) in vm.appsettings.configurationGroups">
 
         <div class="umb-panel-group__details-group">
 
@@ -8,7 +20,6 @@
                     {{config.name}}
                 </div>
             </div>
-
             <umb-box ng-show="vm.panelsVisibility[idx]">
                 <umb-box-content>
                     <div class="sub-view-columns">
@@ -29,7 +40,7 @@
                             <small><localize key="uslack_groups_help" /></small>
                         </div>
                         <div class="sub-view-column-right">
-                            <select type="text" ng-model="config.groups" multiple>
+                            <select type="text" ng-model="config.securityGroups" multiple>
                                 <option ng-repeat="group in vm.userGroups" value="{{group}}">{{group}}</option>
                             </select>
                             <p><a href prevent-default><small ng-click="vm.selectAllGroups(config)">Select all</small></a></p>
@@ -41,29 +52,21 @@
                 <umb-box-content>
                     <div class="sub-view-columns">
                         <div class="sub-view-column-left">
-                            <h5><localize key="uslack_token" /></h5>
-                            <small><localize key="uslack_token_help" /></small>
-                        </div>
-                        <div class="sub-view-column-right">
-                            <input type="text" placeholder="your app token" ng-model="config.token" no-validate />
-                        </div>
-                    </div>
-                    <div class="sub-view-columns">
-                        <div class="sub-view-column-left">
                             <h5><localize key="uslack_channel" /></h5>
                             <small><localize key="uslack_channel_help" /></small>
                         </div>
                         <div class="sub-view-column-right">
-                            <umb-button ng-show="!config.channels"
+                            <umb-button ng-hide="vm.channels"
                                         action="vm.loadChannels(config)"
                                         type="button"
                                         button-style="action"
                                         state="vm.loadChannelsState"
                                         label-key="uslack_loadChannelsBtn"
-                                        disabled="vm.loadChannelsState === 'busy' || !config.token">
+                                        disabled="vm.loadChannelsState === 'busy' || !vm.appsettings.token">
                             </umb-button>
-                            <select ng-model="config.channel" ng-show="config.channels">
-                                <option ng-repeat="channel in config.channels" value="{{channel.id}}">{{channel.name}}</option>
+                            <small ng-show="!vm.appsettings.token">Enter an App token to load the channels</small>
+                            <select ng-model="config.channel" ng-show="vm.channels">
+                                <option ng-repeat="channel in vm.channels" value="{{channel.id}}">{{channel.name}}</option>
                             </select>
                         </div>
                     </div>

@@ -30,6 +30,8 @@ namespace uSlack
             composition.Register(typeof(InteractiveControllerTypeResolver));
 
             composition.Register(typeof(ISecurityService), typeof(SecurityService));
+            composition.Register(typeof(ManagingService));
+
         }
     }
 }
