@@ -112,6 +112,10 @@
         addNewConfigGroup();
     }
 
+    vm.deleteGroup = function (idx) {
+        vm.appsettings.configurationGroups.splice(idx, 1);
+    }
+
     init();
 
 }

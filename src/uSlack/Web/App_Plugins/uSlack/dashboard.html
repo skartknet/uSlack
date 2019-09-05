@@ -6,7 +6,7 @@
                 state="vm.buttonState"
                 shortcut="ctrl+c"
                 label-key="buttons_save"
-                disabled="vm.buttonState === 'busy'">
+                disabled="vm.buttonState === 'busy' || !vm.appsettings.token">
     </umb-button>
 
     <div class="sub-view-columns">
@@ -28,8 +28,8 @@
                 <div class="umb-panel-group__details-group-name">
                     {{config.name}}
                 </div>
-                <div class="pull-right">
-                    <i class="icon-trash" ng-click="deleteGroup(idx)"></i>
+                <div class="pull-right" ng-if="idx != 0">
+                    <i class="icon-trash" ng-click="vm.deleteGroup(idx)" ></i>
                 </div>
             </div>
             <umb-box ng-show="vm.panelsVisibility[idx]">
