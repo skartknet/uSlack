@@ -11,18 +11,21 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Umbraco.Core.Composing;
 using uSlack.Configuration;
+using Umbraco.Core.Logging;
 
 namespace uSlack.Services
 {
     public class SlackService : IMessageService
     {
         private readonly IConfiguration configuration;
-
+        private readonly ILogger _logger;
         private Lazy<SlackTaskClient> client;
 
-        public SlackService(IConfiguration configuration)
+        public SlackService(IConfiguration configuration,
+                            ILogger logger)
         {
             this.configuration = configuration;
+            _logger = logger;
             client = new Lazy<SlackTaskClient>(InitSlackClient);
         }
 
@@ -80,12 +83,12 @@ namespace uSlack.Services
 
                 if (!response.ok)
                 {
-                    Current.Logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);
+                    _logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);                    
                 }
             }
             catch (Exception ex)
             {
-                Current.Logger.Warn(typeof(SlackService), ex, "Error sending uSlack message");
+                _logger.Warn(typeof(SlackService), ex, "Error sending uSlack message");
             }
 
         }

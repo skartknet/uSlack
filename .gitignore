@@ -378,3 +378,4 @@ MigrationBackup/
 # End of https://www.gitignore.io/api/umbraco,visualstudio
 /uSlack/Web/App_Plugins/uSlack/Config/uslack.config
 /uSlack.Web/App_Plugins/uSlack/Config/uslack.config
+/src/uSlack.Web/App_Plugins/uSlack/Config/uslack.config

@@ -5,14 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
+using Umbraco.Web.Mvc;
+using Umbraco.Web.WebApi;
 
 namespace uSlack.Interactive
 {
-    public abstract class InteractiveControllerBase
-    {
-        public InteractiveControllerBase()
-        {
-
-        }
+    public abstract class InteractiveApiControllerBase : UmbracoApiController
+    {       
     }
 }

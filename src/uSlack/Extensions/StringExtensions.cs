@@ -21,7 +21,7 @@ namespace uSlack.Services
             }
 
             string resultTxt = txt;
-            foreach (Match ph in Regex.Matches(txt, "@{(\\w+)}"))
+            foreach (Match ph in Regex.Matches(txt, "{(\\w+)}"))
             {
                 var placeholder = ph.Value;
                 var placehPropName = ph.Groups[1].Value;

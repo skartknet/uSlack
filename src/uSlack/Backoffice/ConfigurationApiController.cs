@@ -5,7 +5,6 @@
 
 using SlackAPI;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -13,7 +12,6 @@ using Umbraco.Web.Editors;
 using Umbraco.Web.Mvc;
 using uSlack.Backoffice.Models;
 using uSlack.Configuration;
-using uSlack.Services;
 
 
 namespace uSlack.Backoffice
@@ -24,7 +22,7 @@ namespace uSlack.Backoffice
         private readonly IConfiguration _configuration;
 
         public ConfigurationApiController(IConfiguration configuration)
-        {            
+        {
             _configuration = configuration;
         }
 
@@ -72,8 +70,8 @@ namespace uSlack.Backoffice
                 //TODO: properly manage response and display error messages
 
                 var client = new SlackTaskClient(token);
-                var response =  await client.GetConversationListAsync();
-                
+                var response = await client.GetConversationListAsync();
+
 
                 if (!response.ok)
                 {

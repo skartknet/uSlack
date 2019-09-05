@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack.Tests", "uSlack.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B9FD22B6-353D-48C9-832A-971021D666A8}"
 	ProjectSection(SolutionItems) = preProject
-		Tools\createTunnel.bat = Tools\createTunnel.bat
+		..\tools\createTunnel.bat = ..\tools\createTunnel.bat
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack.Plumber", "uSlack.Plumber\uSlack.Plumber.csproj", "{2C2C6480-1602-49E7-B0B3-681AD9AA6E4B}"

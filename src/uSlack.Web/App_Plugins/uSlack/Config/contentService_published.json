@@ -3,18 +3,20 @@
   "blocks": [
     {
       "type": "section",
+      "block_id": "content",
       "text": {
         "type": "mrkdwn",
-        "text": "The page with name: @{Name} and Id: @{Id} has been published."
+        "text": "The page with name: {name} and Id: {id} has been published."
       },
       "accessory": {
         "type": "button",
+        "action_id": "unpublish",
         "text": {
           "type": "plain_text",
           "text": "Unpublish",
           "emoji": true
         },
-        "value": "content/unpublish/@{Id}"
+        "value": "{id}"
       }
     }
   ]

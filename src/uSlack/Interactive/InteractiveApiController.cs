@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Umbraco.Core;
+using Umbraco.Core.Logging;
+using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
 using uSlack.Security;
 using uSlack.Services;
@@ -13,17 +15,20 @@ using uSlack.Services.Models;
 
 namespace uSlack.Interactive
 {
-
+    [PluginController("uslack")]
     public class InteractiveApiController : UmbracoApiController
     {
         private readonly InteractiveControllerSelector _controllerSelector;
         private readonly ISecurityService _securityService;
+        private readonly ILogger _logger;
 
         public InteractiveApiController(InteractiveControllerSelector controllerSelector,
-                                        ISecurityService securityService)
+                                        ISecurityService securityService,
+                                        ILogger logger)
         {
             _controllerSelector = controllerSelector;
             _securityService = securityService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -69,13 +74,11 @@ namespace uSlack.Interactive
                     object classInstance = Activator.CreateInstance(controller.ControllerType, null);
                     if (route.Value.IsNullOrWhiteSpace())
                     {
-                        methodInfo.Invoke(classInstance, null);
-
+                        return (IHttpActionResult)methodInfo.Invoke(classInstance, null);
                     }
                     else
                     {
-
-                        methodInfo.Invoke(classInstance, new object[] { route.Value });
+                        return (IHttpActionResult)methodInfo.Invoke(classInstance, new object[] { route.Value });
                     }
 
                 }
@@ -83,7 +86,8 @@ namespace uSlack.Interactive
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.Error<InteractiveApiController>(ex, "Error processing interactive request");
+                return InternalServerError();
             }
 
             return Ok();

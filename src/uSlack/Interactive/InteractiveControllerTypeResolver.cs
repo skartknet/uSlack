@@ -62,7 +62,7 @@ namespace uSlack.Services
 
         internal bool IsControllerType(Type t)
         {
-            if (t != (Type)null && t.IsClass && (t.IsVisible && !t.IsAbstract) && typeof(InteractiveControllerBase).IsAssignableFrom(t))
+            if (t != (Type)null && t.IsClass && (t.IsVisible && !t.IsAbstract) && typeof(InteractiveApiControllerBase).IsAssignableFrom(t))
                 return InteractiveControllerTypeResolver.HasValidControllerName(t);
             return false;
         }

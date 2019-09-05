@@ -1,13 +1,25 @@
-﻿using uSlack.Interactive;
+﻿using System.Web.Http;
+using uSlack.Interactive;
 
 namespace uSlack.API
 {
-    public class ContentController : InteractiveControllerBase
+    public class ContentController : InteractiveApiControllerBase
     {
 
-        public void Unpublish(string id)
+        public IHttpActionResult Unpublish(string src)
         {
-            var k = id;
+            if (int.TryParse(src, out int id))
+            {
+                var node = Services.ContentService.GetById(id);
+                if (node == null) return BadRequest("Node doesn't exist");
+                Services.ContentService.Unpublish(node);
+            }
+            else
+            {
+                return BadRequest("Value passed is not a valid id. It needs to be an integer.");
+            }
+
+            return Ok();
         }
     }
 }

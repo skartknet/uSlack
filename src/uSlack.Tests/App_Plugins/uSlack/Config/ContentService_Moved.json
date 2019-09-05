@@ -5,7 +5,7 @@
       "type": "section",
       "text": {
         "type": "mrkdwn",
-        "text": "The page with name: @{Name} and Id: @{Id} has been moved."
+        "text": "The page with name: {name} and Id: {id} has been moved."
       }
     }
   ]
