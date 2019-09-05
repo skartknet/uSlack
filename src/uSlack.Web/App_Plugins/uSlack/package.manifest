@@ -7,5 +7,6 @@
       "weight": -10
     }
   ],
-  "javascript": ["~/App_Plugins/uSlack/dashboard.controller.js"]
+  "javascript": [ "~/App_Plugins/uSlack/dashboard.controller.js" ],
+  "css": [ "~/App_Plugins/uSlack/styles.min.css" ]
 }

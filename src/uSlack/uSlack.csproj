@@ -152,7 +152,7 @@
     </Reference>
     <Reference Include="SlackAPI, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\SlackAPI.dll</HintPath>
+      <HintPath>..\..\uSlack\bin\net45\SlackAPI.dll</HintPath>
     </Reference>
     <Reference Include="Superpower, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7, processorArchitecture=MSIL">
       <HintPath>..\packages\Superpower.2.0.0\lib\net45\Superpower.dll</HintPath>
@@ -307,7 +307,17 @@
   <ItemGroup>
     <Content Include="Web\App_Plugins\uSlack\lang\en-US.xml" />
     <Content Include="Gruntfile.js" />
+    <Content Include="Web\App_Plugins\uSlack\styles.css">
+      <DependentUpon>styles.scss</DependentUpon>
+    </Content>
+    <Content Include="Web\App_Plugins\uSlack\styles.min.css">
+      <DependentUpon>styles.css</DependentUpon>
+    </Content>
     <None Include="app.config" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="uSlack.licenseheader" />
     <None Include="Web\App_Plugins\uSlack\Config\ContentService_SentTopublish.json" />
