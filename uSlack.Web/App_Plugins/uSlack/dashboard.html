@@ -1,4 +1,13 @@
 ﻿<div ng-controller="uslack.dashboard.controller as vm">
+    <umb-button class="pull-right"
+                action="vm.btnSave(config)"
+                type="button"
+                button-style="success"
+                state="vm.buttonState"
+                shortcut="ctrl+c"
+                label-key="buttons_save"
+                disabled="vm.buttonState === 'busy'">
+    </umb-button>
 
     <div class="sub-view-columns">
         <div class="sub-view-column-left">
@@ -9,7 +18,7 @@
             <input type="text" placeholder="your app token" ng-model="vm.appsettings.token" no-validate />
         </div>
     </div>
-     
+
 
     <div class="umb-panel-group__details" ng-repeat="(idx, config) in vm.appsettings.configurationGroups">
 
@@ -18,6 +27,9 @@
             <div class="umb-panel-group__details-group-title" ng-click="vm.togglePanel(idx);">
                 <div class="umb-panel-group__details-group-name">
                     {{config.name}}
+                </div>
+                <div class="pull-right">
+                    <i class="icon-trash" ng-click="deleteGroup(idx)"></i>
                 </div>
             </div>
             <umb-box ng-show="vm.panelsVisibility[idx]">
@@ -70,25 +82,17 @@
                             </select>
                         </div>
                     </div>
-                    <umb-button action="vm.btnSave(config)"
-                                type="button"
-                                button-style="action"
-                                state="vm.buttonState"
-                                shortcut="ctrl+c"
-                                label-key="buttons_save"
-                                disabled="vm.buttonState === 'busy'">
-                    </umb-button>
                 </umb-box-content>
 
                 <div ng-repeat="(section, sectionValue) in config.sections">
                     <umb-box-header title-key="uslack_{{section}}_title"></umb-box-header>
                     <umb-box-content>
-                        <div ng-repeat="(key, paramValue) in sectionValue.parameters" class="sub-view-columns">
+                        <div ng-repeat="(key, paramValue) in sectionValue.handlers" class="sub-view-columns">
                             <div class="sub-view-column-left">
                                 <h5><localize key="uslack_{{section}}_{{key}}_label" /></h5>
                             </div>
                             <div class="sub-view-column-right">
-                                <umb-toggle checked="config.sections[section].parameters[key]"
+                                <umb-toggle checked="config.sections[section].handlers[key]"
                                             on-click="vm.toggleSwitch(config, section, key)"></umb-toggle>
                             </div>
                         </div>

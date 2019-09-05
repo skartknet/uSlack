@@ -11,36 +11,29 @@ namespace uSlack.Tests
     {
         [Test]
         public void ShouldReplaceOnePlaceholder()
-        {
-            var node = new Mock<IContent>();
-            node.SetupGet(n => n.Name).Returns("My Content Name");
-
-            var txt = "some text here @{Name} and more text";
+        {           
+            var txt = "some text here @{name} and more text";
             var properties = new Dictionary<string, string>();
             properties.Add("name", "node1Name");
 
             var txtReplaced = txt.ReplacePlaceholders(properties);
 
 
-            Assert.That(txtReplaced, Is.EqualTo("some text here My Content Name and more text"));
+            Assert.That(txtReplaced, Is.EqualTo("some text here node1Name and more text"));
         }
 
         [Test]
         public void ShouldReplaceTwoPlaceholders()
-        {
-            var node = new Mock<IContent>();
-            node.SetupGet(n => n.Name).Returns("My Content Name");
-            node.SetupGet(n => n.Id).Returns(1234);
-
+        {           
             var properties = new Dictionary<string, string>();
             properties.Add("name", "node1Name");
+            properties.Add("id", "1234");
 
-            var txt = "some text here @{Name} and more text and @{Name} and other @{Id}";
+
+            var txt = "some text here @{name} and more text and @{name} and other @{id}";
             var txtReplaced = txt.ReplacePlaceholders(properties);
 
-
-
-            Assert.That(txtReplaced, Is.EqualTo("some text here My Content Name and more text and My Content Name and other 1234"));
+            Assert.That(txtReplaced, Is.EqualTo("some text here node1Name and more text and node1Name and other 1234"));
         }
     }
 }

@@ -59,6 +59,12 @@
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Base, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Configuration.ConfigurationBuilders.Base.1.0.1\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.UserSecrets, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.1.0.2\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
@@ -120,7 +126,6 @@
     <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
-    <Reference Include="SlackAPI, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Superpower, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7, processorArchitecture=MSIL">
       <HintPath>..\packages\Superpower.2.0.0\lib\net45\Superpower.dll</HintPath>
     </Reference>
@@ -167,6 +172,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigurationBuilderTests.cs" />
     <Compile Include="Data\TestingData.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,6 +186,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\SlackAPI\SlackAPI\SlackAPI.csproj">
+      <Project>{d474e5f9-41f6-40d2-bccb-42b83d710973}</Project>
+      <Name>SlackAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\uSlack\uSlack.csproj">
       <Project>{feefeb2f-83ef-4561-80e1-d15808cd432a}</Project>
       <Name>uSlack</Name>

@@ -3,14 +3,14 @@
     vm.buttonState = "init";
     vm.loadChannelsState = "init";
     vm.channels;
-    vm.appsettings;
+    vm.appsettings = { token: undefined, configurationGroups: [] };
     vm.panelsVisibility = [];
 
     function init() {
         $http.get("/umbraco/backoffice/uslack/configurationapi/GetDefaultConfiguration").then(function (res) {
             vm.defaultConfiguration = res.data;
 
-            getCurrentConfigurations();
+            setConfiguration();
             getUserGroups();
             vm.loadChannels();
         });
@@ -22,10 +22,10 @@
         });
     }
 
-    function getCurrentConfigurations() {
+    function setConfiguration() {
         $http.get("/umbraco/backoffice/uslack/configurationapi/getconfiguration").then(function (res) {
 
-            if (res.data == null || res.data.length <= 0) {
+            if (!res.data) {
                 addNewConfigGroup();
                 return;
             }
@@ -100,11 +100,11 @@
             });
     }
 
-    vm.toggleSwitch = function (config, section, param) {
+    vm.toggleSwitch = function (config, section, handler) {
 
         vm.tempconfig = vm.appsettings;
 
-        config.sections[section].parameters[param] = !config.sections[section].parameters[param];
+        config.sections[section].handlers[handler] = !config.sections[section].handlers[handler];
         save();
     }
 

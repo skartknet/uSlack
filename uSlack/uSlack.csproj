@@ -150,6 +150,10 @@
     <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
+    <Reference Include="SlackAPI, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\SlackAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Superpower, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7, processorArchitecture=MSIL">
       <HintPath>..\packages\Superpower.2.0.0\lib\net45\Superpower.dll</HintPath>
     </Reference>
@@ -325,15 +329,10 @@
     <None Include="Web\App_Plugins\uSlack\Config\uslack - Copy.config" />
     <None Include="Web\App_Plugins\uSlack\Config\uslack.config" />
     <None Include="Web\App_Plugins\uSlack\package.manifest" />
+    <None Include="Web\App_Plugins\uSlack\styles.scss" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web\App_Plugins\uSlack\dashboard.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\source\repos\SlackAPI\SlackAPI\SlackAPI.csproj">
-      <Project>{e184eb11-fa35-4ac4-83b1-6486862b3345}</Project>
-      <Name>SlackAPI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

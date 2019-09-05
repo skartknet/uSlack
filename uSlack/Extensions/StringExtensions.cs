@@ -26,7 +26,7 @@ namespace uSlack.Services
                 var placeholder = ph.Value;
                 var placehPropName = ph.Groups[1].Value;
 
-                var matchedValue = properties[placehPropName];
+                string matchedValue = properties.ContainsKey(placehPropName) ? properties[placehPropName] : default;
                 if(matchedValue != null)
                 {
                      resultTxt = resultTxt.Replace(placeholder, matchedValue);

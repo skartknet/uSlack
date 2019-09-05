@@ -11,6 +11,10 @@ using uSlack.Configuration;
 
 namespace uSlack.Configuration
 {
+    /// <summary>
+    /// It creates a default Configuration Group using those classes and methods in all the assemblies that use
+    /// the <see cref="SectionHandlerAttribute"/> and <see cref="EventHandlerAttribute"/>.
+    /// </summary>
     public class ConfigurationBuilder : IConfigurationBuilder
     {
 

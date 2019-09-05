@@ -3,11 +3,11 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
+using Newtonsoft.Json;
+using Umbraco.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Newtonsoft.Json;
 using Umbraco.Core.IO;
 
 namespace uSlack.Configuration
@@ -17,17 +17,20 @@ namespace uSlack.Configuration
         const string FilesLocation = "~/App_Plugins/uSlack/Config/";
         private readonly Lazy<IReadOnlyDictionary<string, MessageConfiguration>> _messages;
         private Lazy<AppSettings> _appSettings;
-        private readonly Lazy<ConfigurationGroup> _defaultConfiguration;        
+        private readonly Lazy<ConfigurationGroup> _defaultConfiguration;
+        private readonly ILogger _logger;
 
-        public UslackConfiguration(IConfigurationBuilder configurationBuilder)
+        public UslackConfiguration(IConfigurationBuilder configurationBuilder,
+                                    ILogger logger)
         {
             _messages = new Lazy<IReadOnlyDictionary<string, MessageConfiguration>>(LoadMessages);
             _appSettings = new Lazy<AppSettings>(LoadSettings);
-            _defaultConfiguration = new Lazy<ConfigurationGroup>(configurationBuilder.CreateDefaultConfiguration);            
+            _defaultConfiguration = new Lazy<ConfigurationGroup>(configurationBuilder.CreateDefaultConfiguration);
+            _logger = logger;
         }
 
 
-        
+
         public ConfigurationGroup DefaultConfigurationGroup => _defaultConfiguration.Value;
 
         public IReadOnlyDictionary<string, MessageConfiguration> Messages => _messages.Value;
@@ -40,7 +43,7 @@ namespace uSlack.Configuration
                 _appSettings = new Lazy<AppSettings>(() => value);
             }
         }
-        
+
 
         /// <summary>
         /// Saves the configuration
@@ -81,7 +84,15 @@ namespace uSlack.Configuration
             if (File.Exists(msgPath))
             {
                 var content = File.ReadAllText(msgPath);
-                config = JsonConvert.DeserializeObject<AppSettings>(content);
+                try
+                {
+                    config = JsonConvert.DeserializeObject<AppSettings>(content);
+                }
+                catch(Exception ex)
+                {
+                    //we can't read config file. This will be rebuilt next time is saved.
+                    _logger.Warn<UslackConfiguration>("Error reading configuration file.");
+                }
             }
 
             return config;

@@ -19,42 +19,42 @@ using Umbraco.ModelsBuilder;
 using Umbraco.ModelsBuilder.Umbraco;
 
 [assembly: PureLiveAssembly]
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "e4a401f240f25dcc")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "973ffb73aecc45a3")]
 [assembly:System.Reflection.AssemblyVersion("0.0.0.1")]
 
 namespace Umbraco.Web.PublishedModels
 {
-	/// <summary>standard</summary>
-	[PublishedModel("standard")]
-	public partial class Standard : PublishedContentModel
+	/// <summary>post</summary>
+	[PublishedModel("post")]
+	public partial class Post : PublishedContentModel
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.0.4")]
-		public new const string ModelTypeAlias = "standard";
+		public new const string ModelTypeAlias = "post";
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.0.4")]
 		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.0.4")]
 		public new static PublishedContentType GetModelContentType()
 			=> PublishedModelUtility.GetModelContentType(ModelItemType, ModelTypeAlias);
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.0.4")]
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Standard, TValue>> selector)
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Post, TValue>> selector)
 			=> PublishedModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 #pragma warning restore 0109
 
 		// ctor
-		public Standard(IPublishedContent content)
+		public Post(IPublishedContent content)
 			: base(content)
 		{ }
 
 		// properties
 
 		///<summary>
-		/// prop1
+		/// Title
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.0.4")]
-		[ImplementPropertyType("prop1")]
-		public string Prop1 => this.Value<string>("prop1");
+		[ImplementPropertyType("title")]
+		public string Title => this.Value<string>("title");
 	}
 
 	/// <summary>Folder</summary>

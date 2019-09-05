@@ -12,33 +12,26 @@ namespace uSlack.Tests
     public class ConfigurationBuilderTests
     {
         [Test]
-        public void ShouldReturnSectionsDictionary()
+        public void ShouldReturnDefaultConfigurationGroup()
         {
-            var sut = new TestConfigBuilder();
+            var sut = new ConfigurationBuilder();
 
-            var testingObj = new TestConfigBuilder();
-            testingObj.TestBuildSections();
+            var config = sut.CreateDefaultConfiguration();
+
+            Assert.AreEqual(config.Sections.Count, 4);
+            Assert.IsNotNull(config.Sections["contentService"]);
+            Assert.IsNotNull(config.Sections["mediaService"]);
+            Assert.IsNotNull(config.Sections["memberService"]);
+            Assert.IsNotNull(config.Sections["userService"]);
+
+            Assert.AreEqual(config.Sections["contentService"].SectionHandlers.Count, 7);
+            Assert.AreEqual(config.Sections["mediaService"].SectionHandlers.Count, 4);
+            Assert.AreEqual(config.Sections["memberService"].SectionHandlers.Count, 2);
+            Assert.AreEqual(config.Sections["userService"].SectionHandlers.Count, 2);
+
         }
     }
 
-    [SectionHandler("contentService")]
-    public class TestSection
-    {
-        [EventHandler("published", true)]
-        public void TestEventHandler() { }
-    }
 
-    //To test protected methods
-    //public class TestConfigBuilder : ConfigurationBuilder
-    //{
-    //    public void TestBuildSections()
-    //    {
-    //        var types = new Type[] { typeof(TestSection) };
 
-    //        var result = this.BuildSections(types);
-
-    //        Assert.That(result.ContainsKey("contentService"), Is.True);
-    //        Assert.That(result["contentService"].Parameters.ContainsKey("published"), Is.True);
-    //    }
-    //}
 }

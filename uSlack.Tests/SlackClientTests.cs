@@ -4,6 +4,7 @@ using NUnit.Framework;
 using SlackAPI;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Threading.Tasks;
 using uSlack.Configuration;
 using uSlack.Services;
@@ -17,19 +18,18 @@ namespace uSlack.Tests
         [Test]
         public async Task SendMessage()
         {
-            var token = "xoxp-656657692176-645232876739-707926362085-36c540618998851513c7122bbc58dd8d";
-            var channel = "CKCEGGARM";
+            var token = ConfigurationManager.AppSettings["SlackAccessToken"];
+            var channel = ConfigurationManager.AppSettings["TestingChannel"];
             var text = "testmsg";
             var blocks = JsonConvert.DeserializeObject<Block[]>(TestingData.BasicMessage);
 
-            try
+
+            var config = new Mock<IConfiguration>();
+            config.Setup(c => c.AppSettings).Returns(new AppSettings
             {
-                var config = new Mock<IConfiguration>();
-                config.Setup(c => c.AppSettings).Returns(new AppSettings
+                Token = token,
+                ConfigurationGroups = new ConfigurationGroup[]
                 {
-                    Token = token,
-                    ConfigurationGroups = new ConfigurationGroup[]
-                    {
                         new ConfigurationGroup
                         {
                             SlackChannel = channel,
@@ -46,17 +46,13 @@ namespace uSlack.Tests
                             }
 
                         }
-                    }
-                });
+                }
+            });
 
-                config.Setup(c => c.GetMessage(It.IsAny<string>())).Returns(new MessageConfiguration { Text = text, Blocks = blocks });
-                var client = new SlackService(config.Object);
-                await client.SendMessageAsync("contentservice", "published", null);
-            }
-            catch
-            {
-                throw new Exception();
-            }
+            config.Setup(c => c.GetMessage(It.IsAny<string>())).Returns(new MessageConfiguration { Text = text, Blocks = blocks });
+            var client = new SlackService(config.Object);
+            await client.SendMessageAsync("contentservice", "published", null);
+
         }
     }
 }
