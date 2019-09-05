@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Umbraco.Core.Composing;
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 using uSlack.Helpers;
@@ -30,6 +31,9 @@ namespace uSlack.EventHandlers
             foreach (var item in e.PublishedEntities)
             {
                 var properties = new PropertiesDictionary(item);
+                var publisher = Current.Services.UserService.GetUserById(item.PublisherId.GetValueOrDefault());
+                if (publisher != null) properties.Add("publisher", publisher.Name);
+
                 AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "published", properties));
             }
         }

@@ -29,7 +29,7 @@ namespace uSlack.Models
 
         public PropertiesDictionary(IContent node) : this(node as IEntity)
         {
-            this.Add("name", node.Name);
+            this.Add("name", node.Name);            
             foreach (var prop in node.Properties)
             {
                 this.Add(prop.Alias, prop.GetValue().ToString());

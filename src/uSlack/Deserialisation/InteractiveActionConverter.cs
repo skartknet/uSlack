@@ -28,6 +28,7 @@ namespace uSlack.Deserialisation
 
             var list = new List<IInteractiveElement>();
 
+            //Maybe we can make this more elegant using the type discriminator. https://github.com/manuc66/JsonSubTypes            
             foreach (var item in array)
             {
                 var action = default(IInteractiveElement);
