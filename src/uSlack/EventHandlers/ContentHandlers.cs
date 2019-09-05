@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
+using uSlack.Helpers;
 using uSlack.Models;
 using uSlack.Services;
 
@@ -16,9 +17,9 @@ namespace uSlack.EventHandlers
     [SectionHandler("contentService")]
     public class ContentHandlers
     {
-        private readonly IMessageService<IEntity> _messagingService;
+        private readonly IMessageService _messagingService;
 
-        public ContentHandlers(IMessageService<IEntity> messagingService)
+        public ContentHandlers(IMessageService messagingService)
         {
             _messagingService = messagingService;
         }
@@ -29,7 +30,7 @@ namespace uSlack.EventHandlers
             foreach (var item in e.PublishedEntities)
             {
                 var properties = new PropertiesDictionary(item);
-                _messagingService.SendMessage("contentService", "published", properties);
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "published", properties));
             }
         }
 
@@ -39,7 +40,7 @@ namespace uSlack.EventHandlers
             foreach (var item in e.PublishedEntities)
             {
                 var properties = new PropertiesDictionary(item);
-                _messagingService.SendMessage("contentService", "unpublished", properties);
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "unpublished", properties));
             }
         }
 
@@ -50,7 +51,7 @@ namespace uSlack.EventHandlers
             {
                 var properties = new PropertiesDictionary(item);
 
-                _messagingService.SendMessage("contentService", "trashed", properties);
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "trashed", properties));
             }
         }
 
@@ -60,7 +61,7 @@ namespace uSlack.EventHandlers
 
             var properties = new PropertiesDictionary(e.Entity);
 
-            _messagingService.SendMessage("contentService", "rolledBack", properties);
+            AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "rolledBack", properties));
 
         }
 
@@ -70,7 +71,7 @@ namespace uSlack.EventHandlers
             foreach (var item in e.DeletedEntities)
             {
                 var properties = new PropertiesDictionary(item);
-                _messagingService.SendMessage("contentService", "deleted", properties);
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "deleted", properties));
             }
         }
 
@@ -81,7 +82,7 @@ namespace uSlack.EventHandlers
             {
                 var properties = new PropertiesDictionary(item);
 
-                _messagingService.SendMessage("contentService", "moved", properties);
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "moved", properties));
             }
         }
 
@@ -90,7 +91,7 @@ namespace uSlack.EventHandlers
         {
             var properties = new PropertiesDictionary(e.Entity);
 
-            _messagingService.SendMessage("contentService", "sentToPublish", properties);
+            AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "sentToPublish", properties));
         }
 
 

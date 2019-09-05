@@ -21,16 +21,14 @@ namespace uSlack
             composition.Register(typeof(UserHandlers));
             composition.Register(typeof(MemberHandlers));
 
-            composition.Register(typeof(IMessageService<IEntity>), typeof(SlackService));
+            composition.Register(typeof(IMessageService), typeof(SlackService));
+            composition.Register(typeof(ISecurityService), typeof(SecurityService));
             composition.Register(typeof(IConfigurationBuilder), typeof(ConfigurationBuilder));
 
-            composition.Register(typeof(IConfiguration), typeof(UslackConfiguration),Lifetime.Singleton);            
+            composition.Register(typeof(IConfiguration), typeof(UslackConfiguration), Lifetime.Singleton);
 
             composition.Register(typeof(InteractiveControllerSelector));
-            composition.Register(typeof(InteractiveControllerTypeResolver));
-
-            composition.Register(typeof(ISecurityService), typeof(SecurityService));
-            composition.Register(typeof(ManagingService));
+            composition.Register(typeof(InteractiveControllerTypeResolver));            
 
         }
     }

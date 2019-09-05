@@ -3,6 +3,7 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
+using SlackAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +21,10 @@ namespace uSlack.Backoffice
     [PluginController("uslack")]
     public class ConfigurationApiController : UmbracoAuthorizedJsonController
     {
-        private readonly ManagingService _slackService;
         private readonly IConfiguration _configuration;
 
-        public ConfigurationApiController(ManagingService slackService,
-                                            IConfiguration configuration)
-        {
-            _slackService = slackService;
+        public ConfigurationApiController(IConfiguration configuration)
+        {            
             _configuration = configuration;
         }
 
@@ -72,7 +70,10 @@ namespace uSlack.Backoffice
             try
             {
                 //TODO: properly manage response and display error messages
-                var response = await _slackService.GetChannelsAsync(token);
+
+                var client = new SlackTaskClient(token);
+                var response =  await client.GetConversationListAsync();
+                
 
                 if (!response.ok)
                 {

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
+using uSlack.Helpers;
 using uSlack.Models;
 using uSlack.Services;
 
@@ -16,9 +17,9 @@ namespace uSlack.EventHandlers
     [SectionHandler("memberService")]
     public class MemberHandlers
     {
-        private readonly IMessageService<IEntity> _messagingService;
+        private readonly IMessageService _messagingService;
 
-        public MemberHandlers(IMessageService<IEntity> messagingService)
+        public MemberHandlers(IMessageService messagingService)
         {
             _messagingService = messagingService;
         }
@@ -30,7 +31,7 @@ namespace uSlack.EventHandlers
             {
                 var properties = new PropertiesDictionary(item);
 
-                _messagingService.SendMessage("memberService", "deleted", properties);
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("memberService", "deleted", properties));
             }
         }
 
@@ -41,7 +42,7 @@ namespace uSlack.EventHandlers
             {
                 var properties = new PropertiesDictionary(item);
 
-                _messagingService.SendMessage("memberService", "saved", properties);
+                AsyncUtil.RunSync(()=>_messagingService.SendMessageAsync("memberService", "saved", properties));
             }
         }
 

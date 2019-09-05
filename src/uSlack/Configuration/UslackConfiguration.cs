@@ -116,5 +116,15 @@ namespace uSlack.Configuration
 
             return messages;
         }
+
+
+        /// <summary>
+        /// Returns the name of the template to use for a message using a service name and handler convention.
+        /// </summary>
+        /// <returns></returns>
+        public string GetMessageTemplateName(string service, string handler)
+        {
+            return $"{service}_{handler}";
+        }
     }
 }

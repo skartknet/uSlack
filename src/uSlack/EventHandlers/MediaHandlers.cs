@@ -5,11 +5,8 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Umbraco.Core.Events;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
+using uSlack.Helpers;
 using uSlack.Models;
 using uSlack.Services;
 
@@ -18,9 +15,9 @@ namespace uSlack.EventHandlers
     [SectionHandler("mediaService")]
     public class MediaHandlers
     {
-        private readonly IMessageService<IEntity> _messagingService;
+        private readonly IMessageService _messagingService;
 
-        public MediaHandlers(IMessageService<IEntity> messagingService)
+        public MediaHandlers(IMessageService messagingService)
         {
             _messagingService = messagingService;
         }
@@ -32,7 +29,7 @@ namespace uSlack.EventHandlers
             {
                 var properties = new PropertiesDictionary(item);
 
-                _messagingService.SendMessage("mediaService", "trashed", properties);
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("mediaService", "trashed", properties));
             }
         }
 
@@ -42,7 +39,7 @@ namespace uSlack.EventHandlers
             foreach (var item in e.SavedEntities)
             {
                 var properties = new PropertiesDictionary(item);
-                _messagingService.SendMessage("mediaService", "saved", properties);
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("mediaService", "saved", properties));
             }
         }
 
@@ -53,7 +50,7 @@ namespace uSlack.EventHandlers
             {
                 var properties = new PropertiesDictionary(item);
 
-                _messagingService.SendMessage("mediaService", "moved", properties);
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("mediaService", "moved", properties));
             }
         }
 
@@ -64,7 +61,7 @@ namespace uSlack.EventHandlers
             {
                 var properties = new PropertiesDictionary(item);
 
-                _messagingService.SendMessage("mediaService", "deleted", properties);
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("mediaService", "deleted", properties));
             }
         }
 

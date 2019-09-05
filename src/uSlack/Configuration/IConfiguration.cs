@@ -9,14 +9,15 @@ using System.Collections.Generic;
 namespace uSlack.Configuration
 {
     public interface IConfiguration
-    {        
+    {
         AppSettings AppSettings { get; }
         ConfigurationGroup DefaultConfigurationGroup { get; }
 
         IReadOnlyDictionary<string, MessageConfiguration> Messages { get; }
         MessageConfiguration GetMessage(string alias);
+        string GetMessageTemplateName(string service, string handler);
         void SaveSettings(AppSettings model);
-        
+
     }
-   
+
 }

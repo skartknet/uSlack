@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace uSlack.Services
 {
-    public interface IMessageService<T> where T : class
-    {
-        Task<SlackAPI.Interactive.ConversationListResponse> GetChannelsAsync(string token);
-        Task SendMessage(string service, string evt, IDictionary<string, string> properties);        
+    public interface IMessageService
+    {        
+        Task SendMessageAsync(string service, string evt, IDictionary<string, string> properties = null);        
     }
 }

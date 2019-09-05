@@ -10,12 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Umbraco.Core.Composing;
-using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 
 namespace uSlack.Services
 {
-    public class SlackService : IMessageService<IEntity>
+    public class SlackService : IMessageService
     {
         private readonly IConfiguration configuration;
 
@@ -33,63 +32,43 @@ namespace uSlack.Services
         }
 
 
-
-        /// <summary>
-        /// Get all Slack conversations
-        /// </summary>
-        /// <param name="token">If no token is passed, the one in the config will be used.</param>
-        /// <returns></returns>
-        public async Task<ConversationListResponse> GetChannelsAsync(string token)
-        {
-
-            var response = await client.Value.GetConversationListAsync();
-
-            if (!response.ok)
-            {
-                Current.Logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);
-            }
-
-            return response;
-        }
-
-
-
         /// <summary>
         ///  It sends a messsage for each of the available configurations.
         /// </summary>
         /// <param name="service"></param>
         /// <param name="evt"></param>        
-        public virtual async Task SendMessageAsync(string service, string evt, IDictionary<string, string> properties)
+        public virtual async Task SendMessageAsync(string service, string evt, IDictionary<string, string> properties = null)
         {
             foreach (var c in configuration.AppSettings.ConfigurationGroups)
             {
                 if (c.GetParameter<bool>(service, evt) == false) return;
 
-                await Send(c.SlackChannel, $"{service}_{evt}", properties);
+                var templateName = configuration.GetMessageTemplateName(service, evt);
+                var msg = configuration.GetMessage(templateName);
+                var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
+                                .ReplacePlaceholders(properties);
+
+                var blocksArray = JsonConvert.DeserializeObject<Block[]>(blocksJsonwithPlaceholdersReplaced);
+
+                var text = msg.Text.ReplacePlaceholders(properties);
+
+                await this.SendMessageAsync(c.SlackChannel, text, blocksArray);
             }
         }
 
-
-        private async Task Send(string channel, string templateName, IDictionary<string, string> properties = null)
-        {
-            if (channel is null)
-            {
-                throw new ArgumentNullException(nameof(channel));
-            }
-
-            var msg = configuration.GetMessage(templateName);
-            var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
-                            .ReplacePlaceholders(properties);
-
-            var blocks = JsonConvert.DeserializeObject<Block[]>(blocksJsonwithPlaceholdersReplaced);
-
-            var text = msg.Text.ReplacePlaceholders(properties);
-
-            await this.SendMessageAsync(channel, text, blocks);
-        }
 
         private async Task SendMessageAsync(string channel, string txt, IBlock[] blocks)
         {
+            if (string.IsNullOrWhiteSpace(channel))
+            {
+                throw new ArgumentException("Channel has not been set", nameof(channel));
+            }
+
+            if (string.IsNullOrWhiteSpace(txt))
+            {
+                throw new ArgumentException("Message text needs to be passed", nameof(txt));
+            }
+
             if (blocks == null)
             {
                 throw new ArgumentNullException(nameof(blocks));
@@ -111,9 +90,5 @@ namespace uSlack.Services
 
         }
 
-        Task IMessageService<IEntity>.SendMessage(string service, string evt, IDictionary<string, string> properties)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
