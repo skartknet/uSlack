@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using NUnit.Framework;
 using SlackAPI;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Threading.Tasks;

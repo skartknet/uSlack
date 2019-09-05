@@ -2,9 +2,10 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using uSlack.Interactive;
 using uSlack.Services.Models;
 
-namespace uSlack.Services
+namespace uSlack.Interactive
 {
     public class InteractiveControllerSelector
     {

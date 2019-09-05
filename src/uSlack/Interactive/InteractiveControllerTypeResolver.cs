@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using uSlack.Interactive;
 
-namespace uSlack.Services
+namespace uSlack.Interactive
 {
     public class InteractiveControllerTypeResolver
     {

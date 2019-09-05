@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http.Dispatcher;
+using uSlack.Services;
 
-namespace uSlack.Services
+namespace uSlack.Interactive
 {
     internal sealed class InteractiveControllerTypeCache
     {

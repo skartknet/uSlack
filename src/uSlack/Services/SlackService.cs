@@ -17,15 +17,12 @@ namespace uSlack.Services
 {
     public class SlackService : IMessageService
     {
-        private readonly IConfiguration configuration;
-        private readonly ILogger _logger;
+        private readonly IConfiguration configuration;        
         private Lazy<SlackTaskClient> client;
 
-        public SlackService(IConfiguration configuration,
-                            ILogger logger)
+        public SlackService(IConfiguration configuration)
         {
-            this.configuration = configuration;
-            _logger = logger;
+            this.configuration = configuration;            
             client = new Lazy<SlackTaskClient>(InitSlackClient);
         }
 
@@ -83,12 +80,12 @@ namespace uSlack.Services
 
                 if (!response.ok)
                 {
-                    _logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);                    
+                    Current.Logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);                    
                 }
             }
             catch (Exception ex)
             {
-                _logger.Warn(typeof(SlackService), ex, "Error sending uSlack message");
+                Current.Logger.Warn(typeof(SlackService), ex, "Error sending uSlack message");
             }
 
         }

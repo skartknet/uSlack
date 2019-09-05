@@ -4,9 +4,9 @@
 // </copyright>
 
 using Umbraco.Core.Composing;
-using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 using uSlack.EventHandlers;
+using uSlack.Interactive;
 using uSlack.Security;
 using uSlack.Services;
 
@@ -29,6 +29,7 @@ namespace uSlack
 
             composition.Register(typeof(InteractiveControllerSelector));
             composition.Register(typeof(InteractiveControllerTypeResolver));            
+
 
         }
     }

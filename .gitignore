@@ -379,3 +379,4 @@ MigrationBackup/
 /uSlack/Web/App_Plugins/uSlack/Config/uslack.config
 /uSlack.Web/App_Plugins/uSlack/Config/uslack.config
 /src/uSlack.Web/App_Plugins/uSlack/Config/uslack.config
+/tools/ngrok.exe

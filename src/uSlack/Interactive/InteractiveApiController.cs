@@ -52,18 +52,7 @@ namespace uSlack.Interactive
                         Method = action.action_id
                     };
 
-
-
-                    switch (action)
-                    {
-                        case ButtonElementInteractive act:
-                            route.Value = act.value;
-                            break;
-                        case DatePickerElementInteractive act:
-                            route.Value = act.SelectedDate.ToString("yy-MM-dd");
-                            break;
-                    }
-
+                    route.Value = action.Value;
 
                     var controller = _controllerSelector.SelectController(route.Controller);
 

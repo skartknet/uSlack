@@ -283,6 +283,7 @@
     <Compile Include="Configuration\MessageConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationGroup.cs" />
     <Compile Include="API\ContentController.cs" />
+    <Compile Include="Deserialisation\InteractiveActionConverter.cs" />
     <Compile Include="Helpers\AsyncUtil.cs" />
     <Compile Include="Interactive\InteractiveApiController.cs" />
     <Compile Include="Interactive\InteractiveControllerBase.cs" />
@@ -290,13 +291,14 @@
     <Compile Include="EventHandlers\MemberHandlers.cs" />
     <Compile Include="EventHandlers\MediaHandlers.cs" />
     <Compile Include="EventHandlers\UserHandlers.cs" />
+    <Compile Include="Interactive\InteractiveControllerTypeResolver.cs" />
+    <Compile Include="Interactive\InteractiveResponse.cs" />
     <Compile Include="Models\PropertiesDictionary.cs" />
     <Compile Include="Security\ISecurityService.cs" />
     <Compile Include="Security\Security.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Interactive\InteractiveControllerSelector.cs" />
     <Compile Include="Interactive\InteractiveControllerTypeCache.cs" />
-    <Compile Include="Interactive\InteractiveControllerTypeResolver.cs" />
     <Compile Include="Services\Models\InteractiveControllerDescriptor.cs" />
     <Compile Include="Services\Models\InteractiveRequestMessage.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
