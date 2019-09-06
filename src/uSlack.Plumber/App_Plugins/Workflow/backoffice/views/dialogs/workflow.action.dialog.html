@@ -1,0 +1,81 @@
+﻿<div class="workflow action-dialog" ng-controller="Workflow.Action.Controller as vm">
+    
+    <div ng-if="model.item.status === 'Errored'" class="alert alert-error">
+        <h4 style="margin:10px 0">Processing cancelled due to error:</h4>
+        <p ng-bind="vm.extractErrorFromComment()"></p>
+    </div>
+
+    <h5>Change description</h5>
+    <div class="history-item">
+        <div class="history-item__break">
+            <div class="history-item__avatar">
+                <umb-avatar size="m"
+                            color="secondary"
+                            name="{{ model.item.requestedBy }}">
+                </umb-avatar>
+            </div>
+            <div>
+                <div ng-bind="model.item.requestedBy"></div>
+                <div class="history-item__date" ng-bind="model.item.requestedOn"></div>
+            </div>
+        </div>
+        <div class="history-item__break">
+            <p ng-bind="model.item.comment || model.item.instanceComment" class="comment-text"></p>
+        </div>
+    </div>
+
+    <umb-load-indicator ng-show="!vm.tasksLoaded"></umb-load-indicator>
+
+    <div ng-if="vm.tasks.length">
+
+        <hr />
+        <h5>Workflow activity</h5>
+
+        <ul class="action-dialog--task-list">
+            <li class="action-dialog--task-list-item" ng-repeat="taskCollection in vm.tasks track by $index">
+                <div class="history-task-number">
+                    <span class="counter">Stage {{ $index + 1 }}</span>
+                </div>
+                <div class="history-tasks">
+                    <div class="history-line" ng-if="taskCollection.length > 1"></div>
+
+                    <div class="history-item" ng-repeat="t in taskCollection | orderBy: '-taskId'">
+                        <div class="history-item__break">
+                            <div class="history-item__avatar">
+                                <umb-avatar size="xs"
+                                            color="secondary"
+                                            name="{{ t.avatarName }}">
+                                </umb-avatar>
+                            </div>
+                            <div>
+                                <div ng-bind="t.whodunnit"></div>
+                                <div class="history-item__date" ng-bind="t.completedOn" ng-if="t.completedOn"></div>
+                            </div>
+                        </div>
+                        <div class="history-item__break">
+                            <umb-badge color="{{ t.statusColor }}"
+                                       size="xs">
+                                {{ t.statusName }}
+                            </umb-badge>
+                            <div ng-if="t.status !== 4 && t.status !== 3">
+                                <span ng-bind="t.comment"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li> 
+        </ul>
+    </div>
+    
+    <div ng-if="model.detail !== true">
+        <hr />
+        <h5>Stage {{ vm.currentStep }} of {{ vm.totalSteps }}</h5>
+
+        <wf-comments limit="vm.limit"
+                     label-text="'Please provide a comment'"
+                     comment="model.approvalComment"
+                     is-final-approval="model.isFinalApproval"
+                     disabled="vm.disabled">
+        </wf-comments>
+    </div>
+</div>

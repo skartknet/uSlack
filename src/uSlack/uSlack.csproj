@@ -347,8 +347,8 @@
     <Content Include="Web\App_Plugins\uSlack\dashboard.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SlackAPI\SlackAPI\SlackAPI.csproj">
-      <Project>{4f42b4fe-75fe-4d4c-85d6-15980141478b}</Project>
+    <ProjectReference Include="..\..\..\..\..\source\repos\SlackAPI\SlackAPI\SlackAPI.csproj">
+      <Project>{05fead00-caaf-48b1-baaa-3faaa6701fae}</Project>
       <Name>SlackAPI</Name>
     </ProjectReference>
   </ItemGroup>

@@ -39,7 +39,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "uSlack.Docs", "uSlack.Docs\
 		SlnRelativePath = "uSlack.Docs\"
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackAPI", "..\..\SlackAPI\SlackAPI\SlackAPI.csproj", "{4F42B4FE-75FE-4D4C-85D6-15980141478B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackAPI", "..\..\..\..\source\repos\SlackAPI\SlackAPI\SlackAPI.csproj", "{05FEAD00-CAAF-48B1-BAAA-3FAAA6701FAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,10 +71,10 @@ Global
 		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{4F42B4FE-75FE-4D4C-85D6-15980141478B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F42B4FE-75FE-4D4C-85D6-15980141478B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F42B4FE-75FE-4D4C-85D6-15980141478B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F42B4FE-75FE-4D4C-85D6-15980141478B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05FEAD00-CAAF-48B1-BAAA-3FAAA6701FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05FEAD00-CAAF-48B1-BAAA-3FAAA6701FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05FEAD00-CAAF-48B1-BAAA-3FAAA6701FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05FEAD00-CAAF-48B1-BAAA-3FAAA6701FAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
