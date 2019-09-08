@@ -80,18 +80,11 @@ namespace uSlack.Services
                 throw new ArgumentNullException(nameof(blocks));
             }
 
-            try
-            {
-                var response = await client.Value.PostMessageAsync(channel, txt, blocks: blocks);
+            var response = await client.Value.PostMessageAsync(channel, txt, blocks: blocks);
 
-                if (!response.ok)
-                {
-                    Current.Logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);
-                }
-            }
-            catch (Exception ex)
+            if (!response.ok)
             {
-                Current.Logger.Warn(typeof(SlackService), ex, "Error sending uSlack message");
+                throw new FormatException("Error sending message to Slack. Code: " + response.error);
             }
 
         }

@@ -56,16 +56,7 @@ namespace uSlack.Tests
             var client = new SlackService(config.Object);
             await client.SendMessageAsync("contentservice", "published", null);
 
-        }
-
-        [Test]
-        public void test()
-        {
-            var block = JsonConvert.DeserializeObject<IBlock>("{\"Type\":\"section\",\"block_id\":\"123\"}");
-            Assert.AreEqual("123", (block as SectionBlock)?.BlockId);
-
-        }
-
+        }  
 
 
         [Test]
@@ -107,12 +98,7 @@ namespace uSlack.Tests
 
             var client = new SlackService(config.Object);
 
-            var parameters = new Dictionary<string, string>
-            {
-                { "id", "123" },
-                { "name", "node1" }
-            };
-
+           
             await client.SendMessageAsync("contentservice", "published", null);
 
         }

@@ -39,15 +39,6 @@
                 },
                 'value': '{id}'
               }
-            },
-            {
-              'type': 'context',
-              'elements': [
-                {
-                  'type': 'mrkdwn',
-                  'text': '*Publisher:* {publisher}'
-                }
-              ]
             }
           ]";
 

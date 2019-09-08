@@ -283,7 +283,6 @@
     <Compile Include="Configuration\MessageConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationGroup.cs" />
     <Compile Include="API\ContentController.cs" />
-    <Compile Include="Deserialisation\InteractiveActionConverter.cs" />
     <Compile Include="Helpers\AsyncUtil.cs" />
     <Compile Include="Interactive\InteractiveApiController.cs" />
     <Compile Include="Interactive\InteractiveControllerBase.cs" />

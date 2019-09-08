@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using uSlack.Deserialisation;
 using InteractiveModels = SlackAPI.Interactive;
 
 namespace uSlack.Interactive
@@ -30,7 +29,6 @@ namespace uSlack.Interactive
         public string ApiAppId { get; set; }
 
         [JsonProperty("actions")]
-        [JsonConverter(typeof(InteractiveActionConverter))]
         public IList<InteractiveModels.IInteractiveElement> Actions { get; set; }
     }
 
