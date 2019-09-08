@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
 using uSlack.Interactive;
 
 namespace uSlack.API
@@ -6,7 +7,7 @@ namespace uSlack.API
     public class ContentController : InteractiveApiControllerBase
     {
 
-        public IHttpActionResult Unpublish(string src)
+        public async Task<IHttpActionResult> Unpublish(string src)
         {
             if (int.TryParse(src, out int id))
             {

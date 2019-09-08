@@ -34,7 +34,7 @@ namespace uSlack.Interactive
         [HttpPost]
         public async Task<IHttpActionResult> ProcessResponse()
         {
-
+            //TODO: return a Slack error message if something is not right
             var isValidSignature = await _securityService.IsValidRequestAttemptAsync(Request);
 
             if (!isValidSignature) return Unauthorized();
@@ -63,11 +63,11 @@ namespace uSlack.Interactive
                     object classInstance = Activator.CreateInstance(controller.ControllerType, null);
                     if (route.Value.IsNullOrWhiteSpace())
                     {
-                        return (IHttpActionResult)methodInfo.Invoke(classInstance, null);
+                        methodInfo.Invoke(classInstance, null);
                     }
                     else
                     {
-                        return (IHttpActionResult)methodInfo.Invoke(classInstance, new object[] { route.Value });
+                        methodInfo.Invoke(classInstance, new object[] { route.Value });
                     }
 
                 }
@@ -79,6 +79,7 @@ namespace uSlack.Interactive
                 return InternalServerError();
             }
 
+            
             return Ok();
         }
 

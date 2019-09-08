@@ -6,7 +6,7 @@
       "block_id": "content",
       "text": {
         "type": "mrkdwn",
-        "text": "The page with name: {name} and Id: {id} has been published."
+        "text": "The page *(id){name}* has been published."
       },
       "accessory": {
         "type": "button",
