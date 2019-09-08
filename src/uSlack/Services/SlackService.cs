@@ -12,17 +12,18 @@ using System.Threading.Tasks;
 using Umbraco.Core.Composing;
 using uSlack.Configuration;
 using Umbraco.Core.Logging;
+using SlackAPI.Composition;
 
 namespace uSlack.Services
 {
     public class SlackService : IMessageService
     {
-        private readonly IConfiguration configuration;        
+        private readonly IConfiguration configuration;
         private Lazy<SlackTaskClient> client;
 
         public SlackService(IConfiguration configuration)
         {
-            this.configuration = configuration;            
+            this.configuration = configuration;
             client = new Lazy<SlackTaskClient>(InitSlackClient);
         }
 
@@ -44,13 +45,18 @@ namespace uSlack.Services
                 if (c.GetParameter<bool>(service, evt) == false) return;
 
                 var templateName = configuration.GetMessageTemplateName(service, evt);
-                var msg = configuration.GetMessage(templateName);
-                var blocksJsonwithPlaceholdersReplaced = JsonConvert.SerializeObject(msg.Blocks)
-                                .ReplacePlaceholders(properties);
+                var msgConfig = configuration.GetMessage(templateName);
 
-                var blocksArray = JsonConvert.DeserializeObject<Block[]>(blocksJsonwithPlaceholdersReplaced);
+                string msg = JsonConvert.SerializeObject(msgConfig.Blocks);
+                var text = msgConfig.Text;
 
-                var text = msg.Text.ReplacePlaceholders(properties);
+                if (properties != null)
+                {
+                    msg = msg.ReplacePlaceholders(properties);
+                    text = text.ReplacePlaceholders(properties);
+                }
+
+                var blocksArray = JsonConvert.DeserializeObject<IBlock[]>(msg);
 
                 await this.SendMessageAsync(c.SlackChannel, text, blocksArray);
             }
@@ -80,7 +86,7 @@ namespace uSlack.Services
 
                 if (!response.ok)
                 {
-                    Current.Logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);                    
+                    Current.Logger.Error(typeof(SlackService), "Error sending message to Slack. Response: {Response}", response.error);
                 }
             }
             catch (Exception ex)

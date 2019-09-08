@@ -4,7 +4,7 @@
 // </copyright>
 
 using Newtonsoft.Json;
-using SlackAPI;
+using SlackAPI.Composition;
 
 namespace uSlack.Configuration
 {
@@ -14,6 +14,6 @@ namespace uSlack.Configuration
         public string Text { get; set; }
 
         [JsonProperty("blocks")]
-        public Block[] Blocks { get; set; }
+        public IBlock[] Blocks { get; set; }
     }
 }

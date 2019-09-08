@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SlackAPI;
+using SlackAPI.Composition;
 using SlackAPI.Interactive;
 using Umbraco.Core.Composing;
 using uSlack.Interactive;
