@@ -18,27 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack.Plumber", "uSlack.Pl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uSlack.UmbracoForms", "uSlack.UmbracoForms\uSlack.UmbracoForms.csproj", "{F3747020-2471-4CEC-AF7B-24FF882F0A52}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "uSlack.Docs", "uSlack.Docs\", "{298E8A23-E2CF-4047-BAA7-A37310707E37}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_53135"
-		Debug.AspNetCompiler.PhysicalPath = "uSlack.Docs\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53135\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_53135"
-		Release.AspNetCompiler.PhysicalPath = "uSlack.Docs\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53135\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "53135"
-		SlnRelativePath = "uSlack.Docs\"
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackAPI", "..\..\..\..\source\repos\SlackAPI\SlackAPI\SlackAPI.csproj", "{05FEAD00-CAAF-48B1-BAAA-3FAAA6701FAE}"
 EndProject
 Global
@@ -67,10 +46,6 @@ Global
 		{F3747020-2471-4CEC-AF7B-24FF882F0A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3747020-2471-4CEC-AF7B-24FF882F0A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3747020-2471-4CEC-AF7B-24FF882F0A52}.Release|Any CPU.Build.0 = Release|Any CPU
-		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{298E8A23-E2CF-4047-BAA7-A37310707E37}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{05FEAD00-CAAF-48B1-BAAA-3FAAA6701FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{05FEAD00-CAAF-48B1-BAAA-3FAAA6701FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05FEAD00-CAAF-48B1-BAAA-3FAAA6701FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
