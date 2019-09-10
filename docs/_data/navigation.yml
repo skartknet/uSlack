@@ -1,0 +1,14 @@
+main:
+  - title: "Introduction"
+    url: /
+  - title: "Extending"
+    url: /extending/
+  - title: "Configuring"
+    url: /configuring/
+
+
+settings:
+  - title: Configuring uSlack
+    children:
+      - title: "Creating Messages"
+        url: /configuring/messages/
