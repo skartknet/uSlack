@@ -10,23 +10,23 @@
 # Review documentation to determine if you should use `theme` or `remote_theme`
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
-theme                  : "minimal-mistakes-jekyll"
-# remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+# theme                  : "minimal-mistakes-jekyll"
+remote_theme           : "mmistakes/minimal-mistakes"
+minimal_mistakes_skin    : "mint" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "en-AU"
-title                    : ""
+title                    : "uSlack"
 title_separator          : "-"
-subtitle                 : # site tagline that appears below site title in masthead
+subtitle                 : 
 name                     : "Mario Lopez"
-description              : "An Umbraco-Slack integration"
+description              : "An Umbraco-Slack integration. Allows Umbraco to send messages to Slack channels for certain events. Extensible to be configure with any other Umbraco package that implement events."
 url                      : "https://skartknet.github.io"
 baseurl                  : "/uSlack"
 repository               : "skartknet/uSlack"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : "/images/logo.png"
-masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
+logo                     : "/images/logo_alpha.png"
+masthead_title           : " "
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
@@ -263,5 +263,8 @@ defaults:
       author_profile: false
       read_time: false
       comments: false
-      share: true
-      related: true
+      share: false
+      related: false
+      sidebar:
+        nav: "all"
+      toc: false

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.Entities;
 using Umbraco.Core.Models.PublishedContent;
@@ -29,7 +25,7 @@ namespace uSlack.Models
 
         public PropertiesDictionary(IContent node) : this(node as IEntity)
         {
-            this.Add("name", node.Name);            
+            this.Add("name", node.Name);
             foreach (var prop in node.Properties)
             {
                 this.Add(prop.Alias, prop.GetValue().ToString());
