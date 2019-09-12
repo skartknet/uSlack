@@ -3,16 +3,36 @@
     vm.buttonState = "init";
     vm.loadChannelsState = "init";
     vm.channels;
-    vm.appsettings = { token: undefined, configurationGroups: [] };
+    vm.appsettings = { configurationGroups: [] };
     vm.panelsVisibility = [];
 
     function init() {
         $http.get("/umbraco/backoffice/uslack/configurationapi/GetDefaultConfiguration").then(function (res) {
             vm.defaultConfiguration = res.data;
+            initConfiguration();
+        }, function (res) {
+            notificationsService.error("Error", "Default configuration couldn't be created");
+        });
+    }
 
-            setConfiguration();
+
+
+    function initConfiguration() {
+        $http.get("/umbraco/backoffice/uslack/configurationapi/getconfiguration").then(function (res) {
+
+            vm.appsettings = res.data;
+
+            if (!vm.appsettings.configurationGroups) {
+                vm.appsettings.configurationGroups = [];
+                addNewConfigGroup();
+            }
+
+            vm.panelsVisibility = new Array(vm.appsettings.configurationGroups.length).fill(false);
+
             getUserGroups();
             vm.loadChannels();
+        }, function (res) {
+            notificationsService.error("Error", "Error loading configuration");
         });
     }
 
@@ -22,26 +42,6 @@
         });
     }
 
-    function setConfiguration() {
-        $http.get("/umbraco/backoffice/uslack/configurationapi/getconfiguration").then(function (res) {
-
-            if (!res.data) {
-                addNewConfigGroup();
-                return;
-            }
-            vm.appsettings = res.data;
-
-            for (var i = 0; i < vm.appsettings.configurationGroups.length; i++) {
-
-                vm.panelsVisibility.push(false);
-
-                var config = vm.appsettings.configurationGroups[i];
-                if (vm.appsettings.token) {
-                    vm.loadChannels(config);
-                }
-            }
-        });
-    }
 
     function addNewConfigGroup() {
         var configCopy = angular.copy(vm.defaultConfiguration);
@@ -73,10 +73,9 @@
 
     vm.loadChannels = function () {
 
-        if (!vm.appsettings.token) return;
 
         vm.loadChannelsState = "busy";
-        $http.get("/umbraco/backoffice/uslack/configurationapi/loadchannels?token=" + vm.appsettings.token).then(function (res) {
+        $http.get("/umbraco/backoffice/uslack/configurationapi/loadchannels").then(function (res) {
             vm.channels = res.data;
             vm.loadChannelsState = "success";
         },

@@ -12,7 +12,7 @@ using Umbraco.Core.IO;
 
 namespace uSlack.Configuration
 {
-    public class UslackConfiguration : IConfiguration
+    public class USlackContext : IContext
     {
         const string FilesLocation = "~/App_Plugins/uSlack/Config/";
         private readonly Lazy<IReadOnlyDictionary<string, MessageConfiguration>> _messages;
@@ -20,8 +20,8 @@ namespace uSlack.Configuration
         private readonly Lazy<ConfigurationGroup> _defaultConfiguration;
         private readonly ILogger _logger;
 
-        public UslackConfiguration(IConfigurationBuilder configurationBuilder,
-                                    ILogger logger)
+        public USlackContext(IConfigurationBuilder configurationBuilder,
+                            ILogger logger)
         {
             _messages = new Lazy<IReadOnlyDictionary<string, MessageConfiguration>>(LoadMessages);
             _appSettings = new Lazy<AppSettings>(LoadSettings);
@@ -78,7 +78,17 @@ namespace uSlack.Configuration
 
         private AppSettings LoadSettings()
         {
-            AppSettings config = null;
+            AppSettings config;
+            try
+            {
+                config = new AppSettings(); ;
+            }
+            catch(Exception ex)
+            {
+                _logger.Error<USlackContext>(ex);
+                throw ex;
+            }
+
             var msgPath = IOHelper.MapPath(FilesLocation + "uslack.config");
 
             if (File.Exists(msgPath))
@@ -86,12 +96,12 @@ namespace uSlack.Configuration
                 var content = File.ReadAllText(msgPath);
                 try
                 {
-                    config = JsonConvert.DeserializeObject<AppSettings>(content);
+                    JsonConvert.PopulateObject(content, config);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     //we can't read config file. This will be rebuilt next time is saved.
-                    _logger.Warn<UslackConfiguration>("Error reading configuration file.");
+                    _logger.Warn<USlackContext>("Error reading configuration file.");
                 }
             }
 

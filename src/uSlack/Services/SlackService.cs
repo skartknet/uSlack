@@ -3,25 +3,22 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
-using Newtonsoft.Json;
-using SlackAPI;
-using SlackAPI.Interactive;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Umbraco.Core.Composing;
-using uSlack.Configuration;
-using Umbraco.Core.Logging;
+using Newtonsoft.Json;
+using SlackAPI;
 using SlackAPI.Composition;
+using uSlack.Configuration;
 
 namespace uSlack.Services
 {
     public class SlackService : IMessageService
     {
-        private readonly IConfiguration configuration;
+        private readonly IContext configuration;
         private Lazy<SlackTaskClient> client;
 
-        public SlackService(IConfiguration configuration)
+        public SlackService(IContext configuration)
         {
             this.configuration = configuration;
             client = new Lazy<SlackTaskClient>(InitSlackClient);

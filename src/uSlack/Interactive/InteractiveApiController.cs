@@ -33,8 +33,7 @@ namespace uSlack.Interactive
 
         [HttpPost]
         public async Task<IHttpActionResult> ProcessResponse()
-        {
-            //TODO: return a Slack error message if something is not right
+        {            
             var isValidSignature = await _securityService.IsValidRequestAttemptAsync(Request);
 
             if (!isValidSignature) return Unauthorized();

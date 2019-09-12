@@ -25,7 +25,7 @@ namespace uSlack
             composition.Register(typeof(ISecurityService), typeof(SecurityService));
             composition.Register(typeof(IConfigurationBuilder), typeof(ConfigurationBuilder));
 
-            composition.Register(typeof(IConfiguration), typeof(UslackConfiguration), Lifetime.Singleton);
+            composition.Register(typeof(IContext), typeof(USlackContext), Lifetime.Singleton);
 
             composition.Register(typeof(InteractiveControllerSelector));
             composition.Register(typeof(InteractiveControllerTypeResolver));            

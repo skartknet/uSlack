@@ -3,16 +3,14 @@
 // Licensed under the Apache License, Version 2.0.
 // </copyright>
 
-using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace uSlack.Configuration
 {
-    public interface IConfiguration
+    public interface IContext
     {
         AppSettings AppSettings { get; }
         ConfigurationGroup DefaultConfigurationGroup { get; }
-
         IReadOnlyDictionary<string, MessageConfiguration> Messages { get; }
         MessageConfiguration GetMessage(string alias);
         string GetMessageTemplateName(string service, string handler);

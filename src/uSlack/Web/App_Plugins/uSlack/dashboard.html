@@ -1,24 +1,21 @@
 ﻿<div ng-controller="uslack.dashboard.controller as vm">
-    <umb-button class="pull-right"
-                action="vm.btnSave(config)"
-                type="button"
-                button-style="success"
-                state="vm.buttonState"
-                shortcut="ctrl+c"
-                label-key="buttons_save"
-                disabled="vm.buttonState === 'busy' || !vm.appsettings.token">
-    </umb-button>
-
-    <div class="sub-view-columns">
-        <div class="sub-view-column-left">
-            <h5><localize key="uslack_token" /></h5>
-            <small><localize key="uslack_token_help" /></small>
-        </div>
-        <div class="sub-view-column-right">
-            <input type="text" placeholder="your app token" ng-model="vm.appsettings.token" no-validate />
+    <div class="umb-box">
+        <div class="umb-box-content">
+            <umb-button action="vm.btnSave(config)"
+                        type="button"
+                        button-style="success"
+                        state="vm.buttonState"
+                        shortcut="ctrl+c"
+                        label-key="buttons_save"
+                        disabled="vm.buttonState === 'busy'">
+            </umb-button>
+            <umb-button action="vm.addNewConfig()"
+                        type="button"
+                        button-style="action"
+                        label-key="uslack_AddConfigBtn">
+            </umb-button>
         </div>
     </div>
-
 
     <div class="umb-panel-group__details" ng-repeat="(idx, config) in vm.appsettings.configurationGroups">
 
@@ -29,7 +26,7 @@
                     {{config.name}}
                 </div>
                 <div class="pull-right" ng-if="idx != 0">
-                    <i class="icon-trash" ng-click="vm.deleteGroup(idx)" ></i>
+                    <i class="icon-trash" ng-click="vm.deleteGroup(idx)"></i>
                 </div>
             </div>
             <umb-box ng-show="vm.panelsVisibility[idx]">
@@ -73,10 +70,8 @@
                                         type="button"
                                         button-style="action"
                                         state="vm.loadChannelsState"
-                                        label-key="uslack_loadChannelsBtn"
-                                        disabled="vm.loadChannelsState === 'busy' || !vm.appsettings.token">
+                                        label-key="uslack_loadChannelsBtn">
                             </umb-button>
-                            <small ng-show="!vm.appsettings.token">Enter an App token to load the channels</small>
                             <select ng-model="config.channel" ng-show="vm.channels">
                                 <option ng-repeat="channel in vm.channels" value="{{channel.id}}">{{channel.name}}</option>
                             </select>
@@ -103,9 +98,5 @@
         </div>
     </div>
 
-    <umb-button action="vm.addNewConfig()"
-                type="button"
-                button-style="action"
-                label-key="uslack_AddConfigBtn">
-    </umb-button>
+
 </div>

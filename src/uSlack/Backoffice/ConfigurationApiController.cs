@@ -19,9 +19,9 @@ namespace uSlack.Backoffice
     [PluginController("uslack")]
     public class ConfigurationApiController : UmbracoAuthorizedJsonController
     {
-        private readonly IConfiguration _configuration;
+        private readonly IContext _configuration;
 
-        public ConfigurationApiController(IConfiguration configuration)
+        public ConfigurationApiController(IContext configuration)
         {
             _configuration = configuration;
         }
@@ -62,14 +62,14 @@ namespace uSlack.Backoffice
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> LoadChannels(string token)
+        public async Task<IHttpActionResult> LoadChannels()
         {
 
             try
             {
                 //TODO: properly manage response and display error messages
 
-                var client = new SlackTaskClient(token);
+                var client = new SlackTaskClient(_configuration.AppSettings.Token);
                 var response = await client.GetConversationListAsync();
 
 

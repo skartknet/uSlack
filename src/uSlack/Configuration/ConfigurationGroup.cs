@@ -6,14 +6,30 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using Microsoft.Azure;
+using Umbraco.Core;
 
 namespace uSlack.Configuration
 {
 
     public class AppSettings
     {
-        [JsonProperty("token")]
-        public string Token { get; set; }
+        public AppSettings()
+        {
+            Token = CloudConfigurationManager.GetSetting("uSlackAccessToken");
+            SigningSecret = CloudConfigurationManager.GetSetting("uSlackSigningSecret");
+
+            if(Token.IsNullOrWhiteSpace()) throw new ArgumentNullException(nameof(Token));            
+            if(SigningSecret.IsNullOrWhiteSpace()) throw new ArgumentNullException(nameof(SigningSecret));
+        }
+
+
+        [JsonIgnore]
+        public string Token { get; }
+
+        [JsonIgnore]
+        public string SigningSecret { get; }
+
 
         [JsonProperty("configurationGroups")]
         public IEnumerable<ConfigurationGroup> ConfigurationGroups { get; set; }

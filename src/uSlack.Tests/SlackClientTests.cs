@@ -25,10 +25,9 @@ namespace uSlack.Tests
             var blocks = JsonConvert.DeserializeObject<IBlock[]>(TestingData.BasicMessage);
 
 
-            var config = new Mock<IConfiguration>();
+            var config = new Mock<IContext>();
             config.Setup(c => c.AppSettings).Returns(new AppSettings
-            {
-                Token = token,
+            {                
                 ConfigurationGroups = new ConfigurationGroup[]
                 {
                         new ConfigurationGroup
@@ -68,10 +67,9 @@ namespace uSlack.Tests
             var blocks = JsonConvert.DeserializeObject<IBlock[]>(TestingData.AdvancedMessage1);
 
 
-            var config = new Mock<IConfiguration>();
+            var config = new Mock<IContext>();
             config.Setup(c => c.AppSettings).Returns(new AppSettings
-            {
-                Token = token,
+            {                
                 ConfigurationGroups = new ConfigurationGroup[]
                 {
                         new ConfigurationGroup
