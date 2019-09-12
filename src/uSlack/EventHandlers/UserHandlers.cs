@@ -4,9 +4,6 @@
 // </copyright>
 
 using System;
-using System.Threading.Tasks;
-using Umbraco.Core.Models.Entities;
-using Umbraco.Core.Models.Membership;
 using uSlack.Configuration;
 using uSlack.Helpers;
 using uSlack.Models;
@@ -14,7 +11,7 @@ using uSlack.Services;
 
 namespace uSlack.EventHandlers
 {
-    [SectionHandler("userService")]
+    [SectionHandler("userService", "Umbraco User Service")]
     public class UserHandlers
     {
         private readonly IMessageService _messagingService;
@@ -24,7 +21,7 @@ namespace uSlack.EventHandlers
             _messagingService = messagingService;
         }
 
-        [EventHandler("deletedUser", true)]
+        [EventHandler("deletedUser", "User deleted", true)]
         public void UserService_DeletedUser(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUser> e)
         {
             foreach (var item in e.DeletedEntities)
@@ -35,7 +32,7 @@ namespace uSlack.EventHandlers
             }
         }
 
-        [EventHandler("deletedUserGroup", true)]
+        [EventHandler("deletedUserGroup", "User gorup deleted", true)]
         public void UserService_DeletedUserGroup(Umbraco.Core.Services.IUserService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.Membership.IUserGroup> e)
         {
             foreach (var item in e.DeletedEntities)

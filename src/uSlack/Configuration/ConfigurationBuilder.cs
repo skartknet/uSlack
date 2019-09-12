@@ -21,8 +21,8 @@ namespace uSlack.Configuration
         public ConfigurationGroup CreateDefaultConfiguration()
         {
             var registeredTypes = GetConfigurationSections();
-            
-            var baseConfig = new ConfigurationGroup {Sections = BuildSections(registeredTypes)};
+
+            var baseConfig = new ConfigurationGroup { Sections = BuildSections(registeredTypes) };
 
             return baseConfig;
         }
@@ -32,10 +32,14 @@ namespace uSlack.Configuration
             var dict = new Dictionary<string, ConfigSection>();
 
             foreach (var sectionType in registeredSections)
-            {             
+            {
                 var methods = GetConfigurationEventHandlers(sectionType);
-                var configSection = new ConfigSection();
-                configSection.SectionHandlers = new Dictionary<string, object>();
+
+                var sectionAttr = sectionType.GetCustomAttribute<SectionHandlerAttribute>();
+                var configSection = new ConfigSection
+                {
+                    Label = sectionAttr.Label
+                };
 
                 foreach (var method in methods)
                 {
@@ -43,11 +47,14 @@ namespace uSlack.Configuration
 
                     if (attr == null) continue;
 
-                    configSection.SectionHandlers.Add(attr.Alias, attr.DefaultValue);
+                    configSection.SectionHandlers.Add(attr.Alias, new SectionHandler
+                    {
+                        Label = attr.Label,
+                        Value = attr.DefaultValue
+                    });
                 }
 
-                dict.Add(sectionType.GetCustomAttribute<SectionHandlerAttribute>().Alias,
-                        configSection);
+                dict.Add(sectionAttr.Alias, configSection);
             }
 
             return dict;

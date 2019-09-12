@@ -4,9 +4,6 @@
 // </copyright>
 
 using System;
-using System.Threading.Tasks;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.Entities;
 using uSlack.Configuration;
 using uSlack.Helpers;
 using uSlack.Models;
@@ -14,7 +11,7 @@ using uSlack.Services;
 
 namespace uSlack.EventHandlers
 {
-    [SectionHandler("memberService")]
+    [SectionHandler("memberService", "Umbraco Member Service")]
     public class MemberHandlers
     {
         private readonly IMessageService _messagingService;
@@ -24,7 +21,7 @@ namespace uSlack.EventHandlers
             _messagingService = messagingService;
         }
 
-        [EventHandler("deleted", true)]
+        [EventHandler("deleted", "Member deleted", true)]
         public void MemberService_Deleted(Umbraco.Core.Services.IMemberService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMember> e)
         {
             foreach (var item in e.DeletedEntities)
@@ -35,14 +32,14 @@ namespace uSlack.EventHandlers
             }
         }
 
-        [EventHandler("saved", true)]
+        [EventHandler("saved", "Member saved", true)]
         public void MemberService_Saved(Umbraco.Core.Services.IMemberService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMember> e)
         {
             foreach (var item in e.SavedEntities)
             {
                 var properties = new PropertiesDictionary(item);
 
-                AsyncUtil.RunSync(()=>_messagingService.SendMessageAsync("memberService", "saved", properties));
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("memberService", "saved", properties));
             }
         }
 

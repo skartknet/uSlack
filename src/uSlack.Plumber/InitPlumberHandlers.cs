@@ -29,7 +29,7 @@ namespace uSlack
 
             try
             {
-                GroupService.Created += GroupsHandlers.GroupService_Created;
+                //GroupService.Created += GroupsHandlers.GroupService_Created;
             }
             catch { }
         }

@@ -16,12 +16,15 @@ namespace uSlack.Configuration
         // See the attribute guidelines at 
         //  http://go.microsoft.com/fwlink/?LinkId=85236
 
-        public SectionHandlerAttribute(string alias)
+        public SectionHandlerAttribute(string alias, string label)
         {
             this.Alias = alias;
+            this.Label = label;
         }
 
         public string Alias { get; }
+        public string Label { get; }
+
     }
 
 }

@@ -12,7 +12,7 @@ using uSlack.Services;
 
 namespace uSlack.EventHandlers
 {
-    [SectionHandler("mediaService")]
+    [SectionHandler("mediaService", "Umbraco Media Service")]
     public class MediaHandlers
     {
         private readonly IMessageService _messagingService;
@@ -22,7 +22,7 @@ namespace uSlack.EventHandlers
             _messagingService = messagingService;
         }
 
-        [EventHandler("trashed", true)]
+        [EventHandler("trashed", "Media item trashed", true)]
         public void MediaService_Trashed(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
             foreach (var item in e.MoveInfoCollection.Select(mi => mi.Entity))
@@ -33,7 +33,7 @@ namespace uSlack.EventHandlers
             }
         }
 
-        [EventHandler("saved", true)]
+        [EventHandler("saved", "Media item saved", true)]
         public void MediaService_Saved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.SaveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
             foreach (var item in e.SavedEntities)
@@ -43,7 +43,7 @@ namespace uSlack.EventHandlers
             }
         }
 
-        [EventHandler("moved", true)]
+        [EventHandler("moved", "Media item moved", true)]
         public void MediaService_Moved(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.MoveEventArgs<Umbraco.Core.Models.IMedia> e)
         {
             foreach (var item in e.MoveInfoCollection.Select(mi => mi.Entity))
@@ -54,7 +54,7 @@ namespace uSlack.EventHandlers
             }
         }
 
-        [EventHandler("deleted", true)]
+        [EventHandler("deleted", "Media item deleted", true)]
         public void MediaService_Deleted(Umbraco.Core.Services.IMediaService sender, Umbraco.Core.Events.DeleteEventArgs<Umbraco.Core.Models.IMedia> e)
         {
             foreach (var item in e.DeletedEntities)

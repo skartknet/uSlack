@@ -103,7 +103,7 @@
 
         vm.tempconfig = vm.appsettings;
 
-        config.sections[section].handlers[handler] = !config.sections[section].handlers[handler];
+        config.sections[section].handlers[handler].value = !config.sections[section].handlers[handler].value;
         save();
     }
 

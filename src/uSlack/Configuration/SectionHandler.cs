@@ -4,17 +4,15 @@
 // </copyright>
 
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace uSlack.Configuration
 {
-    public class ConfigSection
+    public class SectionHandler
     {        
-        [JsonProperty("label")]        
+        [JsonProperty("label")]
         public string Label { get; set; }
 
-        [JsonProperty("handlers")]
-        public Dictionary<string, SectionHandler> SectionHandlers { get; set; } = new Dictionary<string, SectionHandler>();
+        [JsonProperty("value")]
+        public object Value { get; set; }
     }
-
 }

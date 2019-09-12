@@ -27,7 +27,7 @@ namespace uSlack.Tests
 
             var config = new Mock<IContext>();
             config.Setup(c => c.AppSettings).Returns(new AppSettings
-            {                
+            {
                 ConfigurationGroups = new ConfigurationGroup[]
                 {
                         new ConfigurationGroup
@@ -37,9 +37,9 @@ namespace uSlack.Tests
                             {
                                 { "contentservice", new ConfigSection
                                     {
-                                        SectionHandlers = new Dictionary<string, object>()
+                                        SectionHandlers = new Dictionary<string, SectionHandler>()
                                         {
-                                            { "published", true }
+                                            {"published", new SectionHandler{ Label ="Content published", Value = true}  }
                                         }
                                     }
                                 }
@@ -55,7 +55,7 @@ namespace uSlack.Tests
             var client = new SlackService(config.Object);
             await client.SendMessageAsync("contentservice", "published", null);
 
-        }  
+        }
 
 
         [Test]
@@ -69,7 +69,7 @@ namespace uSlack.Tests
 
             var config = new Mock<IContext>();
             config.Setup(c => c.AppSettings).Returns(new AppSettings
-            {                
+            {
                 ConfigurationGroups = new ConfigurationGroup[]
                 {
                         new ConfigurationGroup
@@ -79,9 +79,9 @@ namespace uSlack.Tests
                             {
                                 { "contentservice", new ConfigSection
                                     {
-                                        SectionHandlers = new Dictionary<string, object>()
+                                        SectionHandlers = new Dictionary<string, SectionHandler>()
                                         {
-                                            { "published", true }
+                                            {"published", new SectionHandler{ Label ="Content published", Value = true}  }
                                         }
                                     }
                                 }
@@ -96,7 +96,7 @@ namespace uSlack.Tests
 
             var client = new SlackService(config.Object);
 
-           
+
             await client.SendMessageAsync("contentservice", "published", null);
 
         }

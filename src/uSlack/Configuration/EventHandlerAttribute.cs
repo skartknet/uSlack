@@ -16,14 +16,16 @@ namespace uSlack.Configuration
         // See the attribute guidelines at 
         //  http://go.microsoft.com/fwlink/?LinkId=85236
 
-        public EventHandlerAttribute(string alias, object defaultValue)
+        public EventHandlerAttribute(string alias, string label, object defaultValue)
         {
             Alias = alias;
             DefaultValue = defaultValue;
+            Label = label;
         }
 
         public string Alias { get; }
         public object DefaultValue { get; }
+        public string Label { get; }
     }
 
 }

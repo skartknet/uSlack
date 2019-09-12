@@ -24,7 +24,7 @@ Firstly we have to assign different permissions to our app that uSlack will use 
 In the dropdown we'll need to add the following permissions:
 - channels:read
 - chat:write:bot
-- commands 
+- groups:read 
 
 Click _Save Changes_
 

@@ -53,7 +53,7 @@ namespace uSlack.Backoffice
             var response = new HttpResponseMessage
             {
                 StatusCode = System.Net.HttpStatusCode.ServiceUnavailable,
-                RequestMessage = _request,
+                RequestMessage = _request,                
                 Content = new StringContent(message)
             };
 

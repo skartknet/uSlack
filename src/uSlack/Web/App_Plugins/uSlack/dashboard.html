@@ -79,16 +79,16 @@
                     </div>
                 </umb-box-content>
 
-                <div ng-repeat="(section, sectionValue) in config.sections">
-                    <umb-box-header title-key="uslack_{{section}}_title"></umb-box-header>
+                <div ng-repeat="(sectionAlias, sectionObj) in config.sections">
+                    <umb-box-header title="{{sectionObj.label}}"></umb-box-header>
                     <umb-box-content>
-                        <div ng-repeat="(key, paramValue) in sectionValue.handlers" class="sub-view-columns">
+                        <div ng-repeat="(handlerAlias, handlerObj) in sectionObj.handlers" class="sub-view-columns">
                             <div class="sub-view-column-left">
-                                <h5><localize key="uslack_{{section}}_{{key}}_label" /></h5>
+                                <h5>{{handlerObj.label}}</h5>
                             </div>
                             <div class="sub-view-column-right">
-                                <umb-toggle checked="config.sections[section].handlers[key]"
-                                            on-click="vm.toggleSwitch(config, section, key)"></umb-toggle>
+                                <umb-toggle checked="config.sections[sectionAlias].handlers[handlerAlias].value"
+                                            on-click="vm.toggleSwitch(config, sectionAlias, handlerAlias)"></umb-toggle>
                             </div>
                         </div>
                     </umb-box-content>

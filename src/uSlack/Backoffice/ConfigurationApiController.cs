@@ -67,7 +67,6 @@ namespace uSlack.Backoffice
 
             try
             {
-                //TODO: properly manage response and display error messages
 
                 var client = new SlackTaskClient(_configuration.AppSettings.Token);
                 var response = await client.GetConversationListAsync();
@@ -75,6 +74,7 @@ namespace uSlack.Backoffice
 
                 if (!response.ok)
                 {
+                    //TODO: properly manage response and display error messages
                     return new SlackErrorResult(response.error, Request);
                 }
 
