@@ -6,22 +6,20 @@ main:
 
 
 all:
-  - title: Getting Started
+  - title: Documentation    
     children:
       - title: "Installation"
         url: /installation/
       - title: "Configuring Slack"
         url: /configuring-slack/
       - title: "Using the uSlack dashboard"  
-        url: /using-dashboard/
-  - title: Customizing
-    children:
+        url: /using-dashboard/  
       - title: "Configuration files"
         url: /configuring/files
       - title: "Customizing the messages"
         url: /configuring/messages/
-  - title: Extending
-    children:
       - title: "Adding new sections"
         url: /extending/sections
+      - title: "Interactivity"
+        url: /interactivity/
         

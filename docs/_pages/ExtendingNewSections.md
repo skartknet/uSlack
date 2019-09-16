@@ -18,10 +18,10 @@ The configured sections and event handlers will be automatically displayed in th
 ### Adding new Configuration Sections
 A configuration section is a group of event handlers. The sections shipped in uSlack are grouped by Umbraco services: content, media, users and members
 
-To add a new section you have to create a class that is decorated with the `SectionHandler` attribute. This attribute takes an alias. This alias will be used to create the configuration file of the enabled handlers.
+To add a new section you have to create a class that is decorated with the `SectionHandler` attribute. This attribute takes an alias and a label. These two properties will be used to create the configuration file of the enabled handlers.
 
 ```csharp 
-[SectionHandler("contentService")]
+[SectionHandler("contentService", "Umbraco content Service")]
 public class MyHandlers
 {
 }
@@ -33,10 +33,10 @@ Each section will host the different event handlers that will listen for any con
 To indicate that a method is a uSlack event handler you have to decorate the method with the `EventHandler` attribute. 
 
 ```csharp
-[SectionHandler("contentService")]
+[SectionHandler("contentService", "Umbraco content Service")]
 public class MyHandlers
 {
-    [EventHandler("published", true)]
+    [EventHandler("published", "Content item published", defaultValue: true)]
     public void ContentService_Published(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.ContentPublishedEventArgs e)
     {
         //your code here
@@ -107,7 +107,7 @@ The SlackService class is already registered in the Umbraco DI container so you 
 
 ```csharp
 
-[SectionHandler("contentService")]
+[SectionHandler("contentService", "Umbraco Content Service")]
 public class ContentHandlers : EventHandlerBase
 {
     private readonly IMessageService _messagingService;
@@ -117,7 +117,7 @@ public class ContentHandlers : EventHandlerBase
         _messagingService = messagingService;
     }
 
-       [EventHandler("published", true)]
+       [EventHandler("published", "Content item published", true)]
         public void ContentService_Published(Umbraco.Core.Services.IContentService sender, Umbraco.Core.Events.ContentPublishedEventArgs e)
         {
             foreach (var item in e.PublishedEntities)
@@ -136,7 +136,8 @@ public class ContentHandlers : EventHandlerBase
 As you can see n the previous example we iterate over all the entities in `e.PublishedEntities`.
 For each entity, we use the `PropertiesDictionary` to populate a collection of default properties to be used in our messages using placeholders. This dictionary adds the name, id, and the custom properties available in the entity.
 In addition to the default values we are adding the name of the using causing this publishing event.
-Then we call the `SendMessageAsync` method, passing the section and event aliases and our generated properties collection.
-This method will take care of finding the right template, replacing the placehlders and sending the message to the available configurations.
 
-As you can see, we are using the `AsyncUtil.RunSync` method to allow us to run this method synchronously. This is because we can't run async methods in the Umbraco event handlers.
+Then we call the `SendMessageAsync` method, passing the section and event aliases and our generated properties collection.
+This method will take care of finding the right template, replacing the placeholders and sending the message to the available configurations.
+
+> we are using the `AsyncUtil.RunSync` method to allow us to run this method synchronously. This is because we can't run async methods in the Umbraco event handlers.

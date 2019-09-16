@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace uSlack.Configuration
 {
     /// <summary>
-    /// It registers a method or the methods of a class as a property of the uSlack configuration.
+    /// It registers a class as a configuration section.
     /// </summary>
 
     [System.AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]

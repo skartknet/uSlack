@@ -1,20 +1,22 @@
-﻿using Newtonsoft.Json;
-using SlackAPI.Interactive;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Newtonsoft.Json;
 using Umbraco.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
 using uSlack.Security;
-using uSlack.Services;
 using uSlack.Services.Models;
 
 namespace uSlack.Interactive
 {
+    /// <summary>
+    /// It receives the response from Slack and validates it using the Slack signature and signing secret
+    /// https://api.slack.com/docs/verifying-requests-from-slack.
+    /// </summary>
     [PluginController("uslack")]
     public class InteractiveApiController : UmbracoApiController
     {
@@ -33,7 +35,7 @@ namespace uSlack.Interactive
 
         [HttpPost]
         public async Task<IHttpActionResult> ProcessResponse()
-        {            
+        {
             var isValidSignature = await _securityService.IsValidRequestAttemptAsync(Request);
 
             if (!isValidSignature) return Unauthorized();
@@ -78,7 +80,7 @@ namespace uSlack.Interactive
                 return InternalServerError();
             }
 
-            
+
             return Ok();
         }
 

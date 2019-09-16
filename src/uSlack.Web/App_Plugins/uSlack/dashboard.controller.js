@@ -100,11 +100,7 @@
     }
 
     vm.toggleSwitch = function (config, section, handler) {
-
-        vm.tempconfig = vm.appsettings;
-
         config.sections[section].handlers[handler].value = !config.sections[section].handlers[handler].value;
-        save();
     }
 
     vm.addNewConfig = function () {
