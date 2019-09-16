@@ -34,8 +34,8 @@ Once the app has been created we need to install it into our Slack workspace. To
 
 Once the app has installed you'll get an _OAuth token_. Take note of this because we'll need it when configuring uSlack in Umbraco.
 
-![oauth token](https://github.com/skartknet/uSlack/tree/master/docs/images/slac-oauth.png)
+![oauth token](https://raw.githubusercontent.com/skartknet/uSlack/master/docs/images/slack-oauth.png)
 
 You will also need the _Signing Secret_, this is in the Settings->Base Information option of your app:
 
-![signing secret](https://github.com/skartknet/uSlack/tree/master/docs/images/slac-signingsecret.png)
+![signing secret](https://raw.githubusercontent.com/skartknet/uSlack/master/docs/images/slack-signingsecret.png)

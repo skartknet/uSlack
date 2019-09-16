@@ -11,7 +11,7 @@ First, go to your Umbraco backoffice and navigate to the uSlack section.
 
 Here you will at least one configuration section. Each configuration section allows to set up different values groups. For instance you could create a section that sends all the Content events to a Slack channel and all the Members events to a different channel.
 
-![dashboard](https://github.com/skartknet/uSlack/tree/master/docs/images/dashboard01.png)
+![dashboard](https://raw.githubusercontent.com/skartknet/uSlack/master/docs/images/dashboard01.png)
 
 ### Options
 **Configuration name:** Give a name to your section

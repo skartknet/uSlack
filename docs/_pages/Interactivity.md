@@ -12,7 +12,7 @@ In order for your app to talk back to your Umbraco installation, you have to con
 
 Navigate to [Your Apps in Slack](https://api.slack.com/apps), find your uSlack app and click it. Navigate to the _Interactive Components_ section.
 
-![request url](https://github.com/skartknet/uSlack/tree/master/docs/images/interactivity-requesturl.png)
+![request url](https://raw.githubusercontent.com/skartknet/uSlack/master/docs/images/interactivity-requesturl.png)
 
 In the **Request Url** field you have to enter your domain followed by the path `/umbraco/uslack/interactiveapi/processresponse`
 
