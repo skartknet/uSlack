@@ -1,4 +1,4 @@
-﻿function uSlackDashboardController($scope, $http, notificationsService, authResource) {
+﻿function uSlackDashboardController($scope, $http, notificationsService, authResource, userService, userGroupsResource) {
     var vm = this;
     vm.buttonState = "init";
     vm.loadChannelsState = "init";
@@ -37,8 +37,18 @@
     }
 
     function getUserGroups() {
-        authResource.getCurrentUser().then(function (data) {
-            vm.userGroups = data.userGroups;
+        userService.getCurrentUser().then(function (user) {
+            currentUser = user;
+            // Get usergroups
+            userGroupsResource.getUserGroups({ onlyCurrentUserGroups: false }).then(function (userGroups) {
+
+                // only allow editing and selection if user is member of the group or admin
+                vm.userGroups = _.map(userGroups, function (ug) {
+                    ug.hasAccess = user.userGroups.indexOf(ug.alias) !== -1 || user.userGroups.indexOf("admin") !== -1;
+                    return ug;
+                });
+                vm.filteredUserGroups = vm.userGroups;
+            });
         });
     }
 

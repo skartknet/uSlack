@@ -30,9 +30,9 @@ namespace uSlack.EventHandlers
             {
                 var properties = new PropertiesDictionary(item);
                 var publisher = Current.Services.UserService.GetUserById(item.PublisherId.GetValueOrDefault());
-                if (publisher != null) properties.Add("publisher", publisher.Name);
-
-                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "published", properties));
+                if (publisher != null) properties.Add("publisher", publisher.Name);   
+                                
+                AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "published", properties, publisher));
             }
         }
 

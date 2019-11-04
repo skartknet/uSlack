@@ -5,22 +5,28 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SlackAPI;
 using SlackAPI.Composition;
+using Umbraco.Core.Models.Membership;
+using Umbraco.Web;
 using uSlack.Configuration;
+using uSlack.Models;
 
 namespace uSlack.Services
 {
     public class SlackService : IMessageService
     {
         private readonly IContext configuration;
+        private readonly IUmbracoContextFactory _umbracoContextFactory;
         private Lazy<SlackTaskClient> client;
 
-        public SlackService(IContext configuration)
+        public SlackService(IContext configuration, IUmbracoContextFactory umbracoContextFactory)
         {
             this.configuration = configuration;
+            _umbracoContextFactory = umbracoContextFactory;
             client = new Lazy<SlackTaskClient>(InitSlackClient);
         }
 
@@ -29,16 +35,31 @@ namespace uSlack.Services
             return new SlackTaskClient(configuration.AppSettings.Token);
         }
 
+        private IEnumerable<IReadOnlyUserGroup> GetCurrentUserGroups()
+        {
+            var umbracoContext = _umbracoContextFactory.EnsureUmbracoContext().UmbracoContext;
+            var currentUser = umbracoContext.Security.CurrentUser;
+            return currentUser == null
+                ? Enumerable.Empty<IReadOnlyUserGroup>()
+                : currentUser.Groups;
+
+        }
+
 
         /// <summary>
         ///  It sends a messsage for each of the available configurations.
         /// </summary>
         /// <param name="service"></param>
         /// <param name="evt"></param>        
-        public virtual async Task SendMessageAsync(string service, string evt, IDictionary<string, string> properties = null)
+        public virtual async Task SendMessageAsync(string service, string evt, IDictionary<string, string> properties = null, IUser user = null)
         {
+
             foreach (var c in configuration.AppSettings.ConfigurationGroups)
             {
+
+                if (user != null && !c.SecurityGroups.Any(secg => user.Groups.Select(g => g.Alias).Contains(secg))) continue;
+
+
                 if (c.GetParameter<bool>(service, evt) == false) return;
 
                 var templateName = configuration.GetMessageTemplateName(service, evt);

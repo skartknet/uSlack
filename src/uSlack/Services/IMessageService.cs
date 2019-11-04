@@ -5,11 +5,12 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Umbraco.Core.Models.Membership;
 
 namespace uSlack.Services
 {
     public interface IMessageService
     {        
-        Task SendMessageAsync(string service, string evt, IDictionary<string, string> properties = null);        
+        Task SendMessageAsync(string service, string evt, IDictionary<string, string> properties = null, IUser user = null);        
     }
 }

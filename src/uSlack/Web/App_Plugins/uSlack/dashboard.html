@@ -50,7 +50,7 @@
                         </div>
                         <div class="sub-view-column-right">
                             <select type="text" ng-model="config.securityGroups" multiple>
-                                <option ng-repeat="group in vm.userGroups" value="{{group}}">{{group}}</option>
+                                <option ng-repeat="group in vm.filteredUserGroups" value="{{group.alias}}">{{group.name}}</option>
                             </select>
                             <p><a href prevent-default><small ng-click="vm.selectAllGroups(config)">Select all</small></a></p>
                         </div>
