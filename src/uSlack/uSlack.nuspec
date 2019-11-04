@@ -1,0 +1,27 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/skartknet/uSlack</projectUrl>
+    <iconUrl>https://github.com/skartknet/uSlack/raw/master/docs/images/logo_symbol.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>$description$</summary>
+    <description>
+      <![CDATA[
+	  Umbraco package that integrates a site with Slack.
+    ]]>
+    </description>
+    <releaseNotes>
+      <![CDATA[ Beta release. ]]>
+    </releaseNotes>
+    <tags>Umbraco slack message backoffice administration notification</tags>
+  </metadata>
+  <files>
+    <file src="App_Plugins\**\*.*" target="content\App_Plugins\"/>
+  </files> 
+</package>

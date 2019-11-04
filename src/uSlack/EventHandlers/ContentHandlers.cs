@@ -42,6 +42,7 @@ namespace uSlack.EventHandlers
             foreach (var item in e.PublishedEntities)
             {
                 var properties = new PropertiesDictionary(item);
+
                 AsyncUtil.RunSync(() => _messagingService.SendMessageAsync("contentService", "unpublished", properties));
             }
         }
