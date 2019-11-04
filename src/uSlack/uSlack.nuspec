@@ -22,6 +22,6 @@
     <tags>Umbraco slack message backoffice administration notification</tags>
   </metadata>
   <files>
-    <file src="App_Plugins\**\*.*" target="content\App_Plugins\"/>
+    <file src="Web\App_Plugins\**\*.*" target="content\App_Plugins\"/>
   </files> 
 </package>

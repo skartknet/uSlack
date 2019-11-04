@@ -1,4 +1,4 @@
-param([string] $packageId, [string]$packageDirectory, [string]$buildConfiguration)
+param([string] $packageId = "Our.Umbraco.uSlack", [string]$packageDirectory = "..\src\uSlack\", [string]$buildConfiguration = "Release")
 
 $scriptDir = $PSScriptRoot
 $targetDirectory =  Join-Path $scriptDir $packageDirectory
@@ -15,8 +15,6 @@ $xpathForVersion = "//info/package/version"
 $fileNodes = $workingPackageFile.SelectNodes($xpathForFiles)
 $nameNode = $workingPackageFile.SelectSingleNode($xpathForName)
 $versionNode = $workingPackageFile.SelectSingleNode($xpathForVersion)
-
-$packageName = $nameNode.InnerText
 
 $filepaths = @($workingPackageFilePath)
 $version = ""
@@ -44,7 +42,6 @@ foreach ($fileNode in $fileNodes) {
 }
 
 $versionNode.InnerText = $semVersion
-#$workingPackageFile.Save((Join-Path $packageDirectory "package.xml"))
 
 Compress-Archive -LiteralPath $filepaths -CompressionLevel Optimal -DestinationPath ($packageId + "-" + $semVersion.Replace(".", "") + ".zip") -Update
 

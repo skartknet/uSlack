@@ -29,5 +29,5 @@ Write-Host "Nuget package created."
 
 # Create Umbraco package
 Unblock-File -Path .\CreateUmbracoPackage.ps1
-powershell -File .\CreateUmbracoPackage.ps1 -packageId Our.Umbraco.uSlack -packageDirectory ..\src\uSlack\uSlack -buildConfiguration Release
+powershell -File .\CreateUmbracoPackage.ps1 -packageId Our.Umbraco.uSlack -packageDirectory ..\src\uSlack\ -buildConfiguration Release
 Write-Host "Umbraco package created."
