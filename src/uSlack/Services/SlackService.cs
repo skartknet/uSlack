@@ -20,13 +20,11 @@ namespace uSlack.Services
     public class SlackService : IMessageService
     {
         private readonly IContext configuration;
-        private readonly IUmbracoContextFactory _umbracoContextFactory;
         private Lazy<SlackTaskClient> client;
 
-        public SlackService(IContext configuration, IUmbracoContextFactory umbracoContextFactory)
+        public SlackService(IContext configuration)
         {
-            this.configuration = configuration;
-            _umbracoContextFactory = umbracoContextFactory;
+            this.configuration = configuration;            
             client = new Lazy<SlackTaskClient>(InitSlackClient);
         }
 
@@ -35,15 +33,6 @@ namespace uSlack.Services
             return new SlackTaskClient(configuration.AppSettings.Token);
         }
 
-        private IEnumerable<IReadOnlyUserGroup> GetCurrentUserGroups()
-        {
-            var umbracoContext = _umbracoContextFactory.EnsureUmbracoContext().UmbracoContext;
-            var currentUser = umbracoContext.Security.CurrentUser;
-            return currentUser == null
-                ? Enumerable.Empty<IReadOnlyUserGroup>()
-                : currentUser.Groups;
-
-        }
 
 
         /// <summary>
